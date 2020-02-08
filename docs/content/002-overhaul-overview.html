@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview of codebase overhaul &mdash; WayneCountyDeedsApp Notes 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://kat-alo.github.io/deed-scrapercontent/002-overhaul-overview.html"/>
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Intro to testing in Python and pytest" href="tdd/001-pytest-basics.html" />
+    <link rel="prev" title="First codebase lookover" href="001-first-notes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> WayneCountyDeedsApp Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="001-first-notes.html">First codebase lookover</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview of codebase overhaul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#inventory">Inventory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#waynecounty-deeds-high-level-scripts">waynecounty_deeds high-level scripts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#waynecounty-deeds-utility-scripts">waynecounty_deeds utility scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tdd/001-pytest-basics.html">Intro to testing in Python and pytest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tdd/002-tdd-basics.html">Intro to unit-testing and test-driven development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="015-refactoring-results_parser.html">Refactoring results_parser.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">WayneCountyDeedsApp Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Overview of codebase overhaul</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/content/002-overhaul-overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview-of-codebase-overhaul">
+<h1>Overview of codebase overhaul<a class="headerlink" href="#overview-of-codebase-overhaul" title="Permalink to this headline">¶</a></h1>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>├── data
+│   ├── samples       # a directory of sample data/HTML
+│   └── scrapes       # the default directory to store done scrapes
+│
+├── tests             # where the tests live
+│   └── live_demos    # a subdir of time-consuming tests that
+│                     #   *aren&#39;t* run by default
+└── waynecounty_deeds
+    ├── __init__.py   # boilerplate stuff
+    ├── __main__.py   # boilerplate for specifying the default &quot;main&quot; function
+    ├── __version__.py
+    ├── cli.py        # specifications of the command-line interface, including arg parsing
+    ├── config.py     # where global vars and other common utils are stored
+    ├── filer.py      # contains helper functions for the data saving/loading disk operations
+    ├── logger.py     # where the logger and its fancy formatting are specified
+    ├── scraper.py    # the high level functionality of the scraper
+    ├── search_results_parser.py  # functions for parsing the returned search results
+    ├── site_searcher.py # the functions that query the site and get initial search results
+    ├── slugify.py  # functions for normalizing names
+    └── wrangler.py # high level functionality of the data wrangler
+</pre></div>
+</div>
+<p>I left the <code class="docutils literal notranslate"><span class="pre">waynecounty_deeds/</span></code> directory flatter than I would
+recommend. Normally, I would try to “hide” all the internal functions in
+their own subdirectory, which would indicate more clearly that the
+end-user is <em>not</em> meant to run stuff in <code class="docutils literal notranslate"><span class="pre">site_searcher.py</span></code> or
+<code class="docutils literal notranslate"><span class="pre">search_results_parser.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>waynecounty_deeds/
+├── __init__.py
+├── __main__.py
+├── __version__.py
+├── cli.py
+├── config.py
+├── scraper.py
+├── wrangler.py
+└── utils
+    ├── filer.py
+    ├── logger.py
+    ├── search_results_parser.py
+    ├── site_searcher.py
+    └── slugify.py
+</pre></div>
+</div>
+<p>But this is a fairly small application so I leave the structure flat. We
+can refactor later as needed, but a flat structure is at least easier to
+see all the scripts we have in total.</p>
+</div>
+<div class="section" id="inventory">
+<h1>Inventory<a class="headerlink" href="#inventory" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="waynecounty-deeds-high-level-scripts">
+<h2>waynecounty_deeds high-level scripts<a class="headerlink" href="#waynecounty-deeds-high-level-scripts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="config-py">
+<h3>config.py<a class="headerlink" href="#config-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="cli-py">
+<h3>cli.py<a class="headerlink" href="#cli-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="scraper-py">
+<h3>scraper.py<a class="headerlink" href="#scraper-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="wrangler-py">
+<h3>wrangler.py<a class="headerlink" href="#wrangler-py" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="waynecounty-deeds-utility-scripts">
+<h2>waynecounty_deeds utility scripts<a class="headerlink" href="#waynecounty-deeds-utility-scripts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="site-searcher-py">
+<h3>site_searcher.py<a class="headerlink" href="#site-searcher-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="search-results-parser-py">
+<h3>search_results_parser.py<a class="headerlink" href="#search-results-parser-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="slugify-py">
+<h3>slugify.py<a class="headerlink" href="#slugify-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="filer-py">
+<h3>filer.py<a class="headerlink" href="#filer-py" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="logger-py">
+<h3>logger.py<a class="headerlink" href="#logger-py" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tdd/001-pytest-basics.html" class="btn btn-neutral float-right" title="Intro to testing in Python and pytest" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="001-first-notes.html" class="btn btn-neutral float-left" title="First codebase lookover" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, Katlyn Alapati
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

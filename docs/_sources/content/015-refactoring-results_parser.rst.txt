@@ -1,0 +1,130 @@
+*****************************
+Refactoring results_parser.py
+*****************************
+
+
+Overview of the original code
+=============================
+
+Good parts:
+
+- Having parse_row() be a function that simply takes in raw HTML and returns a useful ``dict`` object.
+
+
+Places for improvement:
+
+- Don't repeat yourself
+- Doing too much in one function
+- Avoid using regexes when you can parse HTML
+
+Data extraction methods
+-----------------------
+
+Some things require just a regex of a text snippet:
+
+.. literalinclude:: /srccode/oldcode/0.0.1/results_parser.py
+    :pyobject: get_muni
+
+
+.. literalinclude:: /srccode/oldcode/0.0.1/results_parser.py
+    :pyobject: get_rec_date
+
+Others just simple string splitting, because you think you know where the newlines are going t be:
+
+
+.. literalinclude:: /srccode/oldcode/0.0.1/results_parser.py
+    :pyobject: get_doc_number
+
+
+.. literalinclude:: /srccode/oldcode/0.0.1/results_parser.py
+    :pyobject: get_doc_type
+
+
+
+
+Parsing HTML with lxml
+======================
+
+One of the most famous StackOverflow answers is a rant on the `futility of trying to parse HTML with just regexes <https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags>`_. Even when the text pattern is seemingly simple to capture, it's still almost always better to do the extra work of using a HTML parser for the headaches it saves you when the text is more unpredictable than expected.
+
+
+`BeautifulSoup <https://www.crummy.com/software/BeautifulSoup/bs4/doc/>`_ and `lxml <https://lxml.de/>`_ are both solid choices for HTML parsing in Python. However, I like the latter because
+
+
+Both support the use of CSS selectors for targeting
+
+.. code-block:: python
+
+    from bs4 import BeautifulSoup
+    HTML = '''<h1><a href="example.com">Site</a>'''
+    soup = BeautifulSoup(HTML)
+    url = soup.select('a')[0]['href']
+    sitename = soup.select('a')[0]
+
+
+**lxml** tends to be slightly more verbose and formal:
+
+.. code-block:: python
+
+    from lxml.html import fromstring as hparse
+    HTML = '''<h1><a href="example.com">Site</a>'''
+    doc = hparse(HTML)
+    url = doc.cssselect('a')[0].attrib['href']
+    sitename = doc.cssselect('a')[0].text_content()
+
+
+Both libraries are both very similar, and different in ways too small to recount here, though **bs4** is probably more human-friendly at first. But to me, the one clear advantage of **lxml** is that it supports `XPath expressions <https://docs.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms256086(v=vs.100)>`_, which is a powerful (if sometimes confusing) syntax for HTML/XML parsing (`cheatsheet <https://devhints.io/xpath>`_) :
+
+.. code-block:: python
+
+    HTML = '''<h1><a href="example.com">Site</a>'''
+    doc = hparse(HTML)
+    url = doc.xpath('//h1/a/@href')[0]
+    sitename = doc.xpath('//h1/a/text()')[0]
+
+
+Admittedly, the search result parsing doesn't really need XPath's power. In :ref:`script_search_results_parser_py`, I use it in ``_extract_record_url()``:
+
+.. literalinclude:: /srccode/oldcode/0.2.0/search_results_parser.py
+    :pyobject: _extract_record_url
+    :emphasize-lines: 2
+
+
+This is what it would look like with CSS selectors (``r`` being a ``lxml.Element``, i.e. parsed HTML):
+
+.. code-block:: python
+
+    # ...
+        href = r.cssselect('td:first-child strong a:first-child')[0].attrib['href']
+
+
+A better demo of XPath's functionality is in the
+
+
+.. literalinclude:: /srccode/oldcode/0.2.0/samples/example-results-row.html
+
+
+
+
+
+Full code references
+====================
+
+
+.. _script_results_parser_py:
+
+results_parser.py
+-----------------
+
+.. literalinclude:: /srccode/oldcode/0.0.1/results_parser.py
+    :linenos:
+
+
+.. _script_search_results_parser_py:
+
+search_results_parser.py
+------------------------
+
+.. literalinclude:: /srccode/oldcode/0.2.0/search_results_parser.py
+    :linenos:
+

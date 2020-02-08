@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Higher-level scripting &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/007-higher-level-scripting/index-higher-level-scripting.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Hello world" href="../000-hello-world/index-hello-world.html" />
+    <link rel="prev" title="Software Engineering" href="../006-software-engineering/index-software-engineering.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-setup/index-setup.html">Setting Up and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-operating-fundamentals/index-operating-fundamentals.html">Operating system fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../003-plaintext-joy/index-plaintext-joy.html">The joy of plaintext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../005-real-world-scripting/index-real-world-scripting.html">Real world scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../006-software-engineering/index-software-engineering.html">Software Engineering</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../001-examples/index-examples.html">Syntax Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Higher-level scripting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/007-higher-level-scripting/index-higher-level-scripting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="higher-level-scripting">
+<h1>Higher-level scripting<a class="headerlink" href="#higher-level-scripting" title="Permalink to this headline">¶</a></h1>
+<p>Actual programming – e.g. learning Python or R or Javascript or even SQL – is beyond the scope of this project. However, shell scripting basically is programming. So the aim of this unit is to help you get started on getting into a “proper” language, and to give you a taste of <em>why</em> you’d want to do it – which can be hard to convey if you’ve seen the amazing usefulness of shell scripting.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>R and RStudio</dt><dd><ul>
+<li><p>RStudio seems much easier and straightforward to install for the average user, compared to Python (even with conda)</p></li>
+<li><dl class="simple">
+<dt>RStudio basics</dt><dd><ul>
+<li><p>why R syntax is NOT the same as shell syntax</p></li>
+<li><p>variables and variable assignment</p></li>
+<li><p>quoting strings</p></li>
+<li><p>functions</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>How to do cool stuff with ggplot2</dt><dd><ul>
+<li><p>use built in datasets like iris</p></li>
+<li><p>switching between chart types</p></li>
+<li><p>tweaking colors</p></li>
+<li><p>making PNGs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data wrangling basics</dt><dd><ul>
+<li><p>dataframes</p></li>
+<li><p>opening files (CSV, XLS)</p></li>
+<li><p>saving files as CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Web scraping with R</dt><dd><ul>
+<li><p>enough HTML concepts to understand why regex is not enough</p></li>
+<li><p>CSS selector</p></li>
+<li><p>xpath for funsies</p></li>
+<li><dl class="simple">
+<dt>how HTML turns into data</dt><dd><ul>
+<li><p>copy-pasting HTML tables into a spreadsheet</p></li>
+<li><p>scraping non-tabular HTML into CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>[todo] mirror a website to practice on</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>R outside of RStudio</dt><dd><ul>
+<li><p>just use VSCode</p></li>
+<li><p>running R scripts from the commandline</p></li>
+<li><p>reproducible data-&gt;viz R script</p></li>
+<li><p>rmarkdown?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SQLite</dt><dd><ul>
+<li><dl class="simple">
+<dt>Using a GUI like DB Browser</dt><dd><ul>
+<li><p>Why SQL and not Excel?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Basic SQL syntax</dt><dd><ul>
+<li><p>SELECT queries and how they compare to spreadsheets</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SQLite without a GUI</dt><dd><ul>
+<li><p>invoking sqlite3 from the command line</p></li>
+<li><p>dot commands/config</p></li>
+<li><p>turning sqlite into a CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>optional (combining sqlite scripts with R scripts to make viz)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../000-hello-world/index-hello-world.html" class="btn btn-neutral float-right" title="Hello world" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../006-software-engineering/index-software-engineering.html" class="btn btn-neutral float-left" title="Software Engineering" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

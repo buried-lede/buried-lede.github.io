@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Real world scripting &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/005-real-world-scripting/index-real-world-scripting.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Software Engineering" href="../006-software-engineering/index-software-engineering.html" />
+    <link rel="prev" title="Everyday Command-Line" href="../004-everyday-commandline/index-everyday-commandline.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-setup/index-setup.html">Setting Up and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-operating-fundamentals/index-operating-fundamentals.html">Operating system fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../003-plaintext-joy/index-plaintext-joy.html">The joy of plaintext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Real world scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../006-software-engineering/index-software-engineering.html">Software Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../007-higher-level-scripting/index-higher-level-scripting.html">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../001-examples/index-examples.html">Syntax Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Real world scripting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/005-real-world-scripting/index-real-world-scripting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="real-world-scripting">
+<h1>Real world scripting<a class="headerlink" href="#real-world-scripting" title="Permalink to this headline">¶</a></h1>
+<p>How to tie the minutiae you’ve learned to what you probably imagined “real” programming to be. A light introduction to the concept of best practices in software engineering.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Data wrangling with just the shell</dt><dd><ul>
+<li><p>a shell script with as few external dependencies as possible</p></li>
+<li><dl class="simple">
+<dt>fetch and stash remote data file via curl</dt><dd><ul>
+<li><p>unzip/gzip if necessary</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>xsv to filter and extract and sort</p></li>
+<li><p>ripgrep to transform</p></li>
+<li><p>calculate a number.top 5</p></li>
+<li><p>visualize via spreadsheet</p></li>
+<li><p>refine/compact as a one-liner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Your system/shell environment</dt><dd><ul>
+<li><p>sudo</p></li>
+<li><p>installing and running binaries the old fashioned way (i.e. no homebrew)</p></li>
+<li><dl class="simple">
+<dt>understanding the system path</dt><dd><ul>
+<li><p>which</p></li>
+<li><p>echo $PATH</p></li>
+<li><p>adding to the sys path</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>very very basic shell scripting concepts</dt><dd><ul>
+<li><p>what are variables</p></li>
+<li><dl class="simple">
+<dt>very basic functions – basically, a way to name sequence of commands</dt><dd><ul>
+<li><p>maybe introduce function arguments(?)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>.bash_profile/.zsh/etc</dt><dd><ul>
+<li><p>how to configure your prompt</p></li>
+<li><p>set environment variables</p></li>
+<li><p>add functions</p></li>
+<li><p>maybe configure the environment path?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Packaging code as a script</dt><dd><ul>
+<li><dl class="simple">
+<dt>What is a script?</dt><dd><ul>
+<li><p>What makes a script different than a text file?</p></li>
+<li><p>(optional) what is an executable?</p></li>
+<li><p><cite>chmod a+x</cite> for fun</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Repeatable scripts are good</dt><dd><ul>
+<li><p>stop copy-pasting shit from Stickies</p></li>
+<li><p>how to generalize a list of commands to something flexible</p></li>
+<li><p>make a script easier to use with command-line args</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Make your own custom shell script</dt><dd><ul>
+<li><p>make it globally accessible via system path</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>GIF making script</dt><dd><ul>
+<li><p>a shell script that’s more fun, but more complex external dependencies</p></li>
+<li><p>youtube-dl/curl a video</p></li>
+<li><p>ffmpeg/convert into image files</p></li>
+<li><p>stylize the images</p></li>
+<li><p>make a gif</p></li>
+<li><p>turn it into a giffy-like util</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../006-software-engineering/index-software-engineering.html" class="btn btn-neutral float-right" title="Software Engineering" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../004-everyday-commandline/index-everyday-commandline.html" class="btn btn-neutral float-left" title="Everyday Command-Line" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

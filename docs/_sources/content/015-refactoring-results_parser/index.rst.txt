@@ -1,0 +1,27 @@
+*****************************
+Refactoring results_parser.py
+*****************************
+
+.. contents:: Table of contents
+    :local:
+
+
+.. include:: ./_overview.rstinc
+
+
+.. include:: ./_good_parts_of_results_parser.rstinc
+
+
+.. include:: ./_splitting_up_results_parser.rstinc
+
+
+
+.. include:: ./_lxml_html_primer.rstinc
+
+.. include:: ./_dry_results_parser.rstinc
+
+.. include:: ./_fieldnames_dict.rstinc
+
+
+
+.. include:: ./_full_code_bodies.rstinc

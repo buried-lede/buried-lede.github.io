@@ -1,0 +1,14 @@
+
+Overview of the original code
+=============================
+
+Good parts:
+
+- Having parse_row() be a function that simply takes in raw HTML and returns a useful ``dict`` object.
+
+
+Places for improvement:
+
+- Don't repeat yourself
+- Doing too much in one function
+- Avoid using regexes when you can parse HTML

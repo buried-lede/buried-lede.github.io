@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Everyday Command-Line &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/004-everyday-commandline/index-everyday-commandline.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Real world scripting" href="../005-real-world-scripting/index-real-world-scripting.html" />
+    <link rel="prev" title="The joy of plaintext" href="../003-plaintext-joy/index-plaintext-joy.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-setup/index-setup.html">Setting Up and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-operating-fundamentals/index-operating-fundamentals.html">Operating system fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../003-plaintext-joy/index-plaintext-joy.html">The joy of plaintext</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../005-real-world-scripting/index-real-world-scripting.html">Real world scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../006-software-engineering/index-software-engineering.html">Software Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../007-higher-level-scripting/index-higher-level-scripting.html">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../001-examples/index-examples.html">Syntax Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Everyday Command-Line</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/004-everyday-commandline/index-everyday-commandline.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="everyday-command-line">
+<h1>Everyday Command-Line<a class="headerlink" href="#everyday-command-line" title="Permalink to this headline">¶</a></h1>
+<p>It’s possible to be great at data and programming without knowing jack about the shell and the command-line. But such a path is pointlessly dumb and painful. Grokking the Unix philosophy – do one thing and one thing well – and the practice of piping data (i.e. text) between simple utilities, is so useful you may not even need to do “real” programming. And if you do need real programming, the command-line only makes you much much better at learning and using it.</p>
+</div>
+<div class="section" id="getting-started-with-terminal">
+<h1>Getting started with Terminal<a class="headerlink" href="#getting-started-with-terminal" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Terminal.app</p></li>
+<li><dl class="simple">
+<dt>Keyboard as destiny</dt><dd><ul>
+<li><p>Tab to autocomplete</p></li>
+<li><p>up/down for history</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Built-in useful CLI utils</dt><dd><ul>
+<li><p>curl</p></li>
+<li><p>whois</p></li>
+<li><dl class="simple">
+<dt>VS Code + Shell</dt><dd><ul>
+<li><p>using <cite>code</cite> to open from the command line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>MacOS specific utilities</dt><dd><ul>
+<li><p>open</p></li>
+<li><p>pbcopy and pbpaste</p></li>
+<li><p>screenshot</p></li>
+<li><p>say</p></li>
+<li><p>brew</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="shell-syntax-primer">
+<h1>Shell syntax primer<a class="headerlink" href="#shell-syntax-primer" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>whitespace is important</p></li>
+<li><p>backslash</p></li>
+<li><p>quoting stuff</p></li>
+<li><p>flags and arguments</p></li>
+</ul>
+</div>
+<div class="section" id="awesome-third-party-cli">
+<h1>Awesome third-party CLI<a class="headerlink" href="#awesome-third-party-cli" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>how to brew install (hopefully)</p></li>
+<li><dl class="simple">
+<dt>youtube-dl</dt><dd><ul>
+<li><p>output different title</p></li>
+<li><p>get audio only</p></li>
+<li><p>get subtitles</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>pandoc</p></li>
+<li><p>pdftotext via poppler/xpdf</p></li>
+<li><p>wget</p></li>
+<li><p>ffmpeg / convert</p></li>
+<li><p>giffify</p></li>
+<li><p>stylecloud <a class="reference external" href="https://github.com/minimaxir/stylecloud">https://github.com/minimaxir/stylecloud</a></p></li>
+<li><p>twarc (twitter auth stuff)</p></li>
+</ul>
+</div>
+<div class="section" id="command-line-intermediate">
+<h1>Command-Line Intermediate<a class="headerlink" href="#command-line-intermediate" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Keyboard shortcuts</dt><dd><ul>
+<li><p>TAB TO AUTOCOMPLETE DAMMIT</p></li>
+<li><p>Ctrl-A/Ctrl-E</p></li>
+<li><p>Ctrl-C</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Filesystem navigation</dt><dd><ul>
+<li><p>pwd and ls</p></li>
+<li><p>cd</p></li>
+<li><p>home directory and other aliases</p></li>
+<li><p>wildcards</p></li>
+<li><p>mv and cp</p></li>
+<li><p>mkdir</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>general utils</dt><dd><ul>
+<li><p>history</p></li>
+<li><p>man</p></li>
+<li><p>cat</p></li>
+<li><p>head/tail</p></li>
+<li><p>wc</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="the-unix-way">
+<h1>The Unix Way<a class="headerlink" href="#the-unix-way" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Be good at one thing and one thing only</dt><dd><ul>
+<li><p>why unix utils seem so basic</p></li>
+<li><p>as a general design and programming philosophy</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>common nix utils</dt><dd><ul>
+<li><p>grep</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>pipe operator</dt><dd><ul>
+<li><p>pipe pipe pipe</p></li>
+<li><p>cat | grep all the things</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>file redirection</dt><dd><ul>
+<li><p>the dangers of unix</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../005-real-world-scripting/index-real-world-scripting.html" class="btn btn-neutral float-right" title="Real world scripting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../003-plaintext-joy/index-plaintext-joy.html" class="btn btn-neutral float-left" title="The joy of plaintext" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

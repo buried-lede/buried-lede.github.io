@@ -1,0 +1,88 @@
+Overview of codebase overhaul
+=============================
+
+.. code:: sh
+
+    ├── data
+    │   ├── samples       # a directory of sample data/HTML
+    │   └── scrapes       # the default directory to store done scrapes
+    │
+    ├── tests             # where the tests live
+    │   └── live_demos    # a subdir of time-consuming tests that
+    │                     #   *aren't* run by default
+    └── waynecounty_deeds
+        ├── __init__.py   # boilerplate stuff
+        ├── __main__.py   # boilerplate for specifying the default "main" function
+        ├── __version__.py
+        ├── cli.py        # specifications of the command-line interface, including arg parsing
+        ├── config.py     # where global vars and other common utils are stored
+        ├── filer.py      # contains helper functions for the data saving/loading disk operations
+        ├── logger.py     # where the logger and its fancy formatting are specified
+        ├── scraper.py    # the high level functionality of the scraper
+        ├── search_results_parser.py  # functions for parsing the returned search results
+        ├── site_searcher.py # the functions that query the site and get initial search results
+        ├── slugify.py  # functions for normalizing names
+        └── wrangler.py # high level functionality of the data wrangler
+
+I left the ``waynecounty_deeds/`` directory flatter than I would
+recommend. Normally, I would try to "hide" all the internal functions in
+their own subdirectory, which would indicate more clearly that the
+end-user is *not* meant to run stuff in ``site_searcher.py`` or
+``search_results_parser.py``:
+
+::
+
+    waynecounty_deeds/
+    ├── __init__.py
+    ├── __main__.py
+    ├── __version__.py
+    ├── cli.py
+    ├── config.py
+    ├── scraper.py
+    ├── wrangler.py
+    └── utils
+        ├── filer.py
+        ├── logger.py
+        ├── search_results_parser.py
+        ├── site_searcher.py
+        └── slugify.py
+
+But this is a fairly small application so I leave the structure flat. We
+can refactor later as needed, but a flat structure is at least easier to
+see all the scripts we have in total.
+
+Inventory
+=========
+
+waynecounty\_deeds high-level scripts
+-------------------------------------
+
+config.py
+~~~~~~~~~
+
+cli.py
+~~~~~~
+
+scraper.py
+~~~~~~~~~~
+
+wrangler.py
+~~~~~~~~~~~
+
+waynecounty\_deeds utility scripts
+----------------------------------
+
+site\_searcher.py
+~~~~~~~~~~~~~~~~~
+
+search\_results\_parser.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+slugify.py
+~~~~~~~~~~
+
+filer.py
+~~~~~~~~
+
+logger.py
+~~~~~~~~~

@@ -1,0 +1,1709 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>First codebase lookover &mdash; WayneCountyDeedsApp Notes 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://kat-alo.github.io/deed-scrapercontent/001-first-notes.html"/>
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Overview of codebase overhaul" href="002-overhaul-overview.html" />
+    <link rel="prev" title="Notes and guides for WayneCountyDeedsApp development" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> WayneCountyDeedsApp Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">First codebase lookover</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#evaluation-of-your-code-so-far">Evaluation of your code so far</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#critique-and-recommendations">Critique and Recommendations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changes-to-the-code">Changes to the code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="002-overhaul-overview.html">Overview of codebase overhaul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="002-overhaul-overview.html#inventory">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tdd/001-pytest-basics.html">Intro to testing in Python and pytest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tdd/002-tdd-basics.html">Intro to unit-testing and test-driven development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="015-refactoring-results_parser.html">Refactoring results_parser.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">WayneCountyDeedsApp Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>First codebase lookover</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/content/001-first-notes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="first-codebase-lookover">
+<h1>First codebase lookover<a class="headerlink" href="#first-codebase-lookover" title="Permalink to this headline">¶</a></h1>
+<p>Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference external" href="#introduction">Introduction</a></li>
+<li><a class="reference external" href="#evaluation-of-your-code-so-far">Evaluation of your code so far</a></li>
+<li><a class="reference external" href="#critique-and-recommendations">Critique and Recommendations</a><ul>
+<li><a class="reference external" href="#write-programs-designed-for-how-you-yourself-use-them">Write programs designed for how you yourself use
+them</a></li>
+<li><a class="reference external" href="#robust-functions-are-liberal-in-what-they-accept-conservative-in-what-they-do">Robust functions are liberal in what they accept, conservative in
+what they
+do</a><ul>
+<li><a class="reference external" href="#liberal-in-accepting-input">Liberal in accepting input</a></li>
+<li><a class="reference external" href="#conservative-return-values">Conservative return values</a></li>
+<li><a class="reference external" href="#conservative-action">Conservative action</a></li>
+<li><a class="reference external" href="#on-refactoring-your-functions">On refactoring your
+functions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#anticipating-and-handling-real-world-errors">Anticipating, and handling, real-world
+errors</a><ul>
+<li><a class="reference external" href="#the-fundamentals-of-error-handling">The fundamentals of error
+handling</a></li>
+<li><a class="reference external" href="#be-eager-to-know-and-solve-your-errors">Be eager to know and solve your
+errors</a></li>
+<li><a class="reference external" href="#fail-hard-and-fail-early">Fail hard, and fail early</a></li>
+<li><a class="reference external" href="#let-the-serious-errors-crash-your-script">Let the serious errors crash your
+script</a></li>
+<li><a class="reference external" href="#how-to-catch-real-world-errorsfailures">How to catch real-world
+errors/failures</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#how-to-handle-errors-that-arent-non-fatal-errors">How to handle errors that aren’t non-fatal
+errors</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#changes-to-the-code">Changes to the code</a><ul>
+<li><a class="reference external" href="#renaming-and-moving-stuff-around">Renaming and moving stuff
+around</a></li>
+<li><a class="reference external" href="#making-a-command-line-interface">Making a command-line
+interface</a></li>
+<li><a class="reference external" href="#using-pythons-pathlib-module">Using Python’s pathlib module</a></li>
+<li><a class="reference external" href="#using-selenium-to-call-chrome-in-headless-mode">Using selenium to call Chrome in headless
+mode</a></li>
+<li><a class="reference external" href="#breaking-the-code-into-separate-functions-search_namesearch_namesget_driver">Breaking the code into separate functions
+(search_name/search_names/get_driver)</a></li>
+<li><a class="reference external" href="#gathering-shared-constants-and-helepr-functions">Gathering shared constants and helepr
+functions</a></li>
+</ul>
+</li>
+</ul>
+<p>I’m approaching this knowing that you’d like more direction on best
+practices for software engineering, but also being mindful that your
+current role prioritizes getting things done – usually by yourself –
+over becoming the most perfect software engineer, whatever that means.
+When doing programming in journalism, following best coding practices is
+generally much less important than knowing the requirements of the
+story/project, such as, what actual thing/work done by a journalist is
+your script taking over? How does the journalist do that work manually?
+In doing that work, what is the bare minimum of information that the
+journalist is trying to confirm. And what are the things that the
+journalist absolutely cannot get wrong?</p>
+<p>In the scenario of a web scraper, you could go crazy trying to make it
+well-engineered. Such as using
+<a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a> to run
+batch scrapes in parallel. And trying to write robust error handling for
+every possible thing that could go wrong during the scraping. And
+figuring out how the best file format and storage for serializing the
+data. And/or learning a heavy framework like
+<a class="reference external" href="https://scrapy.org">scrapy</a>.</p>
+<p>But if you remember that you’re only requirement is to speed up the
+slow, unscalable manual labor of a reporter pointing and clicking their
+way through a online database search, you can focus on writing the bare
+amount of brute force logic to fetch the pages, extract the few bits
+they need, and save into a plaintext format they can open in Excel.
+Rather than try to anticipate and design for the nearly limitless ways a
+remote web server can break, your code can handle errors as you run into
+them, and break in an ungraceful, but easy-to-diagnose way for you.</p>
+<p>So I’ll try to focus my recommendations on practices and concepts that
+are generally considered to be good/best practices, but are highly
+practical and useful for you to implement in your day-to-day work, for
+big projects and one-offs, especially as a solo developer. As you get
+better, these practices can become instinctive/reflexive to use – or
+even better, for any project, you instinctively know what practices and
+conventions can be safely ignored when speed is of the essence.</p>
+<div class="section" id="evaluation-of-your-code-so-far">
+<h2>Evaluation of your code so far<a class="headerlink" href="#evaluation-of-your-code-so-far" title="Permalink to this headline">¶</a></h2>
+<p>Even for something written in a time crunch, I think you did a really
+good job with this scraper. Even with as many changes I made to the
+code, I found your scripts to be easy to follow and refactor, even with
+having no idea about the context of the project. The messiest part of
+your code was the stuff in <code class="docutils literal notranslate"><span class="pre">main-scraper.py</span></code>, but that was mostly
+because you weren’t familiar with the complicated, wonky behavior of
+selenium+chromedriver when called in a Python script. Despite that, you
+were able to put together a scraping script that actually works, even if
+you knew it felt inelegant.</p>
+<p>One thing you did especially well, that I think the vast majority of
+people get wrong when it comes to web-scraping, was separating the work
+of scraping and parsing. That is, you knew to have your scraper just
+focus on the work of querying the Wayne County deeds site and
+collecting/saving the HTML on disk. And having the parser only care
+about processing the saved HTML files. Most people try to execute the
+parser logic as the webpages are fetched/read by the scraper.</p>
+<p>As I’ll mention in more detail below, separating concerns into different
+functions/scripts is an extremely important best practice to follow, no
+matter how simple/complex the project. But it’s especially important in
+the context of web scraping. Fetching from a remote web server is the
+slowest part of the process by several orders of magnitude. It’s also
+the most error-prone. Having the parsing done <em>while the scrape happens</em>
+becomes extremely time-consuming and frustrating to design and debug.
+The programmer who puts themselves in this situation becomes disinclined
+to make the parsing functionality as useful as it can be, purely because
+it’s such a pain in the ass to revise/iterate code that depends on
+waiting to connect to an unpredictable web server.</p>
+<p>Right now, your parser extracts 7 fields from the HTML of results pages,
+which may be good enough for your current journalistic requirements.
+Later on, you may decide you want to store other fields, like
+<code class="docutils literal notranslate"><span class="pre">Tax</span> <span class="pre">ID</span></code>, or the URL of the filing
+(<a class="reference external" href="https://www.waynecountylandrecords.com/recorder/eagleweb/viewDoc.jsp?node=DOCCL-22365933">example</a>).
+It’s very easy to add that functionality to <code class="docutils literal notranslate"><span class="pre">deed_parser.py</span></code>, and
+re-processing the already downloaded search results is virtually
+instantaneous. You’d likely be much less inclined to consider doing this
+work if you knew you’d have to re-run the scraper all over again.</p>
+<p>Not only is the parser easier to debug and revamp because you don’t have
+the cognitive load that comes from having to look at the scraper code at
+the same time, it becomes something easier to test in isolation. It
+doesn’t look like you’ve written any test code – nor should you, at
+this point. But if you do, it’s much easier to write test code for
+isolated functions – in this case, the parsing functionality does not
+depend on having a working scraper.</p>
+</div>
+<div class="section" id="critique-and-recommendations">
+<h2>Critique and Recommendations<a class="headerlink" href="#critique-and-recommendations" title="Permalink to this headline">¶</a></h2>
+<p>Again, the focus here is the principles/practices that you can still
+keep in mind, even as you work under the burden of having to get things
+done at a hackathon pace. They’re good concepts to implement when you
+have the luxury of time. And, when you’re in a crunch, even implementing
+them imperfectly can be very helpful/sanity-preserving.</p>
+<div class="section" id="write-programs-designed-for-how-you-yourself-use-them">
+<h3>Write programs designed for how <em>you</em> yourself use them<a class="headerlink" href="#write-programs-designed-for-how-you-yourself-use-them" title="Permalink to this headline">¶</a></h3>
+<p>Anticipating user needs – and trying to write the functionality to
+accommodate them – is almost always the most painful and hardest part
+of any project. Especially when writing the interface that a user will
+use to run your code. So starting with the assumption that <em>you</em> will be
+the main and even <em>only</em> user – which is almost always the case as a
+newsroom developer – can really simplify your work, and at the same
+time, result in more elegant code overall.</p>
+<p>I saw early on you tried writing a Makefile, ostensibly to give yourself
+easy convenient invocations for running your scripts, and then gave up
+because, like me and most people, you find the Makefile syntax really
+annoying to learn/write. But the idea to make it easier to run your
+scripts, something which you’ll have to do upon request many times over,
+is the right one.</p>
+<p>As I mention in the <a class="reference external" href="#mark-renaming-stuff">“Renaming and moving stuff
+around”</a> section of the code changes, I tried
+to set things up so that a command like this could work:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>$ python waynecounty_deeds csv samples/sample-names.csv
+</pre></div>
+</div>
+<p>And if that kind of interface is useful to actually how you run your
+code on an every day basis, I think going forward that command-line
+interface can expand as needed for the other types of features you might
+add to the scraper.</p>
+<p>In the meantime, I saw you pivoted from a Makefile to writing an
+interactive prompt. I personally have found coding interactive prompts
+to be more trouble than they’re worth, for any kind of tool that is
+extremely specific (like this dedicated scraper), and/or that you’re
+running repeatedly.</p>
+<p>But let’s say you do find the interactive prompt to be ideal – I think
+you can still apply the concept of “designing just for yourself” to what
+you’ve written. For example, your prompt looked like this:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>How would you like to enter your search? You may respond CSV or MANUAL ENTRY:
+
+# if &#39;CSV&#39;
+What is the name of the CSV containing the names you want to search in RoD?
+
+# if &#39;MANUAL ENTRY&#39;
+What name would you like to search for? Note: for individuals, the RoD site will likely only recognize the format LAST_NAME FIRST_NAME:
+</pre></div>
+</div>
+<p>Given that, at this stage, you’re the only one reading this prompt, is
+there any reason for you to need that much descriptive text, each and
+every time you run your scraper? Maybe it’s worth keeping the
+caveats/requirements as comments in the Python script, but you probably
+only need to see this:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>Search by CSV or MANUAL ENTRY?
+
+# if &#39;CSV&#39;
+CSV filename:
+
+# if &#39;MANUAL ENTRY&#39;
+Individual name:
+</pre></div>
+</div>
+<p>More important than the boilerplate text is the requirements on the user
+input that you’ve imposed:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">input_type</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How would you like to enter your search? You may respond CSV or MANUAL ENTRY: &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">input_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;CSV&quot;</span><span class="p">:</span>
+        <span class="c1"># ...</span>
+    <span class="k">elif</span> <span class="n">input_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;MANUAL ENTRY&quot;</span><span class="p">:</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>It’s good you’ve made it case-insensitive. But why require of the user
+– i.e. you – to type out <code class="docutils literal notranslate"><span class="pre">CSV</span></code>? Or even worse, <code class="docutils literal notranslate"><span class="pre">MANUAL</span> <span class="pre">ENTRY</span></code>?
+While it’s true that sometimes it’s ideal to force the user to be
+explicit, when the choices can be ambiguous/confusingly named, this
+isn’t one of those situations. Maybe in the future, your scraper will
+have more choices, but why make your program annoying to use in the
+meantime? Simplifying the interface cleans up your code <em>and</em> makes it
+easier for you to run:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">input_type</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;(C)SV or (M)ANUAL ENTRY? &quot;</span><span class="p">)</span>
+<span class="n">_ic</span> <span class="o">=</span> <span class="n">input_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span>  <span class="n">_ic</span> <span class="ow">is</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+<span class="k">elif</span> <span class="n">_ic</span> <span class="ow">is</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>I talk more about [error handling](</p>
+<div id="mark-error-handling"></div><p>) later, but thinking yourself as the only user also lets you focus on
+just the errors that you are likely to make. I ended up refactoring most
+of your interactive code and putting it into its own function in the
+<strong>cli.py</strong> file. It was difficult to understand and refactor, though,
+because you had a lot of deeply nested logic, including a
+<code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> block.</p>
+<p>The interactive prompt code starts off being indented under a <code class="docutils literal notranslate"><span class="pre">while</span></code>
+loop that ostensibly waits for proper input (via the
+<code class="docutils literal notranslate"><span class="pre">searching_for_input</span></code> flag):</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">searching_for_input</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">csv_search_filename</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">while</span> <span class="n">searching_for_input</span><span class="p">:</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;How would you like to enter your search?...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That flag is then immediately set to <code class="docutils literal notranslate"><span class="pre">False</span></code> once a valid input mode
+(e.g. ‘CSV’ or ‘MANUAL ENTRY’) is specified. But if the user enters
+something else, <code class="docutils literal notranslate"><span class="pre">searching_for_input</span></code> remains <code class="docutils literal notranslate"><span class="pre">True</span></code>, the user is
+informed <code class="docutils literal notranslate"><span class="pre">&quot;There</span> <span class="pre">was</span> <span class="pre">an</span> <span class="pre">error...Please</span> <span class="pre">try</span> <span class="pre">again</span></code>, and ostensibly the
+program returns to the top of the loop to ask for the input mode (it
+actually crashes because of an undeclared variable):</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># while searching_for_input:</span>
+<span class="c1">#   input_type = ...</span>
+    <span class="k">if</span> <span class="n">input_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;CSV&quot;</span><span class="p">:</span>
+        <span class="n">searching_for_input</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># ...</span>
+
+    <span class="k">elif</span> <span class="n">input_type</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;MANUAL ENTRY&quot;</span><span class="p">:</span>
+        <span class="n">searching_for_input</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># ...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There was an error processing your response. Please try again.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Later on, in this same <code class="docutils literal notranslate"><span class="pre">while</span></code>-block, you add another level of
+indentation with an <code class="docutils literal notranslate"><span class="pre">if</span></code>-block. And inside <em>that</em>, you have the
+<code class="docutils literal notranslate"><span class="pre">try/except</span></code> block, to handle the situation when you’ve mistyped the
+CSV filename. In that <code class="docutils literal notranslate"><span class="pre">except</span></code> block, you reset
+<code class="docutils literal notranslate"><span class="pre">searching_for_input</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> so that the user is sent back to the
+top of the while-loop.</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">csv_search_filename</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                <span class="n">to_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">searching_for_input</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There was an error processing the CSV file you entered. Please try again.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I know making this interactive prompt well-coded was one of your lowest
+priorities, so getting it to a state where it mostly works, and then
+moving on is definitely the right mentality. But I’d bet that you
+could’ve drastically avoid much of the work/pain by reducing the errors
+and response scenarios actually needed, by just thinking of yourself.</p>
+<p>For example, the error situations that you <em>did</em> code for were:</p>
+<ol class="arabic">
+<li><p class="first">User might mistype the mode they want – e.g. <code class="docutils literal notranslate"><span class="pre">CSV</span></code> or
+<code class="docutils literal notranslate"><span class="pre">MANUAL</span> <span class="pre">ENTRY</span></code>. If so, ask the user again (and again) until they
+respond with a proper and expected value.</p>
+</li>
+<li><p class="first">The user might specify the filename of an invalid CSV file. The CSV
+file may be invalid because of any of the following reasons: A. The
+user misspelled/mistyped the filename B. The filename is correct, but
+the file itself is not a proper CSV. C. Literally any other kind of
+run-time exception, because <code class="docutils literal notranslate"><span class="pre">except</span></code> by default catches them all.</p>
+<p>And no matter what the actual error is, send the user back to the
+beginning of the prompt, which gives the user the option to
+reconsider their choice of choosing <code class="docutils literal notranslate"><span class="pre">CSV</span></code> over <code class="docutils literal notranslate"><span class="pre">MANUAL</span> <span class="pre">ENTRY</span></code></p>
+</li>
+</ol>
+<p>So, thinking of you yourself as the only user, who also happens to be
+the creator, you can ask yourself:</p>
+<ol class="arabic">
+<li><p class="first"><strong>Are you likely to screw up picking between the only two choices for
+mode?</strong></p>
+<p>If so, then something beyond the program’s control is so screwed up
+(e.g. you’ve suffered memory loss) that it’s better to halt execution
+of the script, rather than repeatedly prompting the user.</p>
+<p>What seems to be more likely is that you mistype one of the choices.
+So, before you worry about how the interactive prompt should handle
+that mistake, focus on eliminating the chances of that mistake by
+vastly simplifying the acceptable input (e.g. accept ‘c’ and ‘m’).</p>
+</li>
+<li><p class="first"><strong>Are you likely to specify an invalid CSV file?</strong></p>
+<p>If so, at the very least, you’ll want to know whether you got the
+filepath wrong. Or whether the CSV is malformed. In either case, you
+don’t need to be kicked back to the beginning of the prompt – so
+there’s really no need for a <code class="docutils literal notranslate"><span class="pre">while</span></code> block at all.</p>
+<p>You can write a more complicated, specific <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> block
+to react differently to whether a file could not be found, or whether
+the file exists but has non-valid data. But why bother? In either
+case, but especially the latter one, you might prefer being kicked to
+the system prompt so you can manually investigate the file path or
+its contents. So no need for any error handling here.</p>
+</li>
+</ol>
+<p>So the logic for your interactive prompt (<a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L13">see past commit on
+Github</a>)
+could be simplified to a block of code that goes no deeper than 1 level
+of indentation:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">input_type</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;(C)SV or (M)ANUAL ENTRY: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">input_type</span> <span class="ow">is</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Individual name: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">to_search</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<span class="k">elif</span> <span class="n">input_type</span> <span class="ow">is</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+    <span class="n">cname</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;CSV filename: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># skip first row</span>
+        <span class="n">to_search</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">]</span>
+
+<span class="c1"># ...</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">to_search</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="robust-functions-are-liberal-in-what-they-accept-conservative-in-what-they-do">
+<h3>Robust functions are liberal in what they accept, conservative in what they do<a class="headerlink" href="#robust-functions-are-liberal-in-what-they-accept-conservative-in-what-they-do" title="Permalink to this headline">¶</a></h3>
+<p>One of the more well-known best practices is to separate the concerns
+and responsibilities of your functions and scripts. A function should
+not do too much, or know too much about what other functions/scripts do.
+That’s a pretty broad guideline though, and it’s not as simple as having
+an arbitrary metric, such as that a function should not consist of more
+than <em>n</em> lines of code.</p>
+<p>So a good starting point is to consider what your function accepts as
+input, and what <em>effects</em> it causes, or what it returns as output. This
+is often known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Robustness_principle">Robustness
+principle</a>, aka
+Postel’s law:</p>
+<blockquote>
+<div>TCP implementations should follow a general principle of robustness:
+be conservative in what you do, be liberal in what you accept from
+others.</div></blockquote>
+<div class="section" id="liberal-in-accepting-input">
+<h4>Liberal in accepting input<a class="headerlink" href="#liberal-in-accepting-input" title="Permalink to this headline">¶</a></h4>
+<p>When a function is “liberal” in what it accepts, it means that invoking
+it should be as easy as possible, requiring little knowledge or work
+from the user to “just work”:</p>
+<p>For example, consider the following function:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span>def create_greeting(subject):
+    g =  &quot;Hello, {}!&quot;.format(subject.capitalize())
+    print(g)
+
+&gt;&gt;&gt;&gt; create_greeting(&#39;dan&#39;)
+Hello, Dan!
+
+&gt;&gt;&gt;&gt; create_greeting(9)
+AttributeError: &#39;int&#39; object has no attribute &#39;capitalize&#39;
+</pre></div>
+</div>
+<p>This version of <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> assumes that its user knows that
+the <code class="docutils literal notranslate"><span class="pre">subject</span></code> argument should be a string. And if the user wants to
+print a greeting to someone whose name is actually <code class="docutils literal notranslate"><span class="pre">9</span></code>, then the user
+should have done the work to convert <code class="docutils literal notranslate"><span class="pre">9</span></code> into a string:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; create_greeting(str(9))</span>
+<span class="go">Hello, 9!</span>
+</pre></div>
+</div>
+<p>But why not encapsulate that work in the function, if there’s no
+intrinsic harm in printing a greeting to a non-string object.</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span>  <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; create_greeting(9)</span>
+<span class="go">Hello, 9!</span>
+</pre></div>
+</div>
+<p>This “liberal” strategy makes <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> more pleasant to
+use, not just because the potential for an error is vastly reduced, but
+because the invoker – which might be another function or script – is
+blissfully ignorant of the details of what is valid input for a
+greeting. Instead of seeing <code class="docutils literal notranslate"><span class="pre">str(some_object)</span></code> repeated everywhere
+that <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> is invoked, that string conversion only needs
+to happen inside of <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code></p>
+</div>
+<div class="section" id="conservative-return-values">
+<h4>Conservative return values<a class="headerlink" href="#conservative-return-values" title="Permalink to this headline">¶</a></h4>
+<p>Consider the following usage of <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; create_greeting(&#39;alice, bob and dan&#39;)</span>
+<span class="go">Hello, Alice, bob and dan!</span>
+
+<span class="go">&gt;&gt;&gt;&gt; create_greeting([&#39;alice&#39;, &#39;bob&#39;, &#39;dan&#39;])</span>
+<span class="go">Hello, [&#39;alice&#39;, &#39;bob&#39;, &#39;dan&#39;]!</span>
+</pre></div>
+</div>
+<p>Neither of those examples cause an error. But neither do they produce an
+“ideal” result. So the function’s creator decides to have an opinion
+about what the ideal result should be, and writes the additional logic
+needed to handle certain use cases (e.g. if <code class="docutils literal notranslate"><span class="pre">subject</span></code> is a list or
+tuple):</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; and &#39;</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span>  <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; create_greeting([&#39;alice&#39;, &#39;bob&#39;, &#39;dan&#39;])</span>
+<span class="go">Hello, Alice, Bob and Dan!</span>
+
+<span class="go">&gt;&gt;&gt;&gt; create_greeting([1,2,3])</span>
+<span class="go">Hello, 1, 2 and 3!</span>
+</pre></div>
+</div>
+<p>The principle of liberally accepting input is still preserved – passing
+in lists and tuples as arguments still don’t cause an error. And the
+principle of being <em>conservative</em> has also been followed – despite the
+new special logic for handling lists and tuples, the function still
+<em>does</em> the same thing – prints a single string.</p>
+<p>An example of a non-conservative approach would be if
+<code class="docutils literal notranslate"><span class="pre">create_greeting</span></code> produced something different based on the input it
+receives. For example, the designer might think: <em>if someone is passing
+a list of things, they probably want separate greetings. In that case, I
+should return a list of strings!</em></p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">y</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; create_greeting(&#39;dan&#39;)</span>
+<span class="go">Hello, Dan!</span>
+
+<span class="go">&gt;&gt;&gt;&gt; greets = create_greeting([&#39;dan&#39;, &#39;bob&#39;, &#39;joe&#39;])</span>
+<span class="go">&gt;&gt;&gt;&gt; for g in greets:</span>
+<span class="go">        print(g)</span>
+<span class="go">Hello, Dan!</span>
+<span class="go">Hello, Bob!</span>
+<span class="go">Hello, Joe!</span>
+</pre></div>
+</div>
+<p>The immediate problem of this wacky, non-conservative approach is that,
+for a trivial amount of purported flexibility, now the invoker of
+<code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> has to know <em>a lot</em> about the function’s
+internals. And this detail has to be remembered every time
+<code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> is invoked to avoid errors. The invoker basically
+has to now write two forms of invoking <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> – one for
+when it returns nothing and just prints to screen, and the other for
+when it returns a list, yet prints nothing to screen.</p>
+<p>In addition, the creator of <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> also has to deal with
+additional cognitive burden. Coming up with an opinionated way for a
+list of names to be formatted (e.g. when a user passes in a list of
+values, then they’re going to get a printed ‘Hello’ string, with the
+names joined by commas and ‘and’) is a lot easier than trying to
+speculate what that user wants, and coming up with a half-baked solution
+that dissatisfies every user.</p>
+<p>By taking the conservative approach – “my function is going to print a
+single string no matter what” – you make it easier for yourself to
+design a robust function. And by having consistent output, you actually
+make it easier for the user, the one with a special use case, to come up
+with their own solution:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">]:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">subject</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; and &#39;</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span>  <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; names = [&#39;bob&#39;, &#39;dan&#39;, &#39;joe&#39;]</span>
+<span class="go">&gt;&gt;&gt;&gt; for n in names:</span>
+<span class="go">        create_greeting(n)</span>
+<span class="go">Hello, Bob!</span>
+<span class="go">Hello, Dan!</span>
+<span class="go">Hello, Joe!</span>
+</pre></div>
+</div>
+<div class="section" id="conservative-action">
+<h5>Conservative action<a class="headerlink" href="#conservative-action" title="Permalink to this headline">¶</a></h5>
+<p>Another guideline that is “conservative” in spirit is that functions
+should only do one kind of thing: either returning a useful value, or
+having an effect. An “effect” can be anything from writing a file to
+disk, printing to screen, or mutating a data object.</p>
+<p>For example, it might be tempting to have <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> print
+the string to standard output (i.e. to the screen) <em>and</em> return that
+string, so that the invoker can choose to do something else, like write
+to file, or send out as a tweet:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="n">g</span> <span class="o">=</span>  <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span>
+</pre></div>
+</div>
+<p>But this should intuitively feel like an icky code smell, even if
+nothing actually “breaks”. But rather than worry about whether a code
+smell is icky enough, just stick to the “do one thing and one thing
+only” idea:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_greeting</span><span class="p">(</span><span class="n">subject</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="n">g</span> <span class="o">=</span>  <span class="s2">&quot;Hello, </span><span class="si">{}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span>
+</pre></div>
+</div>
+<p>Removing the “print to screen” effect creates the smallest of
+inconvenience for users, who now have to do this if they want to print
+to screen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; print(create_greeting(&#39;Bob&#39;))</span>
+<span class="go">Hello, Bob!</span>
+</pre></div>
+</div>
+<p>The tradeoff is that <code class="docutils literal notranslate"><span class="pre">create_greeting()</span></code> is now immediately more
+useful and versatile for every other user who wants to do something
+<em>besides</em> print to screen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;&gt; g = create_greating(&#39;Bob&#39;)</span>
+<span class="go">&gt;&gt;&gt;&gt; send_email(recipient=&#39;bob@example.com&#39;, body=g)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="on-refactoring-your-functions">
+<h4>On refactoring your functions<a class="headerlink" href="#on-refactoring-your-functions" title="Permalink to this headline">¶</a></h4>
+<p>I think you did a really good job of keeping functions nice and tidy in
+your parsing script. And you probably would’ve done the same in your
+<code class="docutils literal notranslate"><span class="pre">main-scraper.py</span></code> if you hadn’t run into problems with selenium
+crashing, so there’s not a ton of need to go over</p>
+<p>I mention how this specifically applies to your <a class="reference external" href="#mark-liberal-functions">code later on in the
+code changes section</a>.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="anticipating-and-handling-real-world-errors">
+<h3>Anticipating, and handling, real-world errors<a class="headerlink" href="#anticipating-and-handling-real-world-errors" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-fundamentals-of-error-handling">
+<h4>The fundamentals of error handling<a class="headerlink" href="#the-fundamentals-of-error-handling" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p><strong>NOTE:</strong> I think I went into too much detail in talking about
+error-handling, especially because I didn’t bother changing your
+code to show as an example. Part of this is because error-handling
+is a really complicated topic that in many, many situations, can be
+more work than its worth. The other part is that the biggest problem
+is <code class="docutils literal notranslate"><span class="pre">main-scraper.py</span></code> being a giant monolithic, un-encapsulated
+chunk of code.</p>
+<p>But when we fix that – which I did kind of do – a lot of the
+<code class="docutils literal notranslate"><span class="pre">try/except</span></code> blocks you wrote aren’t needed; at all. Or, they’ll
+be written in an entirely different context. So feel free to skim
+the next few sections about error handling. It’s not directly
+relevant to your code going forward, but I wanted to talk about
+error handling with specific examples in mind, i.e. your previous
+iteration of <code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code></p>
+</div></blockquote>
+<p>Generally speaking, here are a couple of good guidelines when it comes
+to error-handling that are worth always keeping in mind</p>
+<div class="section" id="be-eager-to-know-and-solve-your-errors">
+<h5>Be eager to know and solve your errors<a class="headerlink" href="#be-eager-to-know-and-solve-your-errors" title="Permalink to this headline">¶</a></h5>
+<p>Something that you’ve done in your code, which I comment in specific
+detail later on, is using the broadest form of <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">scrape_deeds</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not scrape deeds for&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;but we&#39;re moving on...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Generally, people only bother writing <code class="docutils literal notranslate"><span class="pre">try/except</span></code> when the code in
+the <code class="docutils literal notranslate"><span class="pre">try</span></code> block (i.e. <code class="docutils literal notranslate"><span class="pre">scrape_deeds()</span></code>) caused an error. But the
+problem with this <code class="docutils literal notranslate"><span class="pre">except</span></code> block is that it activates upon <em>any and
+every kind of error</em>. Not just the actual error that you ran into with
+<code class="docutils literal notranslate"><span class="pre">scrape_deeds()</span></code>, but any unforeseen errors that may happen during the
+execution of <code class="docutils literal notranslate"><span class="pre">scrape_deeds()</span></code>.</p>
+<p>In web scraping, a lot of programmers use this catch-all <code class="docutils literal notranslate"><span class="pre">except</span></code> as a
+band-aid for unexpected results. For example, their scraper expects a
+<code class="docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code> element full of rows. But the website will sometimes return
+no table element at all, if the query returns 0 results, or if the query
+is outright invalid.</p>
+<p>When doing a batch scrape, it does feel simpler to use <code class="docutils literal notranslate"><span class="pre">except</span></code> as
+means to ignore the error and let the batch continue. This pattern seems
+endemic in journalism work, maybe because journalists, justifiably, are
+under a time crunch to get results, and the details of error-handling
+seems to be irrelevant to that work. But unfortunately, journalists are
+almost always in a situation where they <em>do</em> need to know exactly what’s
+going wrong. Because working with real-world data and outputs – like
+the kind you get when web-scraping government websites – the potential
+errors are limitless and impossible to predict.</p>
+<p>So, at the bare minimum, you really do need to know and catch the errors
+that you’ve already encountered and/or you can predict. For example,
+from your <a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L67">main-scraper.py on line
+67</a>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">begin_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">begin_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I assume the error you’ve been running into is the selenium library’s
+<code class="docutils literal notranslate"><span class="pre">NoSuchElementException</span></code>, which occurs when
+<code class="docutils literal notranslate"><span class="pre">find_element_by_xpath()</span></code> fails to find even a single element as
+specified.</p>
+<p>In that case, specify an <code class="docutils literal notranslate"><span class="pre">except</span></code> block to catch that specific error.
+And then use the general <code class="docutils literal notranslate"><span class="pre">except</span></code> block to do something when the
+<em>unknown</em> happens – preferably, print out an “Oh sh**” message before
+re-raising the exception object:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">selenium.common.exceptions</span> <span class="k">import</span> <span class="n">NoSuchElementException</span>
+<span class="c1"># ...</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">begin_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+        <span class="n">begin_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">NoSuchElementException</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unexpected error!!!&quot;</span><span class="p">)</span>
+        <span class="k">raise</span>
+</pre></div>
+</div>
+<p>Ideally, you’d know the ins-and-outs of selenium, including all the
+other exceptions/errors that might happen with
+<code class="docutils literal notranslate"><span class="pre">find_element_by_xpath()</span></code> or <code class="docutils literal notranslate"><span class="pre">click()</span></code>. But you don’t have time for
+that. So just deal with the error you <em>do</em> know about
+(<code class="docutils literal notranslate"><span class="pre">NoSuchElementException</span></code>), and be ready to deal any other unexpected
+errors that might come up. It’s likely that there aren’t <em>any</em>, but the
+extra explicitness in your <code class="docutils literal notranslate"><span class="pre">try/except</span></code> allows you to be better safe
+than sorry.</p>
+</div>
+<div class="section" id="fail-hard-and-fail-early">
+<h5>Fail hard, and fail early<a class="headerlink" href="#fail-hard-and-fail-early" title="Permalink to this headline">¶</a></h5>
+<p>This guideline is a little bit harder to illustrate without the context
+of a project with bigger and smaller moving pieces, but in general, you
+can avoid the tedium of writing <code class="docutils literal notranslate"><span class="pre">try/except</span></code> blocks by <em>just letting
+your script crash upon an error</em>. And then – rather than wrap that bad
+code with <code class="docutils literal notranslate"><span class="pre">try/except</span></code> – fix it so that that it’s impossible to run
+into that previously encountered error.</p>
+<p>Again, looking at your snippet:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">begin_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">begin_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We know that <code class="docutils literal notranslate"><span class="pre">find_element_by_xpath()</span></code> raises a
+<code class="docutils literal notranslate"><span class="pre">NoSuchElementException</span></code> when it can’t find any elements that match
+the given selector. In the case of your scraper, you’ve apparently run
+into a situation where the submit button doesn’t exist.</p>
+<p>But we can avoid this error altogether by using a method that <em>doesn’t</em>
+crash – <code class="docutils literal notranslate"><span class="pre">find_elements_by_xpath()</span></code>, which returns an empty list
+instead. Now we can skip <code class="docutils literal notranslate"><span class="pre">try/catch</span></code> and just use a regular <code class="docutils literal notranslate"><span class="pre">if</span></code>
+block:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sbuttons</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">sbuttons</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">sbuttons</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="c1"># continue scraping stuff</span>
+</pre></div>
+</div>
+<p>By failing hard and early – i.e. not trying to avoid the crash that
+<code class="docutils literal notranslate"><span class="pre">NoSuchElementException</span></code> causes – we’ve forced ourselves to write
+cleaner code. At the same time, the above snippet will still fail if the
+two lines of selenium functionality run into unexpected errors – which
+is what we <em>want</em>.</p>
+<p>However, from a different context, this snippet fails to fail hard and
+early:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">sbuttons</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only time in which <code class="docutils literal notranslate"><span class="pre">search_buttons</span></code> is empty, causing this <code class="docutils literal notranslate"><span class="pre">if</span></code>
+branch to execute, is when the <code class="docutils literal notranslate"><span class="pre">browser</span></code> object fails to find a proper
+submit button. OK, we’ll never have the time to know all the ways the
+Wayne County deed register website can be f–ked up. However, we can
+kind of assume that if the browser is supposed to find a submit button,
+but doesn’t, then something is <em>really</em> screwed. It literally could be
+anything, from a just-activated redesign, to the Wayne County site
+blocking your IP, to an extremely esoteric bug in selenium itself.</p>
+<p>In other words, there’s really no point in continuing to batch scrape
+the remaining names. In fact, halting the scrape immediately is probably
+the best course of action. So instead of printing a “Can’t find the
+submit button message”, we should also raise an exception:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sbuttons</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">sbuttons</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+
+<span class="n">sbuttons</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<span class="c1"># continue executing scraper code...</span>
+</pre></div>
+</div>
+<p>(you don’t have to use the <code class="docutils literal notranslate"><span class="pre">IOError</span></code> class, I’m just doing it here for
+brevity)</p>
+<p>Note one advantage of raising the exception – we don’t need the
+<code class="docutils literal notranslate"><span class="pre">else</span></code> clause because everything after the <code class="docutils literal notranslate"><span class="pre">if</span></code> block can safely
+assume that a “submit” button <em>was</em> found – because the script didn’t
+crash from our raised exception.</p>
+<p>(all the stuff about error-handling after this is just more of the same
+principles, but in practice)</p>
+</div>
+</div>
+<div class="section" id="let-the-serious-errors-crash-your-script">
+<h4>Let the serious errors crash your script<a class="headerlink" href="#let-the-serious-errors-crash-your-script" title="Permalink to this headline">¶</a></h4>
+<p>In the context of being a just-get-it-done solo newsroom developer, it’s
+hard to recommend best practices with error handling because
+sometimes/oftentimes, it’s just not worth the extra work. It completely
+depends on the scope of the project, and how much of a grasp you have of
+all the real-world variables (i.e. how f-ked up a government website’s
+HTML might be).</p>
+<p>To continue the theme of “just program for what <em>you</em> need”, before
+writing code to handle a specific kind of error, ask yourself, <strong>If this
+error happens</strong>:</p>
+<ol class="arabic simple">
+<li>How screwed am I?</li>
+<li>What details about the error are important to me?</li>
+</ol>
+<p>In the previous section, I said the <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> block in your
+interactive prompt was not worth having. But that’s not because the
+error – an invalid CSV file/filepath – was itself trivial, but the
+opposite: having invalid input data <em>completely</em> screws you over. So
+much that there’s little point in trying to clumsily and inadequately
+handle it with <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>, versus quitting the script and
+inspecting/validating the input file to find the actual problem.</p>
+<p>What happens when the user mistypes the CSV filename, and there isn’t
+any error handling? The script crashes, but the Python interpreter tells
+you what the issue is likely to be by the type of error it throws –
+<code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;processors/main_scraper.py&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">37</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="ne">FileNotFoundError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">2</span><span class="p">]</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">:</span> <span class="s1">&#39;asdkfl&#39;</span>
+</pre></div>
+</div>
+<p>What happens when the CSV reading code fails? You could get a variety of
+errors, including <code class="docutils literal notranslate"><span class="pre">IsADirectoryError</span></code> (if you specify a path that’s
+actually a directory) and <code class="docutils literal notranslate"><span class="pre">UnicodeDecodeError</span></code> (if the file is
+weirdly-encoded text, or even a binary file).</p>
+<p>Even more important are the situations that aren’t <em>technically</em>
+exceptions/errors – at least as far as the Python interpreter is
+concerned – but are most definitely errors when it comes to real-world
+usage.</p>
+<p>For example, given the following CSV reading snippet:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">to_search</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="n">to_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">to_search</span><span class="p">:</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">csv_search_filename</span></code> points to an existing, but empty file – no
+exception is thrown. The <code class="docutils literal notranslate"><span class="pre">to_search</span></code> list is simply an empty list. The
+<code class="docutils literal notranslate"><span class="pre">for</span></code> loop, which runs the scraper, never executes even once, and the
+script quits with no issues. Should this situation be handled as an
+error? Some programmers might say it’s fine – the script returns an
+empty result set when given empty input; no harm, no foul, like adding
+<code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">0</span></code>, so why raise an error?</p>
+<p>However, in the “real-world”, you – as in, you, Katlyn, trying to
+service a colleague’s request – most definitely will want to know that
+your colleague mistakenly sent you an empty file. Or a text file, proper
+CSV or not, in which the first column <em>does not</em> contain names. For
+instance, if your colleague sends you a 1,000-row CSV file that, for
+some reason, has id number in the first column, and the name in the
+second – do you really want your scraper to pointlessly hit up the deed
+register website 1,000 times?</p>
+<p>In any case, it’s important to point out that the <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>
+block you have, which I repeat here:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+            <span class="n">to_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">searching_for_input</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There was an error processing the CSV file you entered. Please try again.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>– <strong>would do nothing</strong> about those “real-world errors” because those
+aren’t errors that screw up the Python interpreter, no matter how badly
+they screw you up as the real-world user. So that just reiterates my
+point that this <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> is not what you want.</p>
+</div>
+<div class="section" id="how-to-catch-real-world-errors-failures">
+<h4>How to catch real-world errors/failures<a class="headerlink" href="#how-to-catch-real-world-errors-failures" title="Permalink to this headline">¶</a></h4>
+<p>I didn’t spend much time revamping the control/flow/error handling of
+your existing code, including adding error handling that <em>might</em> be
+necessary as described in the previous section, because I think we’ll
+fundamentally restructure the scraper anyway…</p>
+<p>But in this section, let’s pretend that we want to go forward with as
+much of your existing code as possible, while catching the
+failure-scenarios of an empty or malformed CSV file. Here’s how I would
+do it:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">to_search</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># ...</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+        <span class="n">to_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>First of all, I don’t use <code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code> because, again, an empty or
+malformed CSV is a fatal enough error that there’s no point for the
+program to continue, so it’s better to just crash out. In the case of a
+malformed CSV file – the question we have to ask is: what <em>is</em> a
+“malformed” CSV file?</p>
+<p>In your previous code, you seemed to assume that the file’s first row
+would be the headers row. And in each subsequent row, the first column
+contained the name. But what if the first column of each row was <em>not</em>
+the name – e.g. you’re sent a CSV file it’s the third row? There’s
+really no easy way to write code to determine whether <em>any</em> given string
+is meant to be a person’s name.</p>
+<p>But we can make our work easier by changing our criteria. Given a CSV
+file, we don’t know or care whether the person’s name is in the first or
+<em>nth</em> column. But we do assume that if this CSV file has a person’s
+name, the column heading is <code class="docutils literal notranslate"><span class="pre">'name'</span></code>. By using <code class="docutils literal notranslate"><span class="pre">csv.DictReader</span></code>
+(which automatically treats the first row as headers), we access the
+<em>name</em> value by using dict notation – <code class="docutils literal notranslate"><span class="pre">row['name']</span></code> as opposed to
+<code class="docutils literal notranslate"><span class="pre">row[0]</span></code>. In a CSV file without a <code class="docutils literal notranslate"><span class="pre">'name'</span></code> column, Python will raise
+a <code class="docutils literal notranslate"><span class="pre">KeyError</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">KeyError</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span>
+</pre></div>
+</div>
+<p>– and that’s all you need to know as the user/programmer to know that
+you’ve been given bad input.</p>
+<p>(Note: I don’t actually know what CSV format you’re expecting. For
+testing purposes, you should add an example to the <code class="docutils literal notranslate"><span class="pre">samples</span></code>
+directory)</p>
+<p>In the case of an empty CSV file, or a CSV file with just a headers row
+(including <code class="docutils literal notranslate"><span class="pre">'name'</span></code>), but no other rows, the above block would finish
+without error, and <code class="docutils literal notranslate"><span class="pre">to_search</span></code> would just be an empty list. If we do
+want to halt execution in the event of an empty file/list, we can
+manually throw the error:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">to_search</span><span class="p">:</span>  <span class="c1"># i.e. it&#39;s empty</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> had 0 rows.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_search_filename</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Again, without an <code class="docutils literal notranslate"><span class="pre">except</span></code> block, the raising of this <code class="docutils literal notranslate"><span class="pre">IOError</span></code> will
+immediately crash the script. Which is probably what we want, even if
+the scraper code does nothing when given an empty list of names. Note
+that you can arbitrarily raise whatever <a class="reference external" href="https://docs.python.org/3/library/exceptions.html">built-in Python error class you
+want</a> (the second
+argument is just the message you want Python to spit out). The error
+class only matters if, in <em>another</em> script, in which you execute this
+scraper code – you want to have some custom behavior. <em>Then</em> you’d use
+<code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">main_scraper</span> <span class="k">import</span> <span class="n">search_from_csvfile</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;path/to/file.csv&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">search_from_csvfile</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maybe&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;is malformed?&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span>
+<span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maybe&quot;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="s2">&quot;is empty?&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="n">e</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-handle-errors-that-aren-t-non-fatal-errors">
+<h3>How to handle errors that aren’t non-fatal errors<a class="headerlink" href="#how-to-handle-errors-that-aren-t-non-fatal-errors" title="Permalink to this headline">¶</a></h3>
+<p>I previously discussed an error situation in your scraper code in which
+you would almost certainly your script to crash on – when you’re trying
+to attempt a search, but the page doesn’t even have a submit button:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">begin_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@type=&#39;submit&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">begin_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wasn&#39;t able to find the submit button.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>However, after that snippet, <a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L73">starting from line
+73</a>,
+you handle a couple of situations in which you probably <em>would</em> want the
+batch scraping to go forward:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">search_results</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">no_results_message</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">&quot;noResultsMessage&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No results found for this entry, please check the spelling or try a different name.&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">too_many_results</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Too many results found for this search. Please narrow the search term.&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">search_results</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># ...</span>
+<span class="k">if</span> <span class="n">search_results</span><span class="p">:</span>
+    <span class="c1"># ...scrape stuff</span>
+</pre></div>
+</div>
+<p>First of all, the purpose behind this code shows that you’ve wisely
+anticipated these real-world situations that are problematic for you,
+even if they aren’t <em>technically</em> Python interpreter/runtime errors. So
+that’s good.</p>
+<p>It’s also good that you’re looking for these non-normal states at the
+earliest point you can detect them. Less experienced programmers would
+defer the error handling at a later point, such as when the <code class="docutils literal notranslate"><span class="pre">browser</span></code>
+object fails to find the next page navigation (because the
+0/too-many-results page has no such button), or even at the parsing
+stage, when the parser tries to extract data from a non-existent table.</p>
+<p>That said, I think you could’ve used <code class="docutils literal notranslate"><span class="pre">if/else</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">try</span></code>/<code class="docutils literal notranslate"><span class="pre">except</span></code>. I’m assuming you used <code class="docutils literal notranslate"><span class="pre">try</span></code> because
+<code class="docutils literal notranslate"><span class="pre">find_element_by_class_name('whatever')</span></code> raises a
+<code class="docutils literal notranslate"><span class="pre">NoSuchElementException</span></code> when not a single <code class="docutils literal notranslate"><span class="pre">tag.whatever</span></code> element is
+found. However, the plural form of that function can be used to return a
+list of elements. And, when it finds 0 elements, it simply returns an
+empty list:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">search_results</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">_e</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="s2">&quot;noResultsMessage&quot;</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">_e</span><span class="p">:</span>
+    <span class="n">search_results</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No results found&quot;</span><span class="p">)</span>
+
+<span class="n">_e</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">_e</span><span class="p">:</span>
+    <span class="n">search_results</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">_e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">search_results</span><span class="p">:</span>
+    <span class="c1"># ...scrape stuff</span>
+</pre></div>
+</div>
+<p>Or you could be even fancier:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error_els</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_cname</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;noResultsMessage&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">]:</span>
+    <span class="n">error_els</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">browser</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="n">_cname</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">error_els</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">error_els</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># ...scrape stuff</span>
+</pre></div>
+</div>
+<p>However, <em>an even better practice</em> is to raise an error (we can just
+settle for the very first type of error, if there’s ever a situation
+where multiple error tags occur):</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">error_els</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_cname</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;noResultsMessage&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">]:</span>
+    <span class="n">error_els</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">browser</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="n">_cname</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">error_els</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="n">error_els</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+<span class="c1"># scrape stuff</span>
+</pre></div>
+</div>
+<p>One advantage of this is that it flattens the code, removing that
+<code class="docutils literal notranslate"><span class="pre">if/else</span></code> block in which the main “scrape stuff” logic resided.
+However, the problem with this is that the scraper script immediately
+crashes upon the first name search that returns 0 or too many results.</p>
+<p>For your purposes in this project, this is not desired behavior, because
+there might be many situations in which a colleague sends you a list of
+names, but some/many of those names just don’t exist in the Wayne County
+database. You still want to run the rest of those names, though. So how
+can you, when the scraper script throws that <code class="docutils literal notranslate"><span class="pre">IOError</span></code>?</p>
+<p>The solution is: wrap that scraper stuff in its own function, and let
+whatever calls it deal with the error. In the <code class="docutils literal notranslate"><span class="pre">main-scraper.py</span></code> that
+you had, this was not possible, of course. But now that we’ve figured
+out how to wrap up the web scraper in its own function – i.e. <a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/f045db62b230a058fe457d899ee763c1fde87a82/waynecounty_deeds/deed_scraper.py#L19">the
+search_name() function in deed_scraper.py (line
+19)</a>,
+we could put <code class="docutils literal notranslate"><span class="pre">try/except</span></code> in the <a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/f045db62b230a058fe457d899ee763c1fde87a82/waynecounty_deeds/deed_scraper.py#L69">search_names function (line
+69)</a></p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_names</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">browser</span> <span class="o">=</span> <span class="n">get_driver</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Searching for:&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">search_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">browser</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Had some kind of search error&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="c1"># but still going on to the next name</span>
+        <span class="n">browser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>But to reiterate what I said at the beginning of the <a class="reference external" href="#mark-error-handling">error handling
+section</a>: in the <a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/tree/f045db62b230a058fe457d899ee763c1fde87a82">most recent commit to the
+scraper
+repo</a>,
+I <strong>did not</strong> actually add this exception handling code, because I think
+we’ll end up restructuring how the scraper works anyway. So this section
+was just to give you a broad idea of how error handling might work in
+practice, for any future code you write.</p>
+</div>
+</div>
+<div class="section" id="changes-to-the-code">
+<h2>Changes to the code<a class="headerlink" href="#changes-to-the-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="renaming-and-moving-stuff-around">
+<h3>Renaming and moving stuff around<a class="headerlink" href="#renaming-and-moving-stuff-around" title="Permalink to this headline">¶</a></h3>
+<p>I’ve tried to follow the basic structure for Python packages/projects,
+as recommended by Kenneth Reitz’s (the author of <code class="docutils literal notranslate"><span class="pre">requests</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pipenv</span></code>, and other massively used Python libraries) <em>Hitchhiker’s
+Guide to Python</em> (<a class="reference external" href="https://docs.python-guide.org/writing/structure/">Structuring Your
+Project</a>), as well
+as the scaffold that the <a class="reference external" href="https://poetry.eustace.io/docs/cli/">poetry packaging library
+uses</a>. Not so much for making it
+ready to publish as a Python package on <a class="reference external" href="https://pypi.org/">PyPi</a>
+(I’m assuming you don’t need nor want to publish this on PyPi), but
+because these seem to be well-tested and well-accepted conventions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── data/
+│   ├── processed-csv
+│   ├── raw-html
+|   └── samples/
+├── pyproject.toml
+├── tests/
+└── waynecounty_deeds/
+    ├── __init__.py
+    ├── __main__.py
+    ├── deed_scraper.py (reanamed from main-scraper.py)
+    ├── deed_parser.py (renamed from results_parser.py)
+    ├── cli.py (contains the interactive get-user-input logic)
+    ├── config.py (for constants used project-wide)
+    └── helpers.py (for functions used project-wide)
+</pre></div>
+</div>
+<p>Here’s a brief explanation of how it’s supposed to work:</p>
+<p><strong>waynecounty_deeds/</strong></p>
+<p>It’s almost always worth it to make a subdirectory for the Python
+scripts, even for what might first seem like a quick one-off hack.
+Almost always you’ll find that putting everything in a 200+ line script
+becomes really hard to debug and think about. Having a subdirectory,
+which effectively packages all the scripts and subfolders in a nice
+module to import, will put you in the mindset of keeping your code nice
+and organized and well-separated.</p>
+<p><strong>**init</strong>.py**</p>
+<p>Having this file in your python script directory – in our case,
+<code class="docutils literal notranslate"><span class="pre">waynecounty_deeds/</span></code> – used to be mandatory to treat that directory
+as a <strong>package</strong> that you could call <code class="docutils literal notranslate"><span class="pre">import</span></code> on. Now it’s not, but I
+use it here for some boilerplate things, mainly:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">_ROOT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When running <code class="docutils literal notranslate"><span class="pre">python</span></code>/<code class="docutils literal notranslate"><span class="pre">ipython</span></code> from the project root, the above
+snippet tells the interpreter to add <code class="docutils literal notranslate"><span class="pre">./waynecounty_deeds</span></code> to the path
+when searching for Python scripts. It’s a minor thing, but makes it
+easier to <em>consistently</em> refer to scripts, relative to each other, e.g.
+in <code class="docutils literal notranslate"><span class="pre">deed_scraper.py</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">deed_parser</span> <span class="k">import</span> <span class="n">html_to_csv</span>
+</pre></div>
+</div>
+<p>Instead of:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.deed_parser</span> <span class="k">import</span> <span class="n">html_to_csv</span>
+</pre></div>
+</div>
+<p>(the latter version will break depending on where you’re trying to
+invoke <code class="docutils literal notranslate"><span class="pre">deed_scraper.py</span></code>)</p>
+<p><strong>**main</strong>.py**</p>
+<p>This file, <a class="reference external" href="https://docs.python.org/3/library/__main__.html">by
+convention</a>, allows
+you to define a routine to run in the <code class="docutils literal notranslate"><span class="pre">__main__</span></code> scope, when trying to
+“execute” the directory (e.g. <code class="docutils literal notranslate"><span class="pre">waynecounty_deeds</span></code>) as a script.
+Basically, it allows us, from the project root, to invoke:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span>
+</pre></div>
+</div>
+<p>And run whatever is defined in <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code>. As opposed to defining
+separate <code class="docutils literal notranslate"><span class="pre">__main__</span></code> routines in each of <code class="docutils literal notranslate"><span class="pre">waynecounty_deeds</span></code> separate
+Python scripts, and having to invoke:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span><span class="o">/</span><span class="n">deed_scraper</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>It’s totally a quality-of-life convenience, but something I find helpful
+to do because it kind of compels me to modularize my code more cleanly,
+and to make a command-line interface for it (see <a class="reference external" href="#mark-making-cli">next section, about
+making a CLI</a>)</p>
+<p><strong>pyproject.toml</strong> (via poetry)</p>
+<p>This is the least “standard” thing I’ve added, and the thing I’m most
+iffy about…Python seems to be in the middle of a debate over picking a
+standard for how a project’s meta info should be described, including
+its dependencies.
+<a class="reference external" href="https://docs.python.org/3/distutils/setupscript.html">setup.py</a> has
+long since been the standard, along with
+<a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#requirements-files">requirements.txt</a>
+for listing dependencies. But now there’s debate over whether
+pipenv/Pipfile is the better way to go, or <a class="reference external" href="http://journal.kennethreitz.org/entry/r-python">maybe it
+isn’t</a>.</p>
+<p>Meanwhile, PEP seems like it will settle for using the TOML format and
+for the config file to be named <strong>pyproject.toml</strong>, [though it isn’t
+widespread yet (it will be a feature in pip 19
+apparently)](<a class="reference external" href="https://medium.com/&#64;grassfedcode/pep-517-and-518-in-plain-english-47208ca8b7a6">https://medium.com/&#64;grassfedcode/pep-517-and-518-in-plain-english-47208ca8b7a6</a>.</p>
+<p>The relatively new <a class="reference external" href="https://github.com/sdispater/poetry">poetry
+library</a> makes use of the
+<strong>pyproject.toml</strong> standard, and imposes its own conventions on how
+dependencies should be listed. Normally I wouldn’t pick something as new
+as poetry (which itself is another dependency to install). And
+“future-proofing” your scraper is a really low priority. But I think
+<code class="docutils literal notranslate"><span class="pre">poetry</span></code> provides enough conveniences and is easy/stable enough to
+install, on any system, including a remote server if you end up making
+this a web app. It’s supposed to make the build process a lot more
+flexible and predictable, which is necessary when dealing with a library
+so complicated as <strong>selenium</strong> and <strong>chromedriver</strong>.</p>
+<p>But generally, having a plain ol <strong>requirements.txt</strong> file is enough for
+a tool like this. And of course, it’s only important for anyone else who
+needs to clone your tool and run it on their system, which is generally
+very low priority when you’re just trying to hack together something for
+a newsroom project by yourself.</p>
+<p><strong>tests/</strong></p>
+<p>It’s not necessary right now to think about doing test-driven
+development. But down the line, you may find it helpful to write some
+tests that can act as a sanity check that things are working as
+expected. In any case, any file in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory, that begins
+with <code class="docutils literal notranslate"><span class="pre">test_</span></code>, will automatically be run with the <code class="docutils literal notranslate"><span class="pre">pytest</span></code> command.</p>
+</div>
+<div class="section" id="making-a-command-line-interface">
+<h3>Making a command-line interface<a class="headerlink" href="#making-a-command-line-interface" title="Permalink to this headline">¶</a></h3>
+<p>I don’t know exactly how you use your scraper on a day-to-day basis. But
+what you described in your memo – people emailing you CSV files, and
+you manually feeding them to your scraper – makes it sound like you
+might benefit from the scraper being a one-line invocation, instead of
+having to go through an interactive prompt.</p>
+<p>For example, to scrape given a CSV file path:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span> <span class="n">csv</span> <span class="n">samples</span><span class="o">/</span><span class="n">sample</span><span class="o">-</span><span class="n">names</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>Or, to just do a single name:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span> <span class="n">manual</span> <span class="s1">&#39;NGUYEN D&#39;</span>
+</pre></div>
+</div>
+<p>(With any number of arguments <em>other than 2</em>, the default is to run the
+interactive prompt)</p>
+<p>I’ve put the logic for the argument processing, as well as your code for
+the interactive prompt, in its own file,
+<a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/blob/677bdb7b1cf521f9246dd79cd824df26b1117b71/waynecounty_deeds/cli.py">waynecounty_deeds/cli.py</a>.
+And <code class="docutils literal notranslate"><span class="pre">cli</span></code> is imported by <code class="docutils literal notranslate"><span class="pre">__main__.py</span></code>, which is why we can do:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span> <span class="n">csv</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">the</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>Instead of:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">waynecounty_deeds</span><span class="o">/</span><span class="n">cli</span><span class="o">.</span><span class="n">py</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">the</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>I usually go with the <a class="reference external" href="https://docs.python.org/3/library/argparse.html">built-in argparse
+library</a> for
+argument processing, but to keep things simple for this revision, stuck
+with the basic <code class="docutils literal notranslate"><span class="pre">sys.argv</span></code> technique. I think what you wanted to do in
+your current
+<a class="reference external" href="https://github.com/Kat-Alo/deed-scraper/commit/9f950127f2024abd38c1e5c0746e1c58cfb43ddb#diff-b67911656ef5d18c4ae36cb6741b7965">Makefile</a>
+could be done in <code class="docutils literal notranslate"><span class="pre">cli.py</span></code></p>
+</div>
+<div class="section" id="using-python-s-pathlib-module">
+<h3>Using Python’s pathlib module<a class="headerlink" href="#using-python-s-pathlib-module" title="Permalink to this headline">¶</a></h3>
+<p>Related commit:
+<a class="reference external" href="https://github.com/dannguyen/deed-scraper/commit/94189456a64abc1b2c75ad48d61bc3d55ca53e7d">https://github.com/dannguyen/deed-scraper/commit/94189456a64abc1b2c75ad48d61bc3d55ca53e7d</a></p>
+<p>Python’s <a class="reference external" href="https://docs.python.org/3/library/pathlib.html">pathlib</a>
+became part of the standard library in 3.4, via <a class="reference external" href="https://www.python.org/dev/peps/pep-0428/">PEP
+428</a>, to provide an
+object-oriented, standardized way of working with filepaths. The
+tradeoff for learning its relatively easy syntax is getting to do away
+with having to struggle with trying to remember functionality scattered
+through <code class="docutils literal notranslate"><span class="pre">os.path</span></code>, <code class="docutils literal notranslate"><span class="pre">glob</span></code>, <code class="docutils literal notranslate"><span class="pre">shutil</span></code>, etc.</p>
+<p>For example, instead of this:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PROCESSED_DATA_DIR</span> <span class="o">=</span> <span class="s2">&quot;data/processed-csv/&quot;</span>
+<span class="c1"># ...</span>
+<span class="n">csv_filename</span> <span class="o">=</span> <span class="n">PROCESSED_DATA_DIR</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span> <span class="n">name_hyphenated</span> <span class="o">+</span> <span class="s1">&#39;-rod-results.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can construct a <code class="docutils literal notranslate"><span class="pre">Path</span></code> object by passing in each part of the path
+as an argument.</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="n">PROCESSED_DATA_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;processed-csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To add more parts to an existing <code class="docutils literal notranslate"><span class="pre">Path</span></code> object. use the
+<code class="docutils literal notranslate"><span class="pre">.joinpath()</span></code> method. It’s a little more verbose than concatenating
+strings with <code class="docutils literal notranslate"><span class="pre">+</span></code>, but in the long run, it’s easier to
+maintain/re-read. It will probably even save you from making common
+errors in the short-term, such as not having enough <code class="docutils literal notranslate"><span class="pre">+</span></code> operators, or
+trailing directory slashes <code class="docutils literal notranslate"><span class="pre">/</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">csv_filename</span> <span class="o">=</span> <span class="n">PROCESSED_DATA_DIR</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span> <span class="n">name_hyphenated</span> <span class="o">+</span> <span class="s1">&#39;-rod-results.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Path</span></code> objects can be passed into functions that normally expect a
+filename as <code class="docutils literal notranslate"><span class="pre">str</span></code>:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">RAW_HTML_DIR</span> <span class="o">=</span> <span class="s1">&#39;data/raw-html/&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">RAW_HTML_DIR</span><span class="p">)</span>
+<span class="n">outfile</span> <span class="o">=</span> <span class="n">RAW_HTML_DIR</span> <span class="o">+</span> <span class="s1">&#39;stuff.html&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But they come built with a bunch of handy instance functions for common
+operations:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">path</span>
+<span class="n">RAW_HTML_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;raw-html&#39;</span><span class="p">)</span>
+<span class="n">RAW_HTML_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outfile</span> <span class="o">=</span> <span class="n">RAW_HTML_DIR</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;stuff.html&#39;</span><span class="p">)</span>
+<span class="n">outfile</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A really nice instance function is
+<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.glob">glob</a>.
+Instead of:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">directory</span> <span class="o">=</span> <span class="n">RAW_HTML_DIR</span> <span class="o">+</span> <span class="n">name_hyphenated</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+<span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;.html&quot;</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">filenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">glob</span></code> like this:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RAW_HTML_DIR</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">name_hyphenated</span><span class="p">)</span>
+<span class="n">filenames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">directory</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.html&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-selenium-to-call-chrome-in-headless-mode">
+<h3>Using selenium to call Chrome in headless mode<a class="headerlink" href="#using-selenium-to-call-chrome-in-headless-mode" title="Permalink to this headline">¶</a></h3>
+<p>I’m not sure why you were experiencing crashes when trying to wrap the
+Selenium webdriver in a function. In any case, going forward, I think it
+might be useful to call Chrome in <code class="docutils literal notranslate"><span class="pre">headless</span></code> mode – i.e. invoke
+Chrome and selenium without actually opening Chrome as if you were going
+to use it normally. When you’re testing a scraper out, you might want
+Chrome to activate graphically so you can watch how the scraper
+interacts with the page. But after you’ve figured out the scraping
+process, it’s best to run the scraper as headless, especially if you’re
+going to automate a batch of scraping jobs.</p>
+<p>You can read more here:
+<a class="reference external" href="https://duo.com/decipher/driving-headless-chrome-with-python">https://duo.com/decipher/driving-headless-chrome-with-python</a></p>
+<p>Again, not knowing why you couldn’t wrap the selenium stuff in a
+function, my first step was just to create a helper function,
+<code class="docutils literal notranslate"><span class="pre">get_driver()</span></code> to create and return a webdriver.Chrome instance, which
+could then be used elsehwere in the scraper code:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">selenium</span> <span class="k">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.options</span> <span class="k">import</span> <span class="n">Options</span> <span class="k">as</span> <span class="n">ChromeOptions</span>
+<span class="k">def</span> <span class="nf">get_driver</span><span class="p">():</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">ChromeOptions</span><span class="p">()</span>
+    <span class="n">opts</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--headless&quot;</span><span class="p">)</span>
+    <span class="n">opts</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--incognito&quot;</span><span class="p">)</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">opts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">driver</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">get_driver</span><span class="p">()</span>
+<span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="breaking-the-code-into-separate-functions-search-name-search-names-get-driver">
+<h3>Breaking the code into separate functions (search_name/search_names/get_driver)<a class="headerlink" href="#breaking-the-code-into-separate-functions-search-name-search-names-get-driver" title="Permalink to this headline">¶</a></h3>
+<p>I’m already imagining that the entire logic/flow of <code class="docutils literal notranslate"><span class="pre">deed_scraper.py</span></code>,
+along with <code class="docutils literal notranslate"><span class="pre">deed_parser.py</span></code>, can be redesigned to be more streamlined.
+But rather than do the overhaul here, I’ve tried to leave your current
+code as intact as possible, so that the focus is on the
+refactoring/reorganization I’ve done, rather than being distracted by
+what seems like new code.</p>
+<p>As an intermediary step, I moved the main search/scraping functionality
+to a function, <code class="docutils literal notranslate"><span class="pre">search_name</span></code>, which takes two arguments – the name to
+search for, and <code class="docutils literal notranslate"><span class="pre">browser</span></code>, a <code class="docutils literal notranslate"><span class="pre">webdriver.Chrome()</span></code> instance:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">browser</span><span class="p">):</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">LOGIN_URL</span><span class="p">)</span>
+    <span class="n">public_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@value=&#39;Free Public Search Login&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">public_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+<span class="c1"># ...</span>
+
+<span class="k">def</span> <span class="nf">search_names</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="n">browser</span> <span class="o">=</span> <span class="n">get_driver</span><span class="p">()</span> <span class="c1"># necessary to make a new browser instance for each name?</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Searching for:&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">search_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">browser</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I guess there’s no big reason why <code class="docutils literal notranslate"><span class="pre">search_name</span></code> couldn’t itself invoke
+<code class="docutils literal notranslate"><span class="pre">get_driver()</span></code>, e.g.:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">search_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">browser</span><span class="p">):</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="n">get_driver</span><span class="p">()</span>
+    <span class="n">browser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">LOGIN_URL</span><span class="p">)</span>
+    <span class="n">public_search</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s2">&quot;//input[@value=&#39;Free Public Search Login&#39;]&quot;</span><span class="p">)</span>
+    <span class="n">public_search</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+<span class="c1"># ...</span>
+<span class="k">def</span> <span class="nf">search_names</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Searching for:&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">search_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">browser</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>I was thinking ahead, that maybe it turns out we don’t need to keep
+calling <code class="docutils literal notranslate"><span class="pre">get_driver()</span></code> for each name search – i.e. just instantiate
+the browser once, and re-use it for the entirety of a batch search. It
+would definitely be faster, and maybe related to any issues with
+crashing. There’s also the possibility that, for some reason, it’s
+optimal for the <code class="docutils literal notranslate"><span class="pre">browser</span></code> object to have a certain state (e.g. gotten
+through the login page) before it does the name search. In which case,
+the <code class="docutils literal notranslate"><span class="pre">search_name()</span></code> function shouldn’t have to bother itself with that
+logic.</p>
+<p>By delegating the <code class="docutils literal notranslate"><span class="pre">browser</span></code> object to be something that’s passed in as
+an argument, we don’t have to worry about futzing with <code class="docutils literal notranslate"><span class="pre">search_name()</span></code>
+later on. It’s already a complicated function – the less it has to
+do/know, the better.</p>
+</div>
+<div class="section" id="gathering-shared-constants-and-helepr-functions">
+<h3>Gathering shared constants and helepr functions<a class="headerlink" href="#gathering-shared-constants-and-helepr-functions" title="Permalink to this headline">¶</a></h3>
+<p>One of the things I’m sure you’ll want to revisit is how data is stored
+for a given name. Right now, given a name like “NGUYEN D C”:</p>
+<p><code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code> creates a subdirectory <code class="docutils literal notranslate"><span class="pre">data/raw-html/NGUYEN-D-C</span></code>
+to store the HTML pages of search results. That subdirectory slug is
+created by this line:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#remove spaces for file name, replace with hyphens</span>
+<span class="n">name_list</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">name_hyphenated</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">results_parser.py</span></code> contains a function, <code class="docutils literal notranslate"><span class="pre">html_to_csv()</span></code>, which
+expects a string argument, <code class="docutils literal notranslate"><span class="pre">name_hyphenated</span></code>, which is then used to
+construct the raw HTML subdirectory created for that name-slug by
+<code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">data/raw-html/NGUYEN-D-C</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">html_to_csv()</span></code> then creates a new file at this path:
+<code class="docutils literal notranslate"><span class="pre">data/processed-csv/NGUYEN-D-C-rod-results.csv</span></code></p>
+<p>I think this implementation is fine, for now. Down the line, you may
+need something more robust (like using a database), or even just
+differently organized, e.g. given <code class="docutils literal notranslate"><span class="pre">NGUYEN</span> <span class="pre">D</span> <span class="pre">C</span></code>, the data path is
+currently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data
+├── processed-csv
+│   └── NGUYEN-D-C-rod-results.csv
+│
+└── raw-html
+    └── NGUYEN_D_C
+        ├── results-NGUYEN-D-C-page1.html
+        └── results-NGUYEN-D-C-page2.html
+</pre></div>
+</div>
+<p>But, depending on the extra features you add (e.g. other types of
+results to scrape, different kinds of processed output) it could also
+be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data
+└── NGUYEN-D-C
+    ├── rod-results.csv
+    └── raw-html
+        ├── results-page1.html
+        └── results-page2.html
+</pre></div>
+</div>
+<p>But the bottom line is, file storage is complicated <em>enough</em> to not be
+the kind of thing that <code class="docutils literal notranslate"><span class="pre">deed_scraper.py</span></code> and <code class="docutils literal notranslate"><span class="pre">deed_parser.py</span></code>
+worries about. Moreover, both of these scripts assume that, given a name
+like <code class="docutils literal notranslate"><span class="pre">NGUYEN</span> <span class="pre">D</span> <span class="pre">C</span></code>, there is a canonical location for its resulting
+HTML files and processed CSVs. Rather than have both those scripts
+define something like:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RAW_HTML_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;raw-html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We create a separate file, <code class="docutils literal notranslate"><span class="pre">config.py</span></code>, and import that constant into
+whatever scripts may need it, e.g.</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">config</span> <span class="k">import</span> <span class="n">RAW_HTML_DIR</span>
+</pre></div>
+</div>
+<p>Another shared convention between the scripts is how “NGUYEN D C”
+becomes “NGUYEN-D-C”. Previously, in <code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code>, you do it like
+this:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name_list</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">name_hyphenated</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> in <code class="docutils literal notranslate"><span class="pre">results_parser.py</span></code> expects any name it takes to
+be in that <code class="docutils literal notranslate"><span class="pre">name_hyphenated</span></code> format. But it’s worth asking yourself –
+is there any situation in which you would invoke <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> on
+something like “NGUYEN D” – i.e. a file path that, under current
+assumptions, would never exist?</p>
+<p>Maybe there is. But for now, it might be better to follow the principle
+of designing functions to <strong>be liberal in what they accept, and
+conservative in what they return</strong>.</p>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code>, passing in <code class="docutils literal notranslate"><span class="pre">'NGUYEN</span> <span class="pre">D'</span></code> would generally
+result in an error. Because the scraper script, when searching for
+<code class="docutils literal notranslate"><span class="pre">'NGUYEN</span> <span class="pre">D'</span></code>, and saving the results, creates a subdirectory with a
+slug of <code class="docutils literal notranslate"><span class="pre">'NGUYEN-D'</span></code>.</p>
+<p>So design <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> to work whether you pass in <code class="docutils literal notranslate"><span class="pre">NGUYEN-D</span></code> or
+<code class="docutils literal notranslate"><span class="pre">NGUYEN</span> <span class="pre">D</span></code>. Rather than repeating the logic in <code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code>,
+though, you can create a helper function, in its own separate script
+(<code class="docutils literal notranslate"><span class="pre">helpers.py</span></code>), and import it into both the scraper and parser
+scripts:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in helpers.py</span>
+<span class="k">def</span> <span class="nf">slugify</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">name_list</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">name_hyphenated</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">name_hyphenated</span>
+
+<span class="c1"># in results_parser.py</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">slugify</span>
+<span class="k">def</span> <span class="nf">html_csv</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="c1">#  instead of:  directory = RAW_HTML_DIR + name_hyphenated + &#39;/&#39;</span>
+   <span class="n">directory</span> <span class="o">=</span> <span class="n">RAW_HTML_DIR</span> <span class="o">+</span> <span class="n">slugify</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+</pre></div>
+</div>
+<p>To go even further with the refactoring, there’s no reason for either
+<code class="docutils literal notranslate"><span class="pre">html_csv()</span></code>, or <code class="docutils literal notranslate"><span class="pre">main_scraper.py</span></code>, to know the exact subdirectory
+for the raw HTML for a given name. So we can move that logic (including
+the <code class="docutils literal notranslate"><span class="pre">RAW_HTML_DIR</span></code> constant) into <code class="docutils literal notranslate"><span class="pre">helpers.py</span></code> too:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in helpers.py</span>
+<span class="kn">from</span> <span class="nn">config</span> <span class="k">import</span> <span class="n">RAW_HTML_DIR</span>
+<span class="k">def</span> <span class="nf">name_to_raw_html_results_dir</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">RAW_HTML_DIR</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">slugify</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+<span class="c1"># in results_parser.py</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">name_to_raw_html_results_dir</span>
+<span class="k">def</span> <span class="nf">html_csv</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">name_to_raw_html_results_dir</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c1"># in main_scraper.py</span>
+<span class="kn">from</span> <span class="nn">helpers</span> <span class="k">import</span> <span class="n">name_to_raw_html_results_dir</span>
+<span class="c1"># ...</span>
+    <span class="k">if</span> <span class="n">search_results</span><span class="p">:</span>
+        <span class="c1">#make a directory for each name to store the html pages</span>
+        <span class="n">rawdir</span> <span class="o">=</span> <span class="n">name_to_raw_html_results_dir</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">rawdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1">## instead of</span>
+    <span class="c1"># name_list = name.split()</span>
+    <span class="c1"># name_hyphenated = &#39;-&#39;.join(name_list)</span>
+    <span class="c1"># if search_results:</span>
+    <span class="c1">#     #make a directory for each name to store the html pages</span>
+    <span class="c1">#     os.makedirs(&#39;data/raw-html/{0}/&#39;.format(name_hyphenated))</span>
+</pre></div>
+</div>
+<p>Note: I’ve learned that it’s usually better to design the scraper/parser
+to not have <em>any</em> file-writing/storing logic. That is, the
+scraper/parser should only return a string (e.g. raw HTML/CSV). And the
+script that <em>calls</em> the scraper/parser is responsible for doing
+something with that string, e.g.</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># in some script, like main.py or whatever</span>
+<span class="n">myname</span> <span class="o">=</span> <span class="s1">&#39;NGUYEN D&#39;</span>
+<span class="n">resultdir</span> <span class="o">=</span> <span class="n">name_to_raw_html_results_dir</span><span class="p">(</span><span class="n">myname</span><span class="p">)</span>
+<span class="n">result_pages</span> <span class="o">=</span> <span class="n">search_name</span><span class="p">(</span><span class="n">myname</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">html</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">result_pages</span><span class="p">):</span>
+    <span class="n">destpath</span> <span class="o">=</span> <span class="n">resultdir</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s1">&#39;results-page</span><span class="si">{0}</span><span class="s1">.html&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">destpath</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">parse_html_results</span><span class="p">(</span><span class="n">resultdir</span><span class="p">)</span> <span class="c1"># as opposed to html_csv()</span>
+<span class="n">csvpath</span> <span class="o">=</span> <span class="n">name_to_processed_csv_path</span><span class="p">(</span><span class="n">myname</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csvpath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">w</span><span class="p">:</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">CSV_HEADERS</span><span class="p">)</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The rationale is that, for example, after parsing the HTML, you want to
+do something else besides write to a CSV, such as import to a database.
+Or create a visualization. Or analyze the CSV, and upon finding an
+outlier value (or error), trigger an event, like sending an email.</p>
+<p>A good rule-of-thumb to follow is that <strong>functions should either return
+a value, or have an effect</strong> (e.g. writing to the file system) – but
+not both, and not more than one effect. Right now, <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> has 2
+effects: writing a CSV file, and outputting a more readable version of
+the data to the screen. This is a result of it calling the
+<code class="docutils literal notranslate"><span class="pre">parse_row()</span></code> function, which itself has the effect of printing to
+screen, and returning a list (i.e. <code class="docutils literal notranslate"><span class="pre">clean_row</span></code>). And the scraper code,
+because it calls <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code>, effectively has 3 effects: writes the
+raw HTML, writes the processed CSV, and prints to screen.</p>
+<p>The more optimal flow would be for neither function to have any effect
+(printing to screen, writing to file), but for <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> to return
+a list of “clean row” lists. And then having separate functions that
+turn that list of lists into a CSV, and into screen output.</p>
+<p>But for this iteration, I think it’s fine to leave <code class="docutils literal notranslate"><span class="pre">html_csv()</span></code> and
+the scraper as is.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="002-overhaul-overview.html" class="btn btn-neutral float-right" title="Overview of codebase overhaul" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Notes and guides for WayneCountyDeedsApp development" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, Katlyn Alapati
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

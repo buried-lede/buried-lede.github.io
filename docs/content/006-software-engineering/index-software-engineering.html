@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Software Engineering &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/006-software-engineering/index-software-engineering.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Higher-level scripting" href="../007-higher-level-scripting/index-higher-level-scripting.html" />
+    <link rel="prev" title="Real world scripting" href="../005-real-world-scripting/index-real-world-scripting.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-setup/index-setup.html">Setting Up and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-operating-fundamentals/index-operating-fundamentals.html">Operating system fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../003-plaintext-joy/index-plaintext-joy.html">The joy of plaintext</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../005-real-world-scripting/index-real-world-scripting.html">Real world scripting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Software Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../007-higher-level-scripting/index-higher-level-scripting.html">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../001-examples/index-examples.html">Syntax Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Software Engineering</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/006-software-engineering/index-software-engineering.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="software-engineering">
+<h1>Software Engineering<a class="headerlink" href="#software-engineering" title="Permalink to this headline">¶</a></h1>
+<p>Considering the world beyond our Terminal, including web resources and remote collaboration and how to keep projects sane when you have multiple collaborators.</p>
+<ul>
+<li><dl class="simple">
+<dt>Getting data from a Web API</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>what is an API?</dt><dd><ul>
+<li><p>actually, what is not an API</p></li>
+<li><p>why sites put data into JSON</p></li>
+<li><p>[todo] get sample JSON data files</p></li>
+<li><p>[todo] figure out a public data API that doesn’t require auth</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>http concepts</dt><dd><ul>
+<li><p>GET vs POST</p></li>
+<li><p>HTTP status codes</p></li>
+<li><p>query parameters and data payloads</p></li>
+<li><p>Using the web dev tools to discover unofficial APIs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>advanced curl</dt><dd><ul>
+<li><p>curling into files (i.e. why we don’t need/use wget)</p></li>
+<li><p>configuring web-agent</p></li>
+<li><p>sending a data-payload and using POST</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Version control and git</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://missing.csail.mit.edu/2020/version-control/">https://missing.csail.mit.edu/2020/version-control/</a></p></li>
+<li><dl class="simple">
+<dt>Why version control? Why git?</dt><dd><ul>
+<li><p>why git</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>.gitignore</p></li>
+<li><dl class="simple">
+<dt>git CLI basics and concepts</dt><dd><ul>
+<li><p>git init</p></li>
+<li><p>git add</p></li>
+<li><p>git commit</p></li>
+<li><p>git status</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>what’s in .git?</p></li>
+<li><dl class="simple">
+<dt>rolling back in history</dt><dd><ul>
+<li><p>git checkout</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Clouds as a service</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Github</dt><dd><ul>
+<li><dl class="simple">
+<dt>README.md convention</dt><dd><ul>
+<li><p>More Markdown fun</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Github pages</p></li>
+<li><p>Gists</p></li>
+<li><p>Pull requests</p></li>
+<li><dl class="simple">
+<dt>How to contribute to open source</dt><dd><ul>
+<li><p>correct grammar changes in someone else’s project</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>AWS</dt><dd><ul>
+<li><dl class="simple">
+<dt>S3</dt><dd><ul>
+<li><p>access-control concepts</p></li>
+<li><p>how to quickly upload files from the command line</p></li>
+<li><p>using S3 as a static file server</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>cloud services, like speech2text and image classification</dt><dd><ul>
+<li><p>fun with JSON</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Distributed/collaborative work (i.e. why Github)</dt><dd><ul>
+<li><p>note: this stuff is hard to grasp until you’re actually doing a collaborative project</p></li>
+<li><dl class="simple">
+<dt>Command-line Github</dt><dd><ul>
+<li><p>generating a new ssh key <a class="reference external" href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a></p></li>
+<li><p>git remote</p></li>
+<li><p>git clone</p></li>
+<li><p>git push</p></li>
+<li><p>git pull</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>what is a git conflict</dt><dd><ul>
+<li><p>why do they happen</p></li>
+<li><p>how to deliberately make a conflict</p></li>
+<li><p>how to resolve a conflict</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>git branch/checkout ?</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../007-higher-level-scripting/index-higher-level-scripting.html" class="btn btn-neutral float-right" title="Higher-level scripting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../005-real-world-scripting/index-real-world-scripting.html" class="btn btn-neutral float-left" title="Real world scripting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,1746 @@
+First codebase lookover
+=======================
+
+Table of Contents:
+
+-  `Introduction <#introduction>`__
+-  `Evaluation of your code so far <#evaluation-of-your-code-so-far>`__
+-  `Critique and Recommendations <#critique-and-recommendations>`__
+
+   -  `Write programs designed for how you yourself use
+      them <#write-programs-designed-for-how-you-yourself-use-them>`__
+   -  `Robust functions are liberal in what they accept, conservative in
+      what they
+      do <#robust-functions-are-liberal-in-what-they-accept-conservative-in-what-they-do>`__
+
+      -  `Liberal in accepting input <#liberal-in-accepting-input>`__
+      -  `Conservative return values <#conservative-return-values>`__
+      -  `Conservative action <#conservative-action>`__
+      -  `On refactoring your
+         functions <#on-refactoring-your-functions>`__
+
+   -  `Anticipating, and handling, real-world
+      errors <#anticipating-and-handling-real-world-errors>`__
+
+      -  `The fundamentals of error
+         handling <#the-fundamentals-of-error-handling>`__
+      -  `Be eager to know and solve your
+         errors <#be-eager-to-know-and-solve-your-errors>`__
+      -  `Fail hard, and fail early <#fail-hard-and-fail-early>`__
+      -  `Let the serious errors crash your
+         script <#let-the-serious-errors-crash-your-script>`__
+      -  `How to catch real-world
+         errors/failures <#how-to-catch-real-world-errorsfailures>`__
+
+   -  `How to handle errors that aren't non-fatal
+      errors <#how-to-handle-errors-that-arent-non-fatal-errors>`__
+
+-  `Changes to the code <#changes-to-the-code>`__
+
+   -  `Renaming and moving stuff
+      around <#renaming-and-moving-stuff-around>`__
+   -  `Making a command-line
+      interface <#making-a-command-line-interface>`__
+   -  `Using Python's pathlib module <#using-pythons-pathlib-module>`__
+   -  `Using selenium to call Chrome in headless
+      mode <#using-selenium-to-call-chrome-in-headless-mode>`__
+   -  `Breaking the code into separate functions
+      (search\_name/search\_names/get\_driver) <#breaking-the-code-into-separate-functions-search_namesearch_namesget_driver>`__
+   -  `Gathering shared constants and helepr
+      functions <#gathering-shared-constants-and-helepr-functions>`__
+
+
+I'm approaching this knowing that you'd like more direction on best
+practices for software engineering, but also being mindful that your
+current role prioritizes getting things done -- usually by yourself --
+over becoming the most perfect software engineer, whatever that means.
+When doing programming in journalism, following best coding practices is
+generally much less important than knowing the requirements of the
+story/project, such as, what actual thing/work done by a journalist is
+your script taking over? How does the journalist do that work manually?
+In doing that work, what is the bare minimum of information that the
+journalist is trying to confirm. And what are the things that the
+journalist absolutely cannot get wrong?
+
+In the scenario of a web scraper, you could go crazy trying to make it
+well-engineered. Such as using
+`asyncio <https://docs.python.org/3/library/asyncio.html>`__ to run
+batch scrapes in parallel. And trying to write robust error handling for
+every possible thing that could go wrong during the scraping. And
+figuring out how the best file format and storage for serializing the
+data. And/or learning a heavy framework like
+`scrapy <https://scrapy.org>`__.
+
+But if you remember that you're only requirement is to speed up the
+slow, unscalable manual labor of a reporter pointing and clicking their
+way through a online database search, you can focus on writing the bare
+amount of brute force logic to fetch the pages, extract the few bits
+they need, and save into a plaintext format they can open in Excel.
+Rather than try to anticipate and design for the nearly limitless ways a
+remote web server can break, your code can handle errors as you run into
+them, and break in an ungraceful, but easy-to-diagnose way for you.
+
+So I'll try to focus my recommendations on practices and concepts that
+are generally considered to be good/best practices, but are highly
+practical and useful for you to implement in your day-to-day work, for
+big projects and one-offs, especially as a solo developer. As you get
+better, these practices can become instinctive/reflexive to use -- or
+even better, for any project, you instinctively know what practices and
+conventions can be safely ignored when speed is of the essence.
+
+Evaluation of your code so far
+------------------------------
+
+Even for something written in a time crunch, I think you did a really
+good job with this scraper. Even with as many changes I made to the
+code, I found your scripts to be easy to follow and refactor, even with
+having no idea about the context of the project. The messiest part of
+your code was the stuff in ``main-scraper.py``, but that was mostly
+because you weren't familiar with the complicated, wonky behavior of
+selenium+chromedriver when called in a Python script. Despite that, you
+were able to put together a scraping script that actually works, even if
+you knew it felt inelegant.
+
+One thing you did especially well, that I think the vast majority of
+people get wrong when it comes to web-scraping, was separating the work
+of scraping and parsing. That is, you knew to have your scraper just
+focus on the work of querying the Wayne County deeds site and
+collecting/saving the HTML on disk. And having the parser only care
+about processing the saved HTML files. Most people try to execute the
+parser logic as the webpages are fetched/read by the scraper.
+
+As I'll mention in more detail below, separating concerns into different
+functions/scripts is an extremely important best practice to follow, no
+matter how simple/complex the project. But it's especially important in
+the context of web scraping. Fetching from a remote web server is the
+slowest part of the process by several orders of magnitude. It's also
+the most error-prone. Having the parsing done *while the scrape happens*
+becomes extremely time-consuming and frustrating to design and debug.
+The programmer who puts themselves in this situation becomes disinclined
+to make the parsing functionality as useful as it can be, purely because
+it's such a pain in the ass to revise/iterate code that depends on
+waiting to connect to an unpredictable web server.
+
+Right now, your parser extracts 7 fields from the HTML of results pages,
+which may be good enough for your current journalistic requirements.
+Later on, you may decide you want to store other fields, like
+``Tax ID``, or the URL of the filing
+(`example <https://www.waynecountylandrecords.com/recorder/eagleweb/viewDoc.jsp?node=DOCCL-22365933>`__).
+It's very easy to add that functionality to ``deed_parser.py``, and
+re-processing the already downloaded search results is virtually
+instantaneous. You'd likely be much less inclined to consider doing this
+work if you knew you'd have to re-run the scraper all over again.
+
+Not only is the parser easier to debug and revamp because you don't have
+the cognitive load that comes from having to look at the scraper code at
+the same time, it becomes something easier to test in isolation. It
+doesn't look like you've written any test code -- nor should you, at
+this point. But if you do, it's much easier to write test code for
+isolated functions -- in this case, the parsing functionality does not
+depend on having a working scraper.
+
+Critique and Recommendations
+----------------------------
+
+Again, the focus here is the principles/practices that you can still
+keep in mind, even as you work under the burden of having to get things
+done at a hackathon pace. They're good concepts to implement when you
+have the luxury of time. And, when you're in a crunch, even implementing
+them imperfectly can be very helpful/sanity-preserving.
+
+Write programs designed for how *you* yourself use them
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Anticipating user needs -- and trying to write the functionality to
+accommodate them -- is almost always the most painful and hardest part
+of any project. Especially when writing the interface that a user will
+use to run your code. So starting with the assumption that *you* will be
+the main and even *only* user -- which is almost always the case as a
+newsroom developer -- can really simplify your work, and at the same
+time, result in more elegant code overall.
+
+I saw early on you tried writing a Makefile, ostensibly to give yourself
+easy convenient invocations for running your scripts, and then gave up
+because, like me and most people, you find the Makefile syntax really
+annoying to learn/write. But the idea to make it easier to run your
+scripts, something which you'll have to do upon request many times over,
+is the right one.
+
+As I mention in the `"Renaming and moving stuff
+around" <#mark-renaming-stuff>`__ section of the code changes, I tried
+to set things up so that a command like this could work:
+
+.. code:: sh
+
+    $ python waynecounty_deeds csv samples/sample-names.csv
+
+And if that kind of interface is useful to actually how you run your
+code on an every day basis, I think going forward that command-line
+interface can expand as needed for the other types of features you might
+add to the scraper.
+
+In the meantime, I saw you pivoted from a Makefile to writing an
+interactive prompt. I personally have found coding interactive prompts
+to be more trouble than they're worth, for any kind of tool that is
+extremely specific (like this dedicated scraper), and/or that you're
+running repeatedly.
+
+But let's say you do find the interactive prompt to be ideal -- I think
+you can still apply the concept of "designing just for yourself" to what
+you've written. For example, your prompt looked like this:
+
+.. code:: sh
+
+    How would you like to enter your search? You may respond CSV or MANUAL ENTRY:
+
+    # if 'CSV'
+    What is the name of the CSV containing the names you want to search in RoD?
+
+    # if 'MANUAL ENTRY'
+    What name would you like to search for? Note: for individuals, the RoD site will likely only recognize the format LAST_NAME FIRST_NAME:
+
+Given that, at this stage, you're the only one reading this prompt, is
+there any reason for you to need that much descriptive text, each and
+every time you run your scraper? Maybe it's worth keeping the
+caveats/requirements as comments in the Python script, but you probably
+only need to see this:
+
+.. code:: sh
+
+    Search by CSV or MANUAL ENTRY?
+
+    # if 'CSV'
+    CSV filename:
+
+    # if 'MANUAL ENTRY'
+    Individual name:
+
+More important than the boilerplate text is the requirements on the user
+input that you've imposed:
+
+.. code:: py
+
+    input_type = input("How would you like to enter your search? You may respond CSV or MANUAL ENTRY: ")
+
+        if input_type.strip().upper() == "CSV":
+            # ...
+        elif input_type.strip().upper() == "MANUAL ENTRY":
+            # ...
+
+It's good you've made it case-insensitive. But why require of the user
+-- i.e. you -- to type out ``CSV``? Or even worse, ``MANUAL ENTRY``?
+While it's true that sometimes it's ideal to force the user to be
+explicit, when the choices can be ambiguous/confusingly named, this
+isn't one of those situations. Maybe in the future, your scraper will
+have more choices, but why make your program annoying to use in the
+meantime? Simplifying the interface cleans up your code *and* makes it
+easier for you to run:
+
+.. code:: py
+
+        input_type = input("(C)SV or (M)ANUAL ENTRY? ")
+        _ic = input_type.strip().upper()[0]
+        if  _ic is "C":
+            # ...
+        elif _ic is "M":
+            # ...
+
+I talk more about [error handling](
+
+.. raw:: html
+
+   <div id="mark-error-handling">
+
+.. raw:: html
+
+   </div>
+
+) later, but thinking yourself as the only user also lets you focus on
+just the errors that you are likely to make. I ended up refactoring most
+of your interactive code and putting it into its own function in the
+**cli.py** file. It was difficult to understand and refactor, though,
+because you had a lot of deeply nested logic, including a
+``try``/``except`` block.
+
+The interactive prompt code starts off being indented under a ``while``
+loop that ostensibly waits for proper input (via the
+``searching_for_input`` flag):
+
+.. code:: py
+
+    searching_for_input = True
+    csv_search_filename = None
+    while searching_for_input:
+        input_type = input("How would you like to enter your search?...")
+
+That flag is then immediately set to ``False`` once a valid input mode
+(e.g. 'CSV' or 'MANUAL ENTRY') is specified. But if the user enters
+something else, ``searching_for_input`` remains ``True``, the user is
+informed ``"There was an error...Please try again``, and ostensibly the
+program returns to the top of the loop to ask for the input mode (it
+actually crashes because of an undeclared variable):
+
+.. code:: py
+
+
+    # while searching_for_input:
+    #   input_type = ...
+        if input_type.strip().upper() == "CSV":
+            searching_for_input = False
+            # ...
+
+        elif input_type.strip().upper() == "MANUAL ENTRY":
+            searching_for_input = False
+            # ...
+        else:
+            print("There was an error processing your response. Please try again.")
+
+Later on, in this same ``while``-block, you add another level of
+indentation with an ``if``-block. And inside *that*, you have the
+``try/except`` block, to handle the situation when you've mistyped the
+CSV filename. In that ``except`` block, you reset
+``searching_for_input`` to ``True`` so that the user is sent back to the
+top of the while-loop.
+
+.. code:: py
+
+        if csv_search_filename:
+            try:
+                with open(csv_search_filename) as f:
+                    reader = csv.reader(f)
+                    next(reader, None)
+                    for row in reader:
+                        to_search.append(row[0])
+            except:
+                searching_for_input = True
+                print("There was an error processing the CSV file you entered. Please try again.")
+
+I know making this interactive prompt well-coded was one of your lowest
+priorities, so getting it to a state where it mostly works, and then
+moving on is definitely the right mentality. But I'd bet that you
+could've drastically avoid much of the work/pain by reducing the errors
+and response scenarios actually needed, by just thinking of yourself.
+
+For example, the error situations that you *did* code for were:
+
+1. User might mistype the mode they want -- e.g. ``CSV`` or
+   ``MANUAL ENTRY``. If so, ask the user again (and again) until they
+   respond with a proper and expected value.
+2. The user might specify the filename of an invalid CSV file. The CSV
+   file may be invalid because of any of the following reasons: A. The
+   user misspelled/mistyped the filename B. The filename is correct, but
+   the file itself is not a proper CSV. C. Literally any other kind of
+   run-time exception, because ``except`` by default catches them all.
+
+   And no matter what the actual error is, send the user back to the
+   beginning of the prompt, which gives the user the option to
+   reconsider their choice of choosing ``CSV`` over ``MANUAL ENTRY``
+
+So, thinking of you yourself as the only user, who also happens to be
+the creator, you can ask yourself:
+
+1. **Are you likely to screw up picking between the only two choices for
+   mode?**
+
+   If so, then something beyond the program's control is so screwed up
+   (e.g. you've suffered memory loss) that it's better to halt execution
+   of the script, rather than repeatedly prompting the user.
+
+   What seems to be more likely is that you mistype one of the choices.
+   So, before you worry about how the interactive prompt should handle
+   that mistake, focus on eliminating the chances of that mistake by
+   vastly simplifying the acceptable input (e.g. accept 'c' and 'm').
+
+2. **Are you likely to specify an invalid CSV file?**
+
+   If so, at the very least, you'll want to know whether you got the
+   filepath wrong. Or whether the CSV is malformed. In either case, you
+   don't need to be kicked back to the beginning of the prompt -- so
+   there's really no need for a ``while`` block at all.
+
+   You can write a more complicated, specific ``try``/``except`` block
+   to react differently to whether a file could not be found, or whether
+   the file exists but has non-valid data. But why bother? In either
+   case, but especially the latter one, you might prefer being kicked to
+   the system prompt so you can manually investigate the file path or
+   its contents. So no need for any error handling here.
+
+So the logic for your interactive prompt (`see past commit on
+Github <https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L13>`__)
+could be simplified to a block of code that goes no deeper than 1 level
+of indentation:
+
+.. code:: py
+
+
+    input_type = input("(C)SV or (M)ANUAL ENTRY: ").strip().upper()[0]
+    if input_type is 'M':
+        n = input("Individual name: ").strip()
+        to_search = [n]
+    elif input_type is 'C':
+        cname = input("CSV filename: ").strip()
+        with open(csv_search_filename) as f:
+            reader = csv.reader(f)
+            next(reader, None) # skip first row
+            to_search = [row[0] for row in reader]
+
+    # ...
+    for name in to_search:
+        # ...
+
+Robust functions are liberal in what they accept, conservative in what they do
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One of the more well-known best practices is to separate the concerns
+and responsibilities of your functions and scripts. A function should
+not do too much, or know too much about what other functions/scripts do.
+That's a pretty broad guideline though, and it's not as simple as having
+an arbitrary metric, such as that a function should not consist of more
+than *n* lines of code.
+
+So a good starting point is to consider what your function accepts as
+input, and what *effects* it causes, or what it returns as output. This
+is often known as the `Robustness
+principle <https://en.wikipedia.org/wiki/Robustness_principle>`__, aka
+Postel's law:
+
+    TCP implementations should follow a general principle of robustness:
+    be conservative in what you do, be liberal in what you accept from
+    others.
+
+Liberal in accepting input
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+When a function is "liberal" in what it accepts, it means that invoking
+it should be as easy as possible, requiring little knowledge or work
+from the user to "just work":
+
+For example, consider the following function:
+
+.. code:: py
+
+    def create_greeting(subject):
+        g =  "Hello, {}!".format(subject.capitalize())
+        print(g)
+
+    >>>> create_greeting('dan')
+    Hello, Dan!
+
+    >>>> create_greeting(9)
+    AttributeError: 'int' object has no attribute 'capitalize'
+
+This version of ``create_greeting()`` assumes that its user knows that
+the ``subject`` argument should be a string. And if the user wants to
+print a greeting to someone whose name is actually ``9``, then the user
+should have done the work to convert ``9`` into a string:
+
+.. code:: py
+
+    >>>> create_greeting(str(9))
+    Hello, 9!
+
+But why not encapsulate that work in the function, if there's no
+intrinsic harm in printing a greeting to a non-string object.
+
+.. code:: py
+
+    def create_greeting(subject):
+        g =  "Hello, {}!".format(str(subject).capitalize())
+        print(g)
+
+::
+
+    >>>> create_greeting(9)
+    Hello, 9!
+
+This "liberal" strategy makes ``create_greeting()`` more pleasant to
+use, not just because the potential for an error is vastly reduced, but
+because the invoker -- which might be another function or script -- is
+blissfully ignorant of the details of what is valid input for a
+greeting. Instead of seeing ``str(some_object)`` repeated everywhere
+that ``create_greeting()`` is invoked, that string conversion only needs
+to happen inside of ``create_greeting()``
+
+Conservative return values
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Consider the following usage of ``create_greeting()``:
+
+::
+
+    >>>> create_greeting('alice, bob and dan')
+    Hello, Alice, bob and dan!
+
+    >>>> create_greeting(['alice', 'bob', 'dan'])
+    Hello, ['alice', 'bob', 'dan']!
+
+Neither of those examples cause an error. But neither do they produce an
+"ideal" result. So the function's creator decides to have an opinion
+about what the ideal result should be, and writes the additional logic
+needed to handle certain use cases (e.g. if ``subject`` is a list or
+tuple):
+
+.. code:: py
+
+    def create_greeting(subject):
+        if type(subject) in [list, tuple]:
+            y = [str(x).capitalize() for x in subject]
+            z = ', '.join(y[0:-1]) + ' and ' + y[-1]
+        else:
+            z = str(subject).capitalize()
+        g =  "Hello, {}!".format(z)
+        print(g)
+
+::
+
+    >>>> create_greeting(['alice', 'bob', 'dan'])
+    Hello, Alice, Bob and Dan!
+
+    >>>> create_greeting([1,2,3])
+    Hello, 1, 2 and 3!
+
+The principle of liberally accepting input is still preserved -- passing
+in lists and tuples as arguments still don't cause an error. And the
+principle of being *conservative* has also been followed -- despite the
+new special logic for handling lists and tuples, the function still
+*does* the same thing -- prints a single string.
+
+An example of a non-conservative approach would be if
+``create_greeting`` produced something different based on the input it
+receives. For example, the designer might think: *if someone is passing
+a list of things, they probably want separate greetings. In that case, I
+should return a list of strings!*
+
+.. code:: py
+
+    def create_greeting(subject):
+        if type(subject) in [list, tuple]:
+            y = ["Hello, {}!".format(str(x).capitalize()) for x in subject]
+            return y
+        else:
+            z = "Hello, {}!".format(str(subject).capitalize())
+            print(z)
+
+.. code:: py
+
+    >>>> create_greeting('dan')
+    Hello, Dan!
+
+    >>>> greets = create_greeting(['dan', 'bob', 'joe'])
+    >>>> for g in greets:
+            print(g)
+    Hello, Dan!
+    Hello, Bob!
+    Hello, Joe!
+
+The immediate problem of this wacky, non-conservative approach is that,
+for a trivial amount of purported flexibility, now the invoker of
+``create_greeting()`` has to know *a lot* about the function's
+internals. And this detail has to be remembered every time
+``create_greeting()`` is invoked to avoid errors. The invoker basically
+has to now write two forms of invoking ``create_greeting()`` -- one for
+when it returns nothing and just prints to screen, and the other for
+when it returns a list, yet prints nothing to screen.
+
+In addition, the creator of ``create_greeting()`` also has to deal with
+additional cognitive burden. Coming up with an opinionated way for a
+list of names to be formatted (e.g. when a user passes in a list of
+values, then they're going to get a printed 'Hello' string, with the
+names joined by commas and 'and') is a lot easier than trying to
+speculate what that user wants, and coming up with a half-baked solution
+that dissatisfies every user.
+
+By taking the conservative approach -- "my function is going to print a
+single string no matter what" -- you make it easier for yourself to
+design a robust function. And by having consistent output, you actually
+make it easier for the user, the one with a special use case, to come up
+with their own solution:
+
+.. code:: py
+
+    def create_greeting(subject):
+        if type(subject) in [list, tuple]:
+            y = [str(x).capitalize() for x in subject]
+            z = ', '.join(y[0:-1]) + ' and ' + y[-1]
+        else:
+            z = str(subject).capitalize()
+        g =  "Hello, {}!".format(z)
+        print(g)
+
+.. code:: py
+
+    >>>> names = ['bob', 'dan', 'joe']
+    >>>> for n in names:
+            create_greeting(n)
+    Hello, Bob!
+    Hello, Dan!
+    Hello, Joe!
+
+Conservative action
+'''''''''''''''''''
+
+Another guideline that is "conservative" in spirit is that functions
+should only do one kind of thing: either returning a useful value, or
+having an effect. An "effect" can be anything from writing a file to
+disk, printing to screen, or mutating a data object.
+
+For example, it might be tempting to have ``create_greeting()`` print
+the string to standard output (i.e. to the screen) *and* return that
+string, so that the invoker can choose to do something else, like write
+to file, or send out as a tweet:
+
+.. code:: py
+
+    def create_greeting(subject):
+        # ...
+        g =  "Hello, {}!".format(z)
+        print(g)
+        return g
+
+But this should intuitively feel like an icky code smell, even if
+nothing actually "breaks". But rather than worry about whether a code
+smell is icky enough, just stick to the "do one thing and one thing
+only" idea:
+
+.. code:: py
+
+    def create_greeting(subject):
+        # ...
+        g =  "Hello, {}!".format(z)
+        return g
+
+Removing the "print to screen" effect creates the smallest of
+inconvenience for users, who now have to do this if they want to print
+to screen:
+
+::
+
+    >>>> print(create_greeting('Bob'))
+    Hello, Bob!
+
+The tradeoff is that ``create_greeting()`` is now immediately more
+useful and versatile for every other user who wants to do something
+*besides* print to screen:
+
+::
+
+    >>>> g = create_greating('Bob')
+    >>>> send_email(recipient='bob@example.com', body=g)
+
+On refactoring your functions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+I think you did a really good job of keeping functions nice and tidy in
+your parsing script. And you probably would've done the same in your
+``main-scraper.py`` if you hadn't run into problems with selenium
+crashing, so there's not a ton of need to go over
+
+I mention how this specifically applies to your `code later on in the
+code changes section <#mark-liberal-functions>`__.
+
+--------------
+
+Anticipating, and handling, real-world errors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The fundamentals of error handling
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    **NOTE:** I think I went into too much detail in talking about
+    error-handling, especially because I didn't bother changing your
+    code to show as an example. Part of this is because error-handling
+    is a really complicated topic that in many, many situations, can be
+    more work than its worth. The other part is that the biggest problem
+    is ``main-scraper.py`` being a giant monolithic, un-encapsulated
+    chunk of code.
+
+    But when we fix that -- which I did kind of do -- a lot of the
+    ``try/except`` blocks you wrote aren't needed; at all. Or, they'll
+    be written in an entirely different context. So feel free to skim
+    the next few sections about error handling. It's not directly
+    relevant to your code going forward, but I wanted to talk about
+    error handling with specific examples in mind, i.e. your previous
+    iteration of ``main_scraper.py``
+
+Generally speaking, here are a couple of good guidelines when it comes
+to error-handling that are worth always keeping in mind
+
+Be eager to know and solve your errors
+''''''''''''''''''''''''''''''''''''''
+
+Something that you've done in your code, which I comment in specific
+detail later on, is using the broadest form of ``try``/``except``:
+
+.. code:: py
+
+        try:
+            scrape_deeds(name)
+        except:
+            print("Could not scrape deeds for", name, "but we're moving on...")
+
+Generally, people only bother writing ``try/except`` when the code in
+the ``try`` block (i.e. ``scrape_deeds()``) caused an error. But the
+problem with this ``except`` block is that it activates upon *any and
+every kind of error*. Not just the actual error that you ran into with
+``scrape_deeds()``, but any unforeseen errors that may happen during the
+execution of ``scrape_deeds()``.
+
+In web scraping, a lot of programmers use this catch-all ``except`` as a
+band-aid for unexpected results. For example, their scraper expects a
+``<table>`` element full of rows. But the website will sometimes return
+no table element at all, if the query returns 0 results, or if the query
+is outright invalid.
+
+When doing a batch scrape, it does feel simpler to use ``except`` as
+means to ignore the error and let the batch continue. This pattern seems
+endemic in journalism work, maybe because journalists, justifiably, are
+under a time crunch to get results, and the details of error-handling
+seems to be irrelevant to that work. But unfortunately, journalists are
+almost always in a situation where they *do* need to know exactly what's
+going wrong. Because working with real-world data and outputs -- like
+the kind you get when web-scraping government websites -- the potential
+errors are limitless and impossible to predict.
+
+So, at the bare minimum, you really do need to know and catch the errors
+that you've already encountered and/or you can predict. For example,
+from your `main-scraper.py on line
+67 <https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L67>`__:
+
+.. code:: py
+
+        try:
+            begin_search = browser.find_element_by_xpath("//input[@type='submit']")
+            begin_search.click()
+        except:
+            print("Wasn't able to find the submit button.")
+
+I assume the error you've been running into is the selenium library's
+``NoSuchElementException``, which occurs when
+``find_element_by_xpath()`` fails to find even a single element as
+specified.
+
+In that case, specify an ``except`` block to catch that specific error.
+And then use the general ``except`` block to do something when the
+*unknown* happens -- preferably, print out an "Oh sh\*\*" message before
+re-raising the exception object:
+
+.. code:: py
+
+    from selenium.common.exceptions import NoSuchElementException
+    # ...
+        try:
+            begin_search = browser.find_element_by_xpath("//input[@type='submit']")
+            begin_search.click()
+        except NoSuchElementException:
+            print("Wasn't able to find the submit button.")
+        except:
+            print("Unexpected error!!!")
+            raise
+
+Ideally, you'd know the ins-and-outs of selenium, including all the
+other exceptions/errors that might happen with
+``find_element_by_xpath()`` or ``click()``. But you don't have time for
+that. So just deal with the error you *do* know about
+(``NoSuchElementException``), and be ready to deal any other unexpected
+errors that might come up. It's likely that there aren't *any*, but the
+extra explicitness in your ``try/except`` allows you to be better safe
+than sorry.
+
+Fail hard, and fail early
+'''''''''''''''''''''''''
+
+This guideline is a little bit harder to illustrate without the context
+of a project with bigger and smaller moving pieces, but in general, you
+can avoid the tedium of writing ``try/except`` blocks by *just letting
+your script crash upon an error*. And then -- rather than wrap that bad
+code with ``try/except`` -- fix it so that that it's impossible to run
+into that previously encountered error.
+
+Again, looking at your snippet:
+
+.. code:: py
+
+        try:
+            begin_search = browser.find_element_by_xpath("//input[@type='submit']")
+            begin_search.click()
+        except:
+            print("Wasn't able to find the submit button.")
+
+We know that ``find_element_by_xpath()`` raises a
+``NoSuchElementException`` when it can't find any elements that match
+the given selector. In the case of your scraper, you've apparently run
+into a situation where the submit button doesn't exist.
+
+But we can avoid this error altogether by using a method that *doesn't*
+crash -- ``find_elements_by_xpath()``, which returns an empty list
+instead. Now we can skip ``try/catch`` and just use a regular ``if``
+block:
+
+.. code:: py
+
+    sbuttons = browser.find_element_by_xpath("//input[@type='submit']")
+    if not sbuttons:
+        print("Wasn't able to find the submit button.")
+    else:
+        sbuttons[0].click()
+        # continue scraping stuff
+
+By failing hard and early -- i.e. not trying to avoid the crash that
+``NoSuchElementException`` causes -- we've forced ourselves to write
+cleaner code. At the same time, the above snippet will still fail if the
+two lines of selenium functionality run into unexpected errors -- which
+is what we *want*.
+
+However, from a different context, this snippet fails to fail hard and
+early:
+
+.. code:: py
+
+    if not sbuttons:
+        print("Wasn't able to find the submit button.")
+
+The only time in which ``search_buttons`` is empty, causing this ``if``
+branch to execute, is when the ``browser`` object fails to find a proper
+submit button. OK, we'll never have the time to know all the ways the
+Wayne County deed register website can be f--ked up. However, we can
+kind of assume that if the browser is supposed to find a submit button,
+but doesn't, then something is *really* screwed. It literally could be
+anything, from a just-activated redesign, to the Wayne County site
+blocking your IP, to an extremely esoteric bug in selenium itself.
+
+In other words, there's really no point in continuing to batch scrape
+the remaining names. In fact, halting the scrape immediately is probably
+the best course of action. So instead of printing a "Can't find the
+submit button message", we should also raise an exception:
+
+.. code:: py
+
+    sbuttons = browser.find_element_by_xpath("//input[@type='submit']")
+    if not sbuttons:
+        raise IOError("Wasn't able to find the submit button.")
+
+    sbuttons[0].click()
+    # continue executing scraper code...
+
+(you don't have to use the ``IOError`` class, I'm just doing it here for
+brevity)
+
+Note one advantage of raising the exception -- we don't need the
+``else`` clause because everything after the ``if`` block can safely
+assume that a "submit" button *was* found -- because the script didn't
+crash from our raised exception.
+
+(all the stuff about error-handling after this is just more of the same
+principles, but in practice)
+
+Let the serious errors crash your script
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In the context of being a just-get-it-done solo newsroom developer, it's
+hard to recommend best practices with error handling because
+sometimes/oftentimes, it's just not worth the extra work. It completely
+depends on the scope of the project, and how much of a grasp you have of
+all the real-world variables (i.e. how f-ked up a government website's
+HTML might be).
+
+To continue the theme of "just program for what *you* need", before
+writing code to handle a specific kind of error, ask yourself, **If this
+error happens**:
+
+1. How screwed am I?
+2. What details about the error are important to me?
+
+In the previous section, I said the ``try``/``except`` block in your
+interactive prompt was not worth having. But that's not because the
+error -- an invalid CSV file/filepath -- was itself trivial, but the
+opposite: having invalid input data *completely* screws you over. So
+much that there's little point in trying to clumsily and inadequately
+handle it with ``try``/``except``, versus quitting the script and
+inspecting/validating the input file to find the actual problem.
+
+What happens when the user mistypes the CSV filename, and there isn't
+any error handling? The script crashes, but the Python interpreter tells
+you what the issue is likely to be by the type of error it throws --
+``FileNotFoundError``:
+
+::
+
+    Traceback (most recent call last):
+      File "processors/main_scraper.py", line 37, in <module>
+        with open(csv_search_filename) as f:
+    FileNotFoundError: [Errno 2] No such file or directory: 'asdkfl'
+
+What happens when the CSV reading code fails? You could get a variety of
+errors, including ``IsADirectoryError`` (if you specify a path that's
+actually a directory) and ``UnicodeDecodeError`` (if the file is
+weirdly-encoded text, or even a binary file).
+
+Even more important are the situations that aren't *technically*
+exceptions/errors -- at least as far as the Python interpreter is
+concerned -- but are most definitely errors when it comes to real-world
+usage.
+
+For example, given the following CSV reading snippet:
+
+.. code:: py
+
+    to_search = []
+    with open(csv_search_filename) as f:
+
+        reader = csv.reader(f)
+
+        next(reader, None)
+
+        for row in reader:
+            to_search.append(row[0])
+
+
+    for name in to_search:
+        # ...
+
+If ``csv_search_filename`` points to an existing, but empty file -- no
+exception is thrown. The ``to_search`` list is simply an empty list. The
+``for`` loop, which runs the scraper, never executes even once, and the
+script quits with no issues. Should this situation be handled as an
+error? Some programmers might say it's fine -- the script returns an
+empty result set when given empty input; no harm, no foul, like adding
+``0`` to ``0``, so why raise an error?
+
+However, in the "real-world", you -- as in, you, Katlyn, trying to
+service a colleague's request -- most definitely will want to know that
+your colleague mistakenly sent you an empty file. Or a text file, proper
+CSV or not, in which the first column *does not* contain names. For
+instance, if your colleague sends you a 1,000-row CSV file that, for
+some reason, has id number in the first column, and the name in the
+second -- do you really want your scraper to pointlessly hit up the deed
+register website 1,000 times?
+
+In any case, it's important to point out that the ``try``/``except``
+block you have, which I repeat here:
+
+.. code:: py
+
+        try:
+            with open(csv_search_filename) as f:
+                reader = csv.reader(f)
+                next(reader, None)
+                for row in reader:
+                    to_search.append(row[0])
+        except:
+            searching_for_input = True
+            print("There was an error processing the CSV file you entered. Please try again.")
+
+-- **would do nothing** about those "real-world errors" because those
+aren't errors that screw up the Python interpreter, no matter how badly
+they screw you up as the real-world user. So that just reiterates my
+point that this ``try``/``except`` is not what you want.
+
+How to catch real-world errors/failures
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+I didn't spend much time revamping the control/flow/error handling of
+your existing code, including adding error handling that *might* be
+necessary as described in the previous section, because I think we'll
+fundamentally restructure the scraper anyway...
+
+But in this section, let's pretend that we want to go forward with as
+much of your existing code as possible, while catching the
+failure-scenarios of an empty or malformed CSV file. Here's how I would
+do it:
+
+.. code:: py
+
+    to_search = []
+    # ...
+    with open(csv_search_filename) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            to_search.append(row['name'])
+
+First of all, I don't use ``try``/``except`` because, again, an empty or
+malformed CSV is a fatal enough error that there's no point for the
+program to continue, so it's better to just crash out. In the case of a
+malformed CSV file -- the question we have to ask is: what *is* a
+"malformed" CSV file?
+
+In your previous code, you seemed to assume that the file's first row
+would be the headers row. And in each subsequent row, the first column
+contained the name. But what if the first column of each row was *not*
+the name -- e.g. you're sent a CSV file it's the third row? There's
+really no easy way to write code to determine whether *any* given string
+is meant to be a person's name.
+
+But we can make our work easier by changing our criteria. Given a CSV
+file, we don't know or care whether the person's name is in the first or
+*nth* column. But we do assume that if this CSV file has a person's
+name, the column heading is ``'name'``. By using ``csv.DictReader``
+(which automatically treats the first row as headers), we access the
+*name* value by using dict notation -- ``row['name']`` as opposed to
+``row[0]``. In a CSV file without a ``'name'`` column, Python will raise
+a ``KeyError``:
+
+.. code:: py
+
+        KeyError: 'name'
+
+-- and that's all you need to know as the user/programmer to know that
+you've been given bad input.
+
+(Note: I don't actually know what CSV format you're expecting. For
+testing purposes, you should add an example to the ``samples``
+directory)
+
+In the case of an empty CSV file, or a CSV file with just a headers row
+(including ``'name'``), but no other rows, the above block would finish
+without error, and ``to_search`` would just be an empty list. If we do
+want to halt execution in the event of an empty file/list, we can
+manually throw the error:
+
+.. code:: py
+
+    if not to_search:  # i.e. it's empty
+        raise IOError("{0} had 0 rows.".format(csv_search_filename))
+
+Again, without an ``except`` block, the raising of this ``IOError`` will
+immediately crash the script. Which is probably what we want, even if
+the scraper code does nothing when given an empty list of names. Note
+that you can arbitrarily raise whatever `built-in Python error class you
+want <https://docs.python.org/3/library/exceptions.html>`__ (the second
+argument is just the message you want Python to spit out). The error
+class only matters if, in *another* script, in which you execute this
+scraper code -- you want to have some custom behavior. *Then* you'd use
+``try``/``except``:
+
+.. code:: py
+
+    from main_scraper import search_from_csvfile
+
+    fname = 'path/to/file.csv'
+    try:
+        search_from_csvfile(fname)
+    except KeyError as e:
+        print("Maybe", fname, "is malformed?")
+        raise e
+    except IOError as e:
+        print("Maybe", fname, "is empty?")
+        raise e
+
+How to handle errors that aren't non-fatal errors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I previously discussed an error situation in your scraper code in which
+you would almost certainly your script to crash on -- when you're trying
+to attempt a search, but the page doesn't even have a submit button:
+
+.. code:: py
+
+        try:
+            begin_search = browser.find_element_by_xpath("//input[@type='submit']")
+            begin_search.click()
+        except:
+            print("Wasn't able to find the submit button.")
+
+However, after that snippet, `starting from line
+73 <https://github.com/Kat-Alo/deed-scraper/blob/ea01170986a9c2740564f3fdcfe7e4b650b06baa/processors/main-scraper.py#L73>`__,
+you handle a couple of situations in which you probably *would* want the
+batch scraping to go forward:
+
+.. code:: py
+
+
+        search_results = False
+
+        try:
+            no_results_message = browser.find_element_by_class_name("noResultsMessage")
+            print("No results found for this entry, please check the spelling or try a different name.")
+        except:
+            try:
+                too_many_results = browser.find_element_by_class_name("error")
+                print("Too many results found for this search. Please narrow the search term.")
+            except:
+                search_results = True
+
+        # ...
+        if search_results:
+            # ...scrape stuff
+
+First of all, the purpose behind this code shows that you've wisely
+anticipated these real-world situations that are problematic for you,
+even if they aren't *technically* Python interpreter/runtime errors. So
+that's good.
+
+It's also good that you're looking for these non-normal states at the
+earliest point you can detect them. Less experienced programmers would
+defer the error handling at a later point, such as when the ``browser``
+object fails to find the next page navigation (because the
+0/too-many-results page has no such button), or even at the parsing
+stage, when the parser tries to extract data from a non-existent table.
+
+That said, I think you could've used ``if/else`` instead of
+``try``/``except``. I'm assuming you used ``try`` because
+``find_element_by_class_name('whatever')`` raises a
+``NoSuchElementException`` when not a single ``tag.whatever`` element is
+found. However, the plural form of that function can be used to return a
+list of elements. And, when it finds 0 elements, it simply returns an
+empty list:
+
+.. code:: py
+
+    search_results = True
+
+    _e = browser.find_elements_by_class_name("noResultsMessage"):
+    if _e:
+        search_results = False
+        print("No results found")
+
+    _e = browser.find_elements_by_class_name("error")
+    if _e:
+        search_results = False
+        for el in _e:
+            print(el.text)
+
+    if search_results:
+        # ...scrape stuff
+
+Or you could be even fancier:
+
+.. code:: py
+
+    error_els = []
+    for _cname in ['noResultsMessage', 'error']:
+        error_els.extend(browser.find_elements_by_class_name(_cname))
+
+    if error_els:
+        for e in error_els:
+            print(e.text)
+    else:
+        # ...scrape stuff
+
+However, *an even better practice* is to raise an error (we can just
+settle for the very first type of error, if there's ever a situation
+where multiple error tags occur):
+
+.. code:: py
+
+    error_els = []
+    for _cname in ['noResultsMessage', 'error']:
+        error_els.extend(browser.find_elements_by_class_name(_cname))
+
+    if error_els:
+        raise IOError(error_els[0].text)
+
+    # ...
+    # scrape stuff
+
+One advantage of this is that it flattens the code, removing that
+``if/else`` block in which the main "scrape stuff" logic resided.
+However, the problem with this is that the scraper script immediately
+crashes upon the first name search that returns 0 or too many results.
+
+For your purposes in this project, this is not desired behavior, because
+there might be many situations in which a colleague sends you a list of
+names, but some/many of those names just don't exist in the Wayne County
+database. You still want to run the rest of those names, though. So how
+can you, when the scraper script throws that ``IOError``?
+
+The solution is: wrap that scraper stuff in its own function, and let
+whatever calls it deal with the error. In the ``main-scraper.py`` that
+you had, this was not possible, of course. But now that we've figured
+out how to wrap up the web scraper in its own function -- i.e. `the
+search\_name() function in deed\_scraper.py (line
+19) <https://github.com/Kat-Alo/deed-scraper/blob/f045db62b230a058fe457d899ee763c1fde87a82/waynecounty_deeds/deed_scraper.py#L19>`__,
+we could put ``try/except`` in the `search\_names function (line
+69) <https://github.com/Kat-Alo/deed-scraper/blob/f045db62b230a058fe457d899ee763c1fde87a82/waynecounty_deeds/deed_scraper.py#L69>`__
+
+.. code:: py
+
+    def search_names(names):
+        for name in names:
+            browser = get_driver()
+            print("Searching for:", name)
+            try:
+                search_name(name, browser)
+            except IOError as e:
+                print("Had some kind of search error")
+                print(e)
+                # but still going on to the next name
+            browser.close()
+
+But to reiterate what I said at the beginning of the `error handling
+section <#mark-error-handling>`__: in the `most recent commit to the
+scraper
+repo <https://github.com/Kat-Alo/deed-scraper/tree/f045db62b230a058fe457d899ee763c1fde87a82>`__,
+I **did not** actually add this exception handling code, because I think
+we'll end up restructuring how the scraper works anyway. So this section
+was just to give you a broad idea of how error handling might work in
+practice, for any future code you write.
+
+Changes to the code
+-------------------
+
+Renaming and moving stuff around
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I've tried to follow the basic structure for Python packages/projects,
+as recommended by Kenneth Reitz's (the author of ``requests``,
+``pipenv``, and other massively used Python libraries) *Hitchhiker's
+Guide to Python* (`Structuring Your
+Project <https://docs.python-guide.org/writing/structure/>`__), as well
+as the scaffold that the `poetry packaging library
+uses <https://poetry.eustace.io/docs/cli/>`__. Not so much for making it
+ready to publish as a Python package on `PyPi <https://pypi.org/>`__
+(I'm assuming you don't need nor want to publish this on PyPi), but
+because these seem to be well-tested and well-accepted conventions:
+
+::
+
+    ├── data/
+    │   ├── processed-csv
+    │   ├── raw-html
+    |   └── samples/
+    ├── pyproject.toml
+    ├── tests/
+    └── waynecounty_deeds/
+        ├── __init__.py
+        ├── __main__.py
+        ├── deed_scraper.py (reanamed from main-scraper.py)
+        ├── deed_parser.py (renamed from results_parser.py)
+        ├── cli.py (contains the interactive get-user-input logic)
+        ├── config.py (for constants used project-wide)
+        └── helpers.py (for functions used project-wide)
+
+Here's a brief explanation of how it's supposed to work:
+
+**waynecounty\_deeds/**
+
+It's almost always worth it to make a subdirectory for the Python
+scripts, even for what might first seem like a quick one-off hack.
+Almost always you'll find that putting everything in a 200+ line script
+becomes really hard to debug and think about. Having a subdirectory,
+which effectively packages all the scripts and subfolders in a nice
+module to import, will put you in the mindset of keeping your code nice
+and organized and well-separated.
+
+****init**.py**
+
+Having this file in your python script directory -- in our case,
+``waynecounty_deeds/`` -- used to be mandatory to treat that directory
+as a **package** that you could call ``import`` on. Now it's not, but I
+use it here for some boilerplate things, mainly:
+
+.. code:: py
+
+    import os
+    import sys
+    _ROOT = os.path.dirname(os.path.realpath(__file__))
+    sys.path.insert(0, _ROOT)
+
+When running ``python``/``ipython`` from the project root, the above
+snippet tells the interpreter to add ``./waynecounty_deeds`` to the path
+when searching for Python scripts. It's a minor thing, but makes it
+easier to *consistently* refer to scripts, relative to each other, e.g.
+in ``deed_scraper.py``:
+
+.. code:: py
+
+    from deed_parser import html_to_csv
+
+Instead of:
+
+.. code:: py
+
+    from .deed_parser import html_to_csv
+
+(the latter version will break depending on where you're trying to
+invoke ``deed_scraper.py``)
+
+****main**.py**
+
+This file, `by
+convention <https://docs.python.org/3/library/__main__.html>`__, allows
+you to define a routine to run in the ``__main__`` scope, when trying to
+"execute" the directory (e.g. ``waynecounty_deeds``) as a script.
+Basically, it allows us, from the project root, to invoke:
+
+.. code:: sh
+
+    python waynecounty_deeds
+
+And run whatever is defined in ``__main__.py``. As opposed to defining
+separate ``__main__`` routines in each of ``waynecounty_deeds`` separate
+Python scripts, and having to invoke:
+
+.. code:: sh
+
+    python waynecounty_deeds/deed_scraper.py
+
+It's totally a quality-of-life convenience, but something I find helpful
+to do because it kind of compels me to modularize my code more cleanly,
+and to make a command-line interface for it (see `next section, about
+making a CLI <#mark-making-cli>`__)
+
+**pyproject.toml** (via poetry)
+
+This is the least "standard" thing I've added, and the thing I'm most
+iffy about...Python seems to be in the middle of a debate over picking a
+standard for how a project's meta info should be described, including
+its dependencies.
+`setup.py <https://docs.python.org/3/distutils/setupscript.html>`__ has
+long since been the standard, along with
+`requirements.txt <https://pip.pypa.io/en/stable/user_guide/#requirements-files>`__
+for listing dependencies. But now there's debate over whether
+pipenv/Pipfile is the better way to go, or `maybe it
+isn't <http://journal.kennethreitz.org/entry/r-python>`__.
+
+Meanwhile, PEP seems like it will settle for using the TOML format and
+for the config file to be named **pyproject.toml**, [though it isn't
+widespread yet (it will be a feature in pip 19
+apparently)](https://medium.com/@grassfedcode/pep-517-and-518-in-plain-english-47208ca8b7a6.
+
+The relatively new `poetry
+library <https://github.com/sdispater/poetry>`__ makes use of the
+**pyproject.toml** standard, and imposes its own conventions on how
+dependencies should be listed. Normally I wouldn't pick something as new
+as poetry (which itself is another dependency to install). And
+"future-proofing" your scraper is a really low priority. But I think
+``poetry`` provides enough conveniences and is easy/stable enough to
+install, on any system, including a remote server if you end up making
+this a web app. It's supposed to make the build process a lot more
+flexible and predictable, which is necessary when dealing with a library
+so complicated as **selenium** and **chromedriver**.
+
+But generally, having a plain ol **requirements.txt** file is enough for
+a tool like this. And of course, it's only important for anyone else who
+needs to clone your tool and run it on their system, which is generally
+very low priority when you're just trying to hack together something for
+a newsroom project by yourself.
+
+**tests/**
+
+It's not necessary right now to think about doing test-driven
+development. But down the line, you may find it helpful to write some
+tests that can act as a sanity check that things are working as
+expected. In any case, any file in the ``tests`` directory, that begins
+with ``test_``, will automatically be run with the ``pytest`` command.
+
+Making a command-line interface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I don't know exactly how you use your scraper on a day-to-day basis. But
+what you described in your memo -- people emailing you CSV files, and
+you manually feeding them to your scraper -- makes it sound like you
+might benefit from the scraper being a one-line invocation, instead of
+having to go through an interactive prompt.
+
+For example, to scrape given a CSV file path:
+
+.. code:: sh
+
+    python waynecounty_deeds csv samples/sample-names.csv
+
+Or, to just do a single name:
+
+.. code:: sh
+
+    python waynecounty_deeds manual 'NGUYEN D'
+
+(With any number of arguments *other than 2*, the default is to run the
+interactive prompt)
+
+I've put the logic for the argument processing, as well as your code for
+the interactive prompt, in its own file,
+`waynecounty\_deeds/cli.py <https://github.com/Kat-Alo/deed-scraper/blob/677bdb7b1cf521f9246dd79cd824df26b1117b71/waynecounty_deeds/cli.py>`__.
+And ``cli`` is imported by ``__main__.py``, which is why we can do:
+
+.. code:: sh
+
+    python waynecounty_deeds csv path/to/the.csv
+
+Instead of:
+
+.. code:: sh
+
+    python waynecounty_deeds/cli.py path/to/the.csv
+
+I usually go with the `built-in argparse
+library <https://docs.python.org/3/library/argparse.html>`__ for
+argument processing, but to keep things simple for this revision, stuck
+with the basic ``sys.argv`` technique. I think what you wanted to do in
+your current
+`Makefile <https://github.com/Kat-Alo/deed-scraper/commit/9f950127f2024abd38c1e5c0746e1c58cfb43ddb#diff-b67911656ef5d18c4ae36cb6741b7965>`__
+could be done in ``cli.py``
+
+Using Python's pathlib module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Related commit:
+https://github.com/dannguyen/deed-scraper/commit/94189456a64abc1b2c75ad48d61bc3d55ca53e7d
+
+Python's `pathlib <https://docs.python.org/3/library/pathlib.html>`__
+became part of the standard library in 3.4, via `PEP
+428 <https://www.python.org/dev/peps/pep-0428/>`__, to provide an
+object-oriented, standardized way of working with filepaths. The
+tradeoff for learning its relatively easy syntax is getting to do away
+with having to struggle with trying to remember functionality scattered
+through ``os.path``, ``glob``, ``shutil``, etc.
+
+For example, instead of this:
+
+.. code:: py
+
+    PROCESSED_DATA_DIR = "data/processed-csv/"
+    # ...
+    csv_filename = PROCESSED_DATA_DIR.joinpath( name_hyphenated + '-rod-results.csv')
+
+You can construct a ``Path`` object by passing in each part of the path
+as an argument.
+
+.. code:: py
+
+    from pathlib import Path
+    PROCESSED_DATA_DIR = Path("data", "processed-csv")
+
+To add more parts to an existing ``Path`` object. use the
+``.joinpath()`` method. It's a little more verbose than concatenating
+strings with ``+``, but in the long run, it's easier to
+maintain/re-read. It will probably even save you from making common
+errors in the short-term, such as not having enough ``+`` operators, or
+trailing directory slashes ``/``:
+
+.. code:: py
+
+    csv_filename = PROCESSED_DATA_DIR.joinpath( name_hyphenated + '-rod-results.csv')
+
+``Path`` objects can be passed into functions that normally expect a
+filename as ``str``:
+
+.. code:: py
+
+    import os
+    RAW_HTML_DIR = 'data/raw-html/'
+    os.makedirs(RAW_HTML_DIR)
+    outfile = RAW_HTML_DIR + 'stuff.html'
+    with open(outfile, 'w') as w:
+        w.write('hello')
+
+But they come built with a bunch of handy instance functions for common
+operations:
+
+.. code:: py
+
+    from pathlib import path
+    RAW_HTML_DIR = Path('data', 'raw-html')
+    RAW_HTML_DIR.mkdir(parents=True, exist_ok=True)
+    outfile = RAW_HTML_DIR.joinpath('stuff.html')
+    outfile.write_text('hello')
+
+A really nice instance function is
+`glob <https://docs.python.org/3/library/pathlib.html#pathlib.Path.glob>`__.
+Instead of:
+
+.. code:: py
+
+    filenames = []
+    directory = RAW_HTML_DIR + name_hyphenated + '/'
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if ".html" in file:
+                filenames.append(file)
+
+You can use ``glob`` like this:
+
+.. code:: py
+
+    RAW_HTML_DIR.joinpath(name_hyphenated)
+    filenames = list(directory.glob('*.html'))
+
+Using selenium to call Chrome in headless mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I'm not sure why you were experiencing crashes when trying to wrap the
+Selenium webdriver in a function. In any case, going forward, I think it
+might be useful to call Chrome in ``headless`` mode -- i.e. invoke
+Chrome and selenium without actually opening Chrome as if you were going
+to use it normally. When you're testing a scraper out, you might want
+Chrome to activate graphically so you can watch how the scraper
+interacts with the page. But after you've figured out the scraping
+process, it's best to run the scraper as headless, especially if you're
+going to automate a batch of scraping jobs.
+
+You can read more here:
+https://duo.com/decipher/driving-headless-chrome-with-python
+
+Again, not knowing why you couldn't wrap the selenium stuff in a
+function, my first step was just to create a helper function,
+``get_driver()`` to create and return a webdriver.Chrome instance, which
+could then be used elsehwere in the scraper code:
+
+.. code:: py
+
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options as ChromeOptions
+    def get_driver():
+        opts = ChromeOptions()
+        opts.add_argument("--headless")
+        opts.add_argument("--incognito")
+        driver = webdriver.Chrome(options=opts)
+        return driver
+
+    # ...
+
+    driver = get_driver()
+    driver.get('http://example.com')
+
+Breaking the code into separate functions (search\_name/search\_names/get\_driver)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I'm already imagining that the entire logic/flow of ``deed_scraper.py``,
+along with ``deed_parser.py``, can be redesigned to be more streamlined.
+But rather than do the overhaul here, I've tried to leave your current
+code as intact as possible, so that the focus is on the
+refactoring/reorganization I've done, rather than being distracted by
+what seems like new code.
+
+As an intermediary step, I moved the main search/scraping functionality
+to a function, ``search_name``, which takes two arguments -- the name to
+search for, and ``browser``, a ``webdriver.Chrome()`` instance:
+
+.. code:: py
+
+    def search_name(name, browser):
+        browser.get(LOGIN_URL)
+        public_search = browser.find_element_by_xpath("//input[@value='Free Public Search Login']")
+        public_search.click()
+
+    # ...
+
+    def search_names(names):
+        for name in names:
+            browser = get_driver() # necessary to make a new browser instance for each name?
+            print("Searching for:", name)
+            search_name(name, browser)
+
+I guess there's no big reason why ``search_name`` couldn't itself invoke
+``get_driver()``, e.g.:
+
+.. code:: py
+
+    def search_name(name, browser):
+        browser = get_driver()
+        browser.get(LOGIN_URL)
+        public_search = browser.find_element_by_xpath("//input[@value='Free Public Search Login']")
+        public_search.click()
+
+    # ...
+    def search_names(names):
+        for name in names:
+            print("Searching for:", name)
+            search_name(name, browser)
+
+I was thinking ahead, that maybe it turns out we don't need to keep
+calling ``get_driver()`` for each name search -- i.e. just instantiate
+the browser once, and re-use it for the entirety of a batch search. It
+would definitely be faster, and maybe related to any issues with
+crashing. There's also the possibility that, for some reason, it's
+optimal for the ``browser`` object to have a certain state (e.g. gotten
+through the login page) before it does the name search. In which case,
+the ``search_name()`` function shouldn't have to bother itself with that
+logic.
+
+By delegating the ``browser`` object to be something that's passed in as
+an argument, we don't have to worry about futzing with ``search_name()``
+later on. It's already a complicated function -- the less it has to
+do/know, the better.
+
+Gathering shared constants and helepr functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One of the things I'm sure you'll want to revisit is how data is stored
+for a given name. Right now, given a name like "NGUYEN D C":
+
+``main_scraper.py`` creates a subdirectory ``data/raw-html/NGUYEN-D-C``
+to store the HTML pages of search results. That subdirectory slug is
+created by this line:
+
+.. code:: py
+
+        #remove spaces for file name, replace with hyphens
+        name_list = name.split()
+        name_hyphenated = '-'.join(name_list)
+
+``results_parser.py`` contains a function, ``html_to_csv()``, which
+expects a string argument, ``name_hyphenated``, which is then used to
+construct the raw HTML subdirectory created for that name-slug by
+``main_scraper.py``, i.e. ``data/raw-html/NGUYEN-D-C``.
+
+``html_to_csv()`` then creates a new file at this path:
+``data/processed-csv/NGUYEN-D-C-rod-results.csv``
+
+I think this implementation is fine, for now. Down the line, you may
+need something more robust (like using a database), or even just
+differently organized, e.g. given ``NGUYEN D C``, the data path is
+currently:
+
+::
+
+    data
+    ├── processed-csv
+    │   └── NGUYEN-D-C-rod-results.csv
+    │
+    └── raw-html
+        └── NGUYEN_D_C
+            ├── results-NGUYEN-D-C-page1.html
+            └── results-NGUYEN-D-C-page2.html
+
+But, depending on the extra features you add (e.g. other types of
+results to scrape, different kinds of processed output) it could also
+be:
+
+::
+
+    data
+    └── NGUYEN-D-C
+        ├── rod-results.csv
+        └── raw-html
+            ├── results-page1.html
+            └── results-page2.html
+
+But the bottom line is, file storage is complicated *enough* to not be
+the kind of thing that ``deed_scraper.py`` and ``deed_parser.py``
+worries about. Moreover, both of these scripts assume that, given a name
+like ``NGUYEN D C``, there is a canonical location for its resulting
+HTML files and processed CSVs. Rather than have both those scripts
+define something like:
+
+.. code:: py
+
+    RAW_HTML_DIR = Path('data', 'raw-html')
+
+We create a separate file, ``config.py``, and import that constant into
+whatever scripts may need it, e.g.
+
+.. code:: py
+
+    from config import RAW_HTML_DIR
+
+Another shared convention between the scripts is how "NGUYEN D C"
+becomes "NGUYEN-D-C". Previously, in ``main_scraper.py``, you do it like
+this:
+
+.. code:: py
+
+        name_list = name.split()
+        name_hyphenated = '-'.join(name_list)
+
+And ``html_csv()`` in ``results_parser.py`` expects any name it takes to
+be in that ``name_hyphenated`` format. But it's worth asking yourself --
+is there any situation in which you would invoke ``html_csv()`` on
+something like "NGUYEN D" -- i.e. a file path that, under current
+assumptions, would never exist?
+
+Maybe there is. But for now, it might be better to follow the principle
+of designing functions to **be liberal in what they accept, and
+conservative in what they return**.
+
+In the case of ``html_csv()``, passing in ``'NGUYEN D'`` would generally
+result in an error. Because the scraper script, when searching for
+``'NGUYEN D'``, and saving the results, creates a subdirectory with a
+slug of ``'NGUYEN-D'``.
+
+So design ``html_csv()`` to work whether you pass in ``NGUYEN-D`` or
+``NGUYEN D``. Rather than repeating the logic in ``main_scraper.py``,
+though, you can create a helper function, in its own separate script
+(``helpers.py``), and import it into both the scraper and parser
+scripts:
+
+.. code:: py
+
+    # in helpers.py
+    def slugify(name):
+        name_list = name.split()
+        name_hyphenated = '-'.join(name_list)
+        return name_hyphenated
+
+    # in results_parser.py
+    from helpers import slugify
+    def html_csv(name):
+    #  instead of:  directory = RAW_HTML_DIR + name_hyphenated + '/'
+       directory = RAW_HTML_DIR + slugify(name) + '/'
+
+To go even further with the refactoring, there's no reason for either
+``html_csv()``, or ``main_scraper.py``, to know the exact subdirectory
+for the raw HTML for a given name. So we can move that logic (including
+the ``RAW_HTML_DIR`` constant) into ``helpers.py`` too:
+
+.. code:: py
+
+    # in helpers.py
+    from config import RAW_HTML_DIR
+    def name_to_raw_html_results_dir(name):
+        return RAW_HTML_DIR.joinpath(slugify(name))
+
+    # in results_parser.py
+    from helpers import name_to_raw_html_results_dir
+    def html_csv(name):
+        directory = name_to_raw_html_results_dir(name)
+
+    # in main_scraper.py
+    from helpers import name_to_raw_html_results_dir
+    # ...
+        if search_results:
+            #make a directory for each name to store the html pages
+            rawdir = name_to_raw_html_results_dir(name)
+            rawdir.mkdir(parents=True, exist_ok=True)
+
+    ## instead of
+        # name_list = name.split()
+        # name_hyphenated = '-'.join(name_list)
+        # if search_results:
+        #     #make a directory for each name to store the html pages
+        #     os.makedirs('data/raw-html/{0}/'.format(name_hyphenated))
+
+Note: I've learned that it's usually better to design the scraper/parser
+to not have *any* file-writing/storing logic. That is, the
+scraper/parser should only return a string (e.g. raw HTML/CSV). And the
+script that *calls* the scraper/parser is responsible for doing
+something with that string, e.g.
+
+.. code:: py
+
+    # in some script, like main.py or whatever
+    myname = 'NGUYEN D'
+    resultdir = name_to_raw_html_results_dir(myname)
+    result_pages = search_name(myname)
+    for html, i in enumerate(result_pages):
+        destpath = resultdir.joinpath('results-page{0}.html'.format(i))
+        destpath.write_text(html)
+
+    data = parse_html_results(resultdir) # as opposed to html_csv()
+    csvpath = name_to_processed_csv_path(myname)
+    with open(csvpath, 'w') as w:
+        o = csv.writer(w)
+        o.writerow(CSV_HEADERS)
+        o.writerows(data)
+
+The rationale is that, for example, after parsing the HTML, you want to
+do something else besides write to a CSV, such as import to a database.
+Or create a visualization. Or analyze the CSV, and upon finding an
+outlier value (or error), trigger an event, like sending an email.
+
+A good rule-of-thumb to follow is that **functions should either return
+a value, or have an effect** (e.g. writing to the file system) -- but
+not both, and not more than one effect. Right now, ``html_csv()`` has 2
+effects: writing a CSV file, and outputting a more readable version of
+the data to the screen. This is a result of it calling the
+``parse_row()`` function, which itself has the effect of printing to
+screen, and returning a list (i.e. ``clean_row``). And the scraper code,
+because it calls ``html_csv()``, effectively has 3 effects: writes the
+raw HTML, writes the processed CSV, and prints to screen.
+
+The more optimal flow would be for neither function to have any effect
+(printing to screen, writing to file), but for ``html_csv()`` to return
+a list of "clean row" lists. And then having separate functions that
+turn that list of lists into a CSV, and into screen output.
+
+But for this iteration, I think it's fine to leave ``html_csv()`` and
+the scraper as is.

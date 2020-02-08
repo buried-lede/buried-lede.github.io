@@ -1,0 +1,116 @@
+Intro to unit-testing and test-driven development
+=================================================
+
+Unit-testing is a strategy. Not to be confused with Python's built-in
+library named unittest.
+
+Test-driven development is a software engineering process
+
+Unit testing refers to testing one thing at a time. Almost invariably,
+this results in functions that do one thing at a time.
+
+A term that's frequently used when discussing good testing practices is
+**unit testing**.
+
+Here's what the `Unit Tests chapter in Software Carpentry's lesson on
+Python testing
+says <http://katyhuff.github.io/python-testing/04-units/>`__:
+
+    Unit tests are so called because they exercise the functionality of
+    the code by interrogating individual functions and methods.
+    Functions and methods can often be considered the atomic units of
+    software because they are indivisible.
+
+From the `Hitchhiker's Guide to Python on Testing Your
+Code <https://docs.python-guide.org/writing/tests/>`__:
+
+-  A testing unit should focus on one tiny bit of functionality and
+   prove it correct.
+-  Each test unit must be fully independent.
+-  Each test must be able to run alone, and also within the test suite,
+   regardless of the order that they are called. The implication of this
+   rule is that each test must be loaded with a fresh dataset and may
+   have to do some cleanup afterwards. This is usually handled by
+   setUp() and tearDown() methods.
+
+Good unit testing is not just a matter of test design, but of good
+design of your functions, making them as independent and isolated and
+following the "do one thing and do it well" philosophy.
+
+Example unit test: ``adder.py`` and ``add()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+First, in the working directory ``/tmp/foobar/``, create two new empty
+files: ``__init__.py``.
+
+And in ``/tmp/foobar/tests/``, create ``__init__.py``. The structure of
+this very simple example project should look like this:
+
+::
+
+    foobar
+    ├── __init__.py
+    ├── adder.py
+    └── tests
+        ├── __init__.py
+        ├── test_adder.py
+        └── test_hello_world.py
+
+adder.py
+''''''''
+
+Now, in **adder.py**, define this very simple ``add()`` function:
+
+.. code:: py
+
+    def add(a, b):
+        return a + b
+
+Why test?
+---------
+
+Living documentation and sanity tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Convenient code-running
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Why test-driven development (TDD)?
+----------------------------------
+
+Enforces minimalist design
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enforces good functional design
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Practical TDD
+-------------
+
+Using the interactive debugger when things break
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://hackebrot.github.io/pytest-tricks/debug\_test\_failures/
+
+.. code:: sh
+
+    $ pytest --pdb
+
+Other readings and resources
+----------------------------
+
+-  `Hitchhiker's Guide to Python: Testing Your
+   Code <https://docs.python-guide.org/writing/tests/>`__
+-  `The Cleaning Hand of
+   Pytest <https://blog.daftcode.pl/the-cleaning-hand-of-pytest-28f434f4b684>`__
+   - A good read about the author's experiences with testing (and
+   non-testing) at various companies, as well as being a primer to
+   pytest (and why he likes it compared to Python's built-in unittest
+   library)
+-  `Software Carpentry lesson on Python Testing and Continuous
+   Integration <http://katyhuff.github.io/python-testing/>`__
+
+   -  `Unit
+      Tests <http://katyhuff.github.io/python-testing/04-units/>`__
+   -  `Test Driven
+      Development <http://katyhuff.github.io/python-testing/09-tdd/>`__

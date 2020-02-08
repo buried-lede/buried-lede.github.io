@@ -1,5 +1,7 @@
 # Dan Nguyen's custom bashfoo
 
+_build
+
 # names for data stash folders that shouldn't be committed
 _drafts/
 junk/

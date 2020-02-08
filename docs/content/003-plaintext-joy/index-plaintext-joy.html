@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The joy of plaintext &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/003-plaintext-joy/index-plaintext-joy.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Everyday Command-Line" href="../004-everyday-commandline/index-everyday-commandline.html" />
+    <link rel="prev" title="Operating system fundamentals" href="../002-operating-fundamentals/index-operating-fundamentals.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-setup/index-setup.html">Setting Up and Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-operating-fundamentals/index-operating-fundamentals.html">Operating system fundamentals</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The joy of plaintext</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plaintext-and-data">Plaintext and data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#regular-expressions">Regular expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-vs-code">Advanced VS Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../004-everyday-commandline/index-everyday-commandline.html#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../005-real-world-scripting/index-real-world-scripting.html">Real world scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../006-software-engineering/index-software-engineering.html">Software Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../007-higher-level-scripting/index-higher-level-scripting.html">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../001-examples/index-examples.html">Syntax Examples</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>The joy of plaintext</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/003-plaintext-joy/index-plaintext-joy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-joy-of-plaintext">
+<h1>The joy of plaintext<a class="headerlink" href="#the-joy-of-plaintext" title="Permalink to this headline">¶</a></h1>
+<p>Most layfolk don’t understand what text is, especially text apart from a Word document. But data and code IS text. Learning to think in text, and to do as much as possible in text, is key to understanding data and programming.</p>
+<div class="section" id="plaintext-and-data">
+<h2>Plaintext and data<a class="headerlink" href="#plaintext-and-data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>brief intro to VS Code</dt><dd><ul>
+<li><dl class="simple">
+<dt>syntax highlighting</dt><dd><ul>
+<li><p>sample HTML page (example.com)</p></li>
+<li><p>JSON file</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>.docx vs .txt</p></li>
+<li><p>intro to markdown / wean yourself off .docx / what is “syntax” in general</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Text is just data</dt><dd><ul>
+<li><p>opening a Excel-made CSV in VS Code</p></li>
+<li></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Intro to plaintext data formats</dt><dd><ul>
+<li><p>CSV</p></li>
+<li><p>JSON</p></li>
+<li><dl class="simple">
+<dt>making a CSV from scratch</dt><dd><ul>
+<li><p>opening it in excel</p></li>
+<li><p>excel Save As…</p></li>
+<li><p>Delimiters and quoting (i.e. complex CSV parsing)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>JSON from an API</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>What is code</dt><dd><ul>
+<li><p>code is just text</p></li>
+<li><p>making HTML from scratch</p></li>
+<li><p>a Python script</p></li>
+<li><p>the Python interpreter</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Unicode and text-encoding (very briefly)</p></li>
+</ul>
+</div>
+<div class="section" id="regular-expressions">
+<h2>Regular expressions<a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>thinking in patterns</p></li>
+<li><dl class="simple">
+<dt>what’s a syntax</dt><dd><ul>
+<li><p>understanding escape characters</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Using regex in VS Code:</dt><dd><ul>
+<li><p>enabling regex search</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>basics</dt><dd><ul>
+<li><p>dot-char</p></li>
+<li><p>character classes</p></li>
+<li><p>one-or-more</p></li>
+<li><p>either-or</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>grouping and named groups</p></li>
+<li><dl class="simple">
+<dt>more regex in VS Code</dt><dd><ul>
+<li><p>find and replace on steroids</p></li>
+<li><p>global search with patterns</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>real-world useful regex patterns</dt><dd><ul>
+<li><p>converting between date formats</p></li>
+<li><p>extracting parts of addresses and names</p></li>
+<li><p>quick-and-dirty data cleaning for Excel, e.g. removing non-numerical symbols in number fields</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="advanced-vs-code">
+<h2>Advanced VS Code<a class="headerlink" href="#advanced-vs-code" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Project sidebar</p></li>
+<li><p>Customization</p></li>
+<li><p>Grepping and file search</p></li>
+<li><dl class="simple">
+<dt>Syntax-specific snippets/tab completion</dt><dd><ul>
+<li><p>Emmet for HTML (already built-in for VS Code)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Plugin ecosystem</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../004-everyday-commandline/index-everyday-commandline.html" class="btn btn-neutral float-right" title="Everyday Command-Line" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../002-operating-fundamentals/index-operating-fundamentals.html" class="btn btn-neutral float-left" title="Operating system fundamentals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

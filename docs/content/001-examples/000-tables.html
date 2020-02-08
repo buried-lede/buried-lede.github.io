@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tables &mdash; BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/content/001-examples/000-tables.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Syntax Examples" href="index-examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../000-hello-world/index-hello-world.html">Hello world</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index-examples.html">Syntax Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tables</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index-examples.html">Syntax Examples</a> &raquo;</li>
+        
+      <li>Tables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/001-examples/000-tables.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tables">
+<h1>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="simple-tables">
+<h2>Simple tables<a class="headerlink" href="#simple-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>First column cells cannot be multiple lines</p></li>
+<li><p>Must contain more than 1 row</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>age</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alice</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bob</p></td>
+<td><p>99</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>=======  =====
+name     age
+=======  =====
+Alice    42
+Bob      99
+=======  =====
+</pre></div>
+</div>
+</div>
+<div class="section" id="grid-table-syntax">
+<h2>Grid Table Syntax<a class="headerlink" href="#grid-table-syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>+-------+-----+
+<span class="o">|</span> name  | age |
++=======+=====+
+<span class="o">|</span> Alice | 42  |
++-------+-----+
+<span class="o">|</span> Bob   | 99  |
++-------+-----+
+</pre></div>
+</div>
+<p>Result:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>age</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alice</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bob</p></td>
+<td><p>99</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sublime-shortcuts-for-osx">
+<h2>Sublime shortcuts for OSX<a class="headerlink" href="#sublime-shortcuts-for-osx" title="Permalink to this headline">¶</a></h2>
+<p>Using the <a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#magic-tables">Sublime Text rst-completion plugin</a>:</p>
+<div class="section" id="grid-table-rst-completion">
+<h3>Grid table rst-completion<a class="headerlink" href="#grid-table-rst-completion" title="Permalink to this headline">¶</a></h3>
+<p><kbd class="kbd docutils literal notranslate">Command-Shift-t</kbd>, <kbd class="kbd docutils literal notranslate">Enter</kbd></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#grid-table">https://github.com/mgaitan/sublime-rst-completion#grid-table</a></p>
+<p>hello    world
+foo      use 2+ spaces as a delimiter
+bar      then do cmd-shift-t, enter</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>hello</p></th>
+<th class="head"><p>world</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>foo</p></td>
+<td><p>use 2+ spaces as a delimiter</p></td>
+</tr>
+<tr class="row-odd"><td><p>bar</p></td>
+<td><p>then do cmd-shift-t, enter</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="simple-table-rst-completion">
+<h3>Simple table rst-completion<a class="headerlink" href="#simple-table-rst-completion" title="Permalink to this headline">¶</a></h3>
+<p><kbd class="kbd docutils literal notranslate">Command-Shift-t</kbd>, <kbd class="kbd docutils literal notranslate">s</kbd></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#simple-table">https://github.com/mgaitan/sublime-rst-completion#simple-table</a></p>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/misc.html#tables">Tables: Miscellaneous Markup, Sphinx Documentation</a></p>
+<p><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#rst-tables">Tables: Restructured Text Primer, Sphinx Documentation</a></p>
+<p><a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#tables">Tables, RestructuredText Docs</a></p>
+<p><a class="reference external" href="http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html#tables">RST Cheatsheet: Tables</a></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#magic-tables">Magic Tables from RST Completion Sublime plugin</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="index-examples.html" class="btn btn-neutral float-left" title="Syntax Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

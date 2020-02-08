@@ -1,0 +1,1193 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BuriedLede Notes 0.0.1beta documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://buried-lede.github.io/index.html"/>
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html#document-index" class="icon icon-home"> BuriedLede Notes
+          
+
+          
+          </a>
+
+          
+
+          
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/001-setup/index-setup">Setting Up and Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#services">Services</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/002-operating-fundamentals/index-operating-fundamentals">Operating system fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#keyboard-shortcuts">Keyboard shortcuts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#navigating-the-file-system">Navigating the file system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#what-are-files">What are files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#debugging-and-learning">Debugging and learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#google-fu">Google-Fu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#browser-stuff">Browser stuff</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/003-plaintext-joy/index-plaintext-joy">The joy of plaintext</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#plaintext-and-data">Plaintext and data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#regular-expressions">Regular expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#advanced-vs-code">Advanced VS Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/004-everyday-commandline/index-everyday-commandline">Everyday Command-Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#getting-started-with-terminal">Getting started with Terminal</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#shell-syntax-primer">Shell syntax primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#awesome-third-party-cli">Awesome third-party CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#command-line-intermediate">Command-Line Intermediate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#the-unix-way">The Unix Way</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/005-real-world-scripting/index-real-world-scripting">Real world scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/006-software-engineering/index-software-engineering">Software Engineering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/007-higher-level-scripting/index-higher-level-scripting">Higher-level scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/000-hello-world/index-hello-world">Hello world</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#second-header">Second header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#third-header">Third header</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-content/001-examples/index-examples">Syntax Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#document-content/001-examples/000-tables">Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="index.html#simple-tables">Simple tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#grid-table-syntax">Grid Table Syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#sublime-shortcuts-for-osx">Sublime shortcuts for OSX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="index.html#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html#document-index">BuriedLede Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html#document-index">Docs</a> &raquo;</li>
+        
+      <li>BuriedLede Notes 0.0.1beta documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dan-s-sphinx-template-buriedlede">
+<h1>Dan’s Sphinx Template [BuriedLede]<a class="headerlink" href="#dan-s-sphinx-template-buriedlede" title="Permalink to this headline">¶</a></h1>
+<p>Because the sphinx-quickstart util is sometimes not specific enough for my needs.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="index.html#document-content/000-hello-world/index-hello-world"><span class="doc">Hello world</span></a> - This is an example of how to do a doc, cause I keep forgetting.</p></li>
+</ul>
+</div>
+<div class="section" id="full-table-of-contents">
+<h1>Full table of contents<a class="headerlink" href="#full-table-of-contents" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-content/001-setup/index-setup"></span><div class="section" id="setting-up-and-installation">
+<h2>Setting Up and Installation<a class="headerlink" href="#setting-up-and-installation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="software">
+<h3>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Chrome or Firefox</p></li>
+<li><p>VS Code</p></li>
+<li><p>RStudio (for much later)</p></li>
+<li><p>DB Browser</p></li>
+</ul>
+</div>
+<div class="section" id="services">
+<h3>Services<a class="headerlink" href="#services" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Google (for Sheets)</p></li>
+<li><p>Github</p></li>
+</ul>
+</div>
+</div>
+<span id="document-content/002-operating-fundamentals/index-operating-fundamentals"></span><div class="section" id="operating-system-fundamentals">
+<h2>Operating system fundamentals<a class="headerlink" href="#operating-system-fundamentals" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="keyboard-shortcuts">
+<h3>Keyboard shortcuts<a class="headerlink" href="#keyboard-shortcuts" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Clipboard stuff Cmd-A Cmd-C Cmd-V</p></li>
+<li><p>Tab</p></li>
+<li><p>Context/app switching</p></li>
+<li><p>Screenshot to clipboard Cmd-Shift-4</p></li>
+<li><p>Jump to filepath Cmd-Shift-tilde</p></li>
+</ul>
+</div>
+<div class="section" id="navigating-the-file-system">
+<h3>Navigating the file system<a class="headerlink" href="#navigating-the-file-system" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Enable: show files as list</p></li>
+<li><p>Sorting</p></li>
+<li><p>Naming conventions</p></li>
+<li><p>Making new folders</p></li>
+<li><p>General organization ideas</p></li>
+</ul>
+</div>
+<div class="section" id="what-are-files">
+<h3>What are files<a class="headerlink" href="#what-are-files" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>enable Show file extensions</p></li>
+<li><p>Open As…</p></li>
+<li><p>what is a PDF and why is a PDF</p></li>
+<li><dl class="simple">
+<dt>demystifying bytes and binary</dt><dd><ul>
+<li><p>how many bytes for 500-words of text</p></li>
+<li><p>bytes per video minute</p></li>
+<li><dl class="simple">
+<dt>bytes for a jpg vs a png vs a tiff vs a gif</dt><dd><ul>
+<li><p>what is lossless</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>how to tell a pdf is “text-based” or a scan based on bytecount alone</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="debugging-and-learning">
+<h3>Debugging and learning<a class="headerlink" href="#debugging-and-learning" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>the computer is never wrong</dt><dd><ul>
+<li><p>but it never judges you</p></li>
+<li><p>be at peace with that</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>how to read an error message</p></li>
+<li><p>how to check assumptions.</p></li>
+<li><dl class="simple">
+<dt>move slow and break things</dt><dd><ul>
+<li><p>if x is right, then not x should be wrong.</p></li>
+<li><p>check but verify</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="google-fu">
+<h3>Google-Fu<a class="headerlink" href="#google-fu" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Google</dt><dd><ul>
+<li><dl class="simple">
+<dt>syntax operators</dt><dd><ul>
+<li><p>site:</p></li>
+<li><p>filetype:</p></li>
+<li><p>minus</p></li>
+<li><p>literal</p></li>
+<li><p>order of operations</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>How to search for errors</dt><dd><ul>
+<li><p>how to read ugly error messages</p></li>
+<li><p>how to generalize error messages to find relevant search results</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="browser-stuff">
+<h3>Browser stuff<a class="headerlink" href="#browser-stuff" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Configuration</dt><dd><ul>
+<li><p>Always download a file (except for media)</p></li>
+<li><p>know the download directory path</p></li>
+<li><p>using History and avoiding tab-overload</p></li>
+<li><p>Show warning before quitting with Cmd-Q (Chrome)</p></li>
+<li><p>Creating multiple browser users/profiles for multiple tasks</p></li>
+<li><dl class="simple">
+<dt>Cool plugins</dt><dd><ul>
+<li><p>Close all tabs but this one</p></li>
+<li><p>Screencapture</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Keyboard shortcuts</dt><dd><ul>
+<li><p>New window vs new tab</p></li>
+<li><p>Window cycling (cmd-tilde)</p></li>
+<li><p>Command-L to edit browser bar</p></li>
+<li><p>Space/Shift-Space for page up/down</p></li>
+<li><p>Cmd-Shift-T to open last closed tab</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Incognito mode (esp. for non-personalized search)</p></li>
+<li><dl class="simple">
+<dt>The importance of URLs</dt><dd><ul>
+<li><p>what are query strings and how to tweak them for fun</p></li>
+<li><dl class="simple">
+<dt>what a URL tells you about an organization, and vice versa</dt><dd><ul>
+<li><p>[How a High Schooler Scooped Everyone on the Iowa Poll](<a class="reference external" href="https://www.nytimes.com/2020/01/10/business/iowa-poll-student-scoop.html">https://www.nytimes.com/2020/01/10/business/iowa-poll-student-scoop.html</a>)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Basic dev tools</dt><dd><ul>
+<li><p>How to view source</p></li>
+<li><p>Finding URLs</p></li>
+<li><dl class="simple">
+<dt>the network panel</dt><dd><ul>
+<li><p>copy as cURL (?)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Disabling Javascript</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<span id="document-content/003-plaintext-joy/index-plaintext-joy"></span><div class="section" id="the-joy-of-plaintext">
+<h2>The joy of plaintext<a class="headerlink" href="#the-joy-of-plaintext" title="Permalink to this headline">¶</a></h2>
+<p>Most layfolk don’t understand what text is, especially text apart from a Word document. But data and code IS text. Learning to think in text, and to do as much as possible in text, is key to understanding data and programming.</p>
+<div class="section" id="plaintext-and-data">
+<h3>Plaintext and data<a class="headerlink" href="#plaintext-and-data" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><dl class="simple">
+<dt>brief intro to VS Code</dt><dd><ul>
+<li><dl class="simple">
+<dt>syntax highlighting</dt><dd><ul>
+<li><p>sample HTML page (example.com)</p></li>
+<li><p>JSON file</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>.docx vs .txt</p></li>
+<li><p>intro to markdown / wean yourself off .docx / what is “syntax” in general</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Text is just data</dt><dd><ul>
+<li><p>opening a Excel-made CSV in VS Code</p></li>
+<li></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Intro to plaintext data formats</dt><dd><ul>
+<li><p>CSV</p></li>
+<li><p>JSON</p></li>
+<li><dl class="simple">
+<dt>making a CSV from scratch</dt><dd><ul>
+<li><p>opening it in excel</p></li>
+<li><p>excel Save As…</p></li>
+<li><p>Delimiters and quoting (i.e. complex CSV parsing)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>JSON from an API</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>What is code</dt><dd><ul>
+<li><p>code is just text</p></li>
+<li><p>making HTML from scratch</p></li>
+<li><p>a Python script</p></li>
+<li><p>the Python interpreter</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Unicode and text-encoding (very briefly)</p></li>
+</ul>
+</div>
+<div class="section" id="regular-expressions">
+<h3>Regular expressions<a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>thinking in patterns</p></li>
+<li><dl class="simple">
+<dt>what’s a syntax</dt><dd><ul>
+<li><p>understanding escape characters</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Using regex in VS Code:</dt><dd><ul>
+<li><p>enabling regex search</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>basics</dt><dd><ul>
+<li><p>dot-char</p></li>
+<li><p>character classes</p></li>
+<li><p>one-or-more</p></li>
+<li><p>either-or</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>grouping and named groups</p></li>
+<li><dl class="simple">
+<dt>more regex in VS Code</dt><dd><ul>
+<li><p>find and replace on steroids</p></li>
+<li><p>global search with patterns</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>real-world useful regex patterns</dt><dd><ul>
+<li><p>converting between date formats</p></li>
+<li><p>extracting parts of addresses and names</p></li>
+<li><p>quick-and-dirty data cleaning for Excel, e.g. removing non-numerical symbols in number fields</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="advanced-vs-code">
+<h3>Advanced VS Code<a class="headerlink" href="#advanced-vs-code" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Project sidebar</p></li>
+<li><p>Customization</p></li>
+<li><p>Grepping and file search</p></li>
+<li><dl class="simple">
+<dt>Syntax-specific snippets/tab completion</dt><dd><ul>
+<li><p>Emmet for HTML (already built-in for VS Code)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Plugin ecosystem</p></li>
+</ul>
+</div>
+</div>
+<span id="document-content/004-everyday-commandline/index-everyday-commandline"></span><div class="section" id="everyday-command-line">
+<h2>Everyday Command-Line<a class="headerlink" href="#everyday-command-line" title="Permalink to this headline">¶</a></h2>
+<p>It’s possible to be great at data and programming without knowing jack about the shell and the command-line. But such a path is pointlessly dumb and painful. Grokking the Unix philosophy – do one thing and one thing well – and the practice of piping data (i.e. text) between simple utilities, is so useful you may not even need to do “real” programming. And if you do need real programming, the command-line only makes you much much better at learning and using it.</p>
+</div>
+<div class="section" id="getting-started-with-terminal">
+<h2>Getting started with Terminal<a class="headerlink" href="#getting-started-with-terminal" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Terminal.app</p></li>
+<li><dl class="simple">
+<dt>Keyboard as destiny</dt><dd><ul>
+<li><p>Tab to autocomplete</p></li>
+<li><p>up/down for history</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Built-in useful CLI utils</dt><dd><ul>
+<li><p>curl</p></li>
+<li><p>whois</p></li>
+<li><dl class="simple">
+<dt>VS Code + Shell</dt><dd><ul>
+<li><p>using <cite>code</cite> to open from the command line</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>MacOS specific utilities</dt><dd><ul>
+<li><p>open</p></li>
+<li><p>pbcopy and pbpaste</p></li>
+<li><p>screenshot</p></li>
+<li><p>say</p></li>
+<li><p>brew</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="shell-syntax-primer">
+<h2>Shell syntax primer<a class="headerlink" href="#shell-syntax-primer" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>whitespace is important</p></li>
+<li><p>backslash</p></li>
+<li><p>quoting stuff</p></li>
+<li><p>flags and arguments</p></li>
+</ul>
+</div>
+<div class="section" id="awesome-third-party-cli">
+<h2>Awesome third-party CLI<a class="headerlink" href="#awesome-third-party-cli" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>how to brew install (hopefully)</p></li>
+<li><dl class="simple">
+<dt>youtube-dl</dt><dd><ul>
+<li><p>output different title</p></li>
+<li><p>get audio only</p></li>
+<li><p>get subtitles</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>pandoc</p></li>
+<li><p>pdftotext via poppler/xpdf</p></li>
+<li><p>wget</p></li>
+<li><p>ffmpeg / convert</p></li>
+<li><p>giffify</p></li>
+<li><p>stylecloud <a class="reference external" href="https://github.com/minimaxir/stylecloud">https://github.com/minimaxir/stylecloud</a></p></li>
+<li><p>twarc (twitter auth stuff)</p></li>
+</ul>
+</div>
+<div class="section" id="command-line-intermediate">
+<h2>Command-Line Intermediate<a class="headerlink" href="#command-line-intermediate" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Keyboard shortcuts</dt><dd><ul>
+<li><p>TAB TO AUTOCOMPLETE DAMMIT</p></li>
+<li><p>Ctrl-A/Ctrl-E</p></li>
+<li><p>Ctrl-C</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Filesystem navigation</dt><dd><ul>
+<li><p>pwd and ls</p></li>
+<li><p>cd</p></li>
+<li><p>home directory and other aliases</p></li>
+<li><p>wildcards</p></li>
+<li><p>mv and cp</p></li>
+<li><p>mkdir</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>general utils</dt><dd><ul>
+<li><p>history</p></li>
+<li><p>man</p></li>
+<li><p>cat</p></li>
+<li><p>head/tail</p></li>
+<li><p>wc</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="the-unix-way">
+<h2>The Unix Way<a class="headerlink" href="#the-unix-way" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Be good at one thing and one thing only</dt><dd><ul>
+<li><p>why unix utils seem so basic</p></li>
+<li><p>as a general design and programming philosophy</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>common nix utils</dt><dd><ul>
+<li><p>grep</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>pipe operator</dt><dd><ul>
+<li><p>pipe pipe pipe</p></li>
+<li><p>cat | grep all the things</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>file redirection</dt><dd><ul>
+<li><p>the dangers of unix</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<span id="document-content/005-real-world-scripting/index-real-world-scripting"></span><div class="section" id="real-world-scripting">
+<h2>Real world scripting<a class="headerlink" href="#real-world-scripting" title="Permalink to this headline">¶</a></h2>
+<p>How to tie the minutiae you’ve learned to what you probably imagined “real” programming to be. A light introduction to the concept of best practices in software engineering.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Data wrangling with just the shell</dt><dd><ul>
+<li><p>a shell script with as few external dependencies as possible</p></li>
+<li><dl class="simple">
+<dt>fetch and stash remote data file via curl</dt><dd><ul>
+<li><p>unzip/gzip if necessary</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>xsv to filter and extract and sort</p></li>
+<li><p>ripgrep to transform</p></li>
+<li><p>calculate a number.top 5</p></li>
+<li><p>visualize via spreadsheet</p></li>
+<li><p>refine/compact as a one-liner</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Your system/shell environment</dt><dd><ul>
+<li><p>sudo</p></li>
+<li><p>installing and running binaries the old fashioned way (i.e. no homebrew)</p></li>
+<li><dl class="simple">
+<dt>understanding the system path</dt><dd><ul>
+<li><p>which</p></li>
+<li><p>echo $PATH</p></li>
+<li><p>adding to the sys path</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>very very basic shell scripting concepts</dt><dd><ul>
+<li><p>what are variables</p></li>
+<li><dl class="simple">
+<dt>very basic functions – basically, a way to name sequence of commands</dt><dd><ul>
+<li><p>maybe introduce function arguments(?)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>.bash_profile/.zsh/etc</dt><dd><ul>
+<li><p>how to configure your prompt</p></li>
+<li><p>set environment variables</p></li>
+<li><p>add functions</p></li>
+<li><p>maybe configure the environment path?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Packaging code as a script</dt><dd><ul>
+<li><dl class="simple">
+<dt>What is a script?</dt><dd><ul>
+<li><p>What makes a script different than a text file?</p></li>
+<li><p>(optional) what is an executable?</p></li>
+<li><p><cite>chmod a+x</cite> for fun</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Repeatable scripts are good</dt><dd><ul>
+<li><p>stop copy-pasting shit from Stickies</p></li>
+<li><p>how to generalize a list of commands to something flexible</p></li>
+<li><p>make a script easier to use with command-line args</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Make your own custom shell script</dt><dd><ul>
+<li><p>make it globally accessible via system path</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>GIF making script</dt><dd><ul>
+<li><p>a shell script that’s more fun, but more complex external dependencies</p></li>
+<li><p>youtube-dl/curl a video</p></li>
+<li><p>ffmpeg/convert into image files</p></li>
+<li><p>stylize the images</p></li>
+<li><p>make a gif</p></li>
+<li><p>turn it into a giffy-like util</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<span id="document-content/006-software-engineering/index-software-engineering"></span><div class="section" id="software-engineering">
+<h2>Software Engineering<a class="headerlink" href="#software-engineering" title="Permalink to this headline">¶</a></h2>
+<p>Considering the world beyond our Terminal, including web resources and remote collaboration and how to keep projects sane when you have multiple collaborators.</p>
+<ul>
+<li><dl class="simple">
+<dt>Getting data from a Web API</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>what is an API?</dt><dd><ul>
+<li><p>actually, what is not an API</p></li>
+<li><p>why sites put data into JSON</p></li>
+<li><p>[todo] get sample JSON data files</p></li>
+<li><p>[todo] figure out a public data API that doesn’t require auth</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>http concepts</dt><dd><ul>
+<li><p>GET vs POST</p></li>
+<li><p>HTTP status codes</p></li>
+<li><p>query parameters and data payloads</p></li>
+<li><p>Using the web dev tools to discover unofficial APIs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>advanced curl</dt><dd><ul>
+<li><p>curling into files (i.e. why we don’t need/use wget)</p></li>
+<li><p>configuring web-agent</p></li>
+<li><p>sending a data-payload and using POST</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Version control and git</dt><dd><ul class="simple">
+<li><p><a class="reference external" href="https://missing.csail.mit.edu/2020/version-control/">https://missing.csail.mit.edu/2020/version-control/</a></p></li>
+<li><dl class="simple">
+<dt>Why version control? Why git?</dt><dd><ul>
+<li><p>why git</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>.gitignore</p></li>
+<li><dl class="simple">
+<dt>git CLI basics and concepts</dt><dd><ul>
+<li><p>git init</p></li>
+<li><p>git add</p></li>
+<li><p>git commit</p></li>
+<li><p>git status</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>what’s in .git?</p></li>
+<li><dl class="simple">
+<dt>rolling back in history</dt><dd><ul>
+<li><p>git checkout</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Clouds as a service</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>Github</dt><dd><ul>
+<li><dl class="simple">
+<dt>README.md convention</dt><dd><ul>
+<li><p>More Markdown fun</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Github pages</p></li>
+<li><p>Gists</p></li>
+<li><p>Pull requests</p></li>
+<li><dl class="simple">
+<dt>How to contribute to open source</dt><dd><ul>
+<li><p>correct grammar changes in someone else’s project</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>AWS</dt><dd><ul>
+<li><dl class="simple">
+<dt>S3</dt><dd><ul>
+<li><p>access-control concepts</p></li>
+<li><p>how to quickly upload files from the command line</p></li>
+<li><p>using S3 as a static file server</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>cloud services, like speech2text and image classification</dt><dd><ul>
+<li><p>fun with JSON</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Distributed/collaborative work (i.e. why Github)</dt><dd><ul>
+<li><p>note: this stuff is hard to grasp until you’re actually doing a collaborative project</p></li>
+<li><dl class="simple">
+<dt>Command-line Github</dt><dd><ul>
+<li><p>generating a new ssh key <a class="reference external" href="https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a></p></li>
+<li><p>git remote</p></li>
+<li><p>git clone</p></li>
+<li><p>git push</p></li>
+<li><p>git pull</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>what is a git conflict</dt><dd><ul>
+<li><p>why do they happen</p></li>
+<li><p>how to deliberately make a conflict</p></li>
+<li><p>how to resolve a conflict</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>git branch/checkout ?</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<span id="document-content/007-higher-level-scripting/index-higher-level-scripting"></span><div class="section" id="higher-level-scripting">
+<h2>Higher-level scripting<a class="headerlink" href="#higher-level-scripting" title="Permalink to this headline">¶</a></h2>
+<p>Actual programming – e.g. learning Python or R or Javascript or even SQL – is beyond the scope of this project. However, shell scripting basically is programming. So the aim of this unit is to help you get started on getting into a “proper” language, and to give you a taste of <em>why</em> you’d want to do it – which can be hard to convey if you’ve seen the amazing usefulness of shell scripting.</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>R and RStudio</dt><dd><ul>
+<li><p>RStudio seems much easier and straightforward to install for the average user, compared to Python (even with conda)</p></li>
+<li><dl class="simple">
+<dt>RStudio basics</dt><dd><ul>
+<li><p>why R syntax is NOT the same as shell syntax</p></li>
+<li><p>variables and variable assignment</p></li>
+<li><p>quoting strings</p></li>
+<li><p>functions</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>How to do cool stuff with ggplot2</dt><dd><ul>
+<li><p>use built in datasets like iris</p></li>
+<li><p>switching between chart types</p></li>
+<li><p>tweaking colors</p></li>
+<li><p>making PNGs</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Data wrangling basics</dt><dd><ul>
+<li><p>dataframes</p></li>
+<li><p>opening files (CSV, XLS)</p></li>
+<li><p>saving files as CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Web scraping with R</dt><dd><ul>
+<li><p>enough HTML concepts to understand why regex is not enough</p></li>
+<li><p>CSS selector</p></li>
+<li><p>xpath for funsies</p></li>
+<li><dl class="simple">
+<dt>how HTML turns into data</dt><dd><ul>
+<li><p>copy-pasting HTML tables into a spreadsheet</p></li>
+<li><p>scraping non-tabular HTML into CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>[todo] mirror a website to practice on</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>R outside of RStudio</dt><dd><ul>
+<li><p>just use VSCode</p></li>
+<li><p>running R scripts from the commandline</p></li>
+<li><p>reproducible data-&gt;viz R script</p></li>
+<li><p>rmarkdown?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SQLite</dt><dd><ul>
+<li><dl class="simple">
+<dt>Using a GUI like DB Browser</dt><dd><ul>
+<li><p>Why SQL and not Excel?</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Basic SQL syntax</dt><dd><ul>
+<li><p>SELECT queries and how they compare to spreadsheets</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>SQLite without a GUI</dt><dd><ul>
+<li><p>invoking sqlite3 from the command line</p></li>
+<li><p>dot commands/config</p></li>
+<li><p>turning sqlite into a CSV</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>optional (combining sqlite scripts with R scripts to make viz)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<span id="document-content/000-hello-world/index-hello-world"></span><div class="section" id="hello-world">
+<h2>Hello world<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<p>This is a bunch of examples of things I forget how to do.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#second-header" id="id1">Second header</a></p></li>
+<li><p><a class="reference internal" href="#third-header" id="id2">Third header</a></p></li>
+</ul>
+</div>
+<div class="section" id="second-header">
+<h3><a class="toc-backref" href="#id1">Second header</a><a class="headerlink" href="#second-header" title="Permalink to this headline">¶</a></h3>
+<p>Put images and other assets related to a chapter directory inside the chapter directory, e.g. <code class="docutils literal notranslate"><span class="pre">content/000-hello-world/images/hello.jpg</span></code></p>
+<img alt="_images/hello.jpg" src="_images/hello.jpg" />
+</div>
+<div class="section" id="third-header">
+<h3><a class="toc-backref" href="#id2">Third header</a><a class="headerlink" href="#third-header" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">echo</span> hello world
+</pre></div>
+</div>
+<p>Some HTML:</p>
+<div></div></div>
+</div>
+<span id="document-content/001-examples/index-examples"></span><div class="section" id="syntax-examples">
+<h2>Syntax Examples<a class="headerlink" href="#syntax-examples" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-content/001-examples/000-tables"></span><div class="section" id="tables">
+<h3>Tables<a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="simple-tables">
+<h4>Simple tables<a class="headerlink" href="#simple-tables" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>First column cells cannot be multiple lines</p></li>
+<li><p>Must contain more than 1 row</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>age</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alice</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bob</p></td>
+<td><p>99</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>=======  =====
+name     age
+=======  =====
+Alice    42
+Bob      99
+=======  =====
+</pre></div>
+</div>
+</div>
+<div class="section" id="grid-table-syntax">
+<h4>Grid Table Syntax<a class="headerlink" href="#grid-table-syntax" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span>+-------+-----+
+<span class="o">|</span> name  | age |
++=======+=====+
+<span class="o">|</span> Alice | 42  |
++-------+-----+
+<span class="o">|</span> Bob   | 99  |
++-------+-----+
+</pre></div>
+</div>
+<p>Result:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 58%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>name</p></th>
+<th class="head"><p>age</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alice</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bob</p></td>
+<td><p>99</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sublime-shortcuts-for-osx">
+<h4>Sublime shortcuts for OSX<a class="headerlink" href="#sublime-shortcuts-for-osx" title="Permalink to this headline">¶</a></h4>
+<p>Using the <a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#magic-tables">Sublime Text rst-completion plugin</a>:</p>
+<div class="section" id="grid-table-rst-completion">
+<h5>Grid table rst-completion<a class="headerlink" href="#grid-table-rst-completion" title="Permalink to this headline">¶</a></h5>
+<p><kbd class="kbd docutils literal notranslate">Command-Shift-t</kbd>, <kbd class="kbd docutils literal notranslate">Enter</kbd></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#grid-table">https://github.com/mgaitan/sublime-rst-completion#grid-table</a></p>
+<p>hello    world
+foo      use 2+ spaces as a delimiter
+bar      then do cmd-shift-t, enter</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>hello</p></th>
+<th class="head"><p>world</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>foo</p></td>
+<td><p>use 2+ spaces as a delimiter</p></td>
+</tr>
+<tr class="row-odd"><td><p>bar</p></td>
+<td><p>then do cmd-shift-t, enter</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="simple-table-rst-completion">
+<h5>Simple table rst-completion<a class="headerlink" href="#simple-table-rst-completion" title="Permalink to this headline">¶</a></h5>
+<p><kbd class="kbd docutils literal notranslate">Command-Shift-t</kbd>, <kbd class="kbd docutils literal notranslate">s</kbd></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#simple-table">https://github.com/mgaitan/sublime-rst-completion#simple-table</a></p>
+</div>
+</div>
+<div class="section" id="references">
+<h4>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://www.sphinx-doc.org/en/stable/markup/misc.html#tables">Tables: Miscellaneous Markup, Sphinx Documentation</a></p>
+<p><a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html#rst-tables">Tables: Restructured Text Primer, Sphinx Documentation</a></p>
+<p><a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#tables">Tables, RestructuredText Docs</a></p>
+<p><a class="reference external" href="http://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html#tables">RST Cheatsheet: Tables</a></p>
+<p><a class="reference external" href="https://github.com/mgaitan/sublime-rst-completion#magic-tables">Magic Tables from RST Completion Sublime plugin</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, 
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

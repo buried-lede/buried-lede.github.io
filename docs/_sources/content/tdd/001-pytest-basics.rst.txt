@@ -1,0 +1,276 @@
+*************************************
+Intro to testing in Python and pytest
+*************************************
+
+
+
+
+Before getting into the `philosophy and bigger picture of testing and
+test-driven development :doc:`/content/002-overhaul-overview`, it's good to get an
+overview of what Python testing actually is, in terms of the practical
+steps of how to write tests, where they go, and how to run them using
+`pytest <https://docs.pytest.org/en/latest/>`_
+
+What is pytest
+==============
+
+
+`pytest is a popular Python
+library <https://docs.pytest.org/en/latest/>`_ for writing and running
+tests in Python. While Python already has a decent built-in framework in
+`unittest <https://docs.python.org/3/library/unittest.html>`_,
+**pytest** comes with a lot of nice quality-of-life improvements and
+conventions, including having a style that requires less boilerplate and
+cruft.
+
+**pytest** can be installed via pip:
+
+.. code:: sh
+
+    $ pip install pytest
+
+**Note:** if you're using pytest in the context of this current app,
+then **pytest** is listed in the pyproject.toml/poetry requirements,
+which means you can install via running ``$ poetry install``
+
+Writing a test and running pytest from scratch
+==============================================
+
+**The setup**
+
+-  Create a new working directory, something that you can throw away,
+   like ``/tmp/foobar``
+-  Inside that working directory, create a subdirectory ``tests/``
+-  Inside ``tests/``, create an empty file named ``test_hey.py``
+
+Here's the command-sequence to get it all set up:
+
+.. code:: sh
+
+    mkdir -p /tmp/foobar/tests
+    touch -p /tmp/foobar/tests/test_hey.py
+    cd /tmp/foobar
+
+Now, assuming ``/tmp/foobar/`` is your **current working directory**,
+open the ``tests/test_hello_world.py`` file to write your first
+**test**. It can be as simple as this:
+
+.. literalinclude:: /srccode/tdd/foobar/test_hello_world.py
+    :pyobject: test_hey
+    :caption: tests/test_hello_world.py
+
+Note these things:
+
+-  **pytest** tests are written in function form.
+-  Their names should be prefixed with ``test_``
+-  They don't have a return value
+-  They typically have an ``assert`` statement followed by a conditional
+   expression that we expect to be truthy.
+
+In the aforementioned snippet -- again, in the file named
+``tests/test_hello_world.py`` -- I've named the test function
+``test_hey()``. And I've given it an assertion that is doomed to
+**fail**, i.e. result in a non-truthy value: ``assert 1 == 2``
+
+Again, assuming ``/tmp/foobar/`` is your **current working directory**,
+you should be able to run ``tests/test_hello_world.py`` with this simple
+command:
+
+.. code:: sh
+
+    $ pytest
+
+By convention, the ``pytest`` runner will look for all files named
+``test_*`` in the current working directory, and inside all of its
+subdirectories.
+
+Because we wrote an assertion that was determined to fail, e.g.
+``1 == 2``, the test result will look like this:
+
+
+.. image:: ./images/test-hey-failed.png
+
+
+
+Fixing a failing test
+---------------------
+
+Basically, everything you need to know about where **pytest** found a
+failure can be found in the ``=== FAILURES ===`` section:
+
+::
+
+    =============== FAILURES ===============
+    --------------- test_hey ---------------
+
+        def test_hey():
+    >       assert 1 == 2
+    E       assert 1 == 2
+
+    tests/test_hello_world.py:2: AssertionError
+    ======= 1 failed in 0.04 seconds =======
+
+-  The test named ``test_hey`` failed.
+-  This test is located in the file ``tests/test_hello_world.py``
+-  The exact exception that caused the test to fail was of class
+   ``AssertionError``
+-  The line in ``test_hello_world.py`` that caused the
+   ``AssertionError`` is **line 2**
+
+As you probably recall, ``test_hey`` looked like this:
+
+.. literalinclude:: /srccode/tdd/foobar/test_hello_world.py
+    :pyobject: test_hey
+    :caption: tests/test_hello_world.py
+
+
+The ``assert`` statement throws an ``AssertionError`` when the
+conditional expression results in a
+`non-truthy-value <https://docs.python.org/3/library/stdtypes.html#truth-value-testing>`__.
+So, to make ``test_hey`` **pass**, make the assertion value something
+that returns ``True``.
+
+Any of these would work:
+
+.. code:: py
+
+        assert 1 == 1
+        assert 2 == 2
+        assert 1 != 2
+        assert 1
+        assert True
+        assert 'hey'
+        assert 'hello world'
+
+Run ``pytest`` again and you'll see something like this:
+
+
+.. image:: ./images/test-hey-passed.png
+
+
+
+Note that no matter how many assertions you stuffed into ``test_hey()``,
+**pytest** will only report that ``1 [test] passed``, because the
+entirety of the ``test_hey()`` function is considered to be a single
+test. To test this for yourself, you can make
+``tests/test_hello_world.py`` look like this:
+
+.. literalinclude:: /srccode/tdd/foobar/test_hello_world.py
+    :caption: tests/test_hello_world.py
+
+
+Running ``pytest`` should generate a report that looks like this:
+
+::
+
+    tests/test_hello_world.py ...                         [100%]
+
+    ================= 3 passed in 0.01 seconds ==================
+
+Useful pytest command-line tricks
+=================================
+
+In the subsequent lessons I'll cover more of pytest's useful features in
+more specificity.
+
+Specifying tests/files to run
+-----------------------------
+
+Invoking ``pytest`` will by default run all test functions in any files
+(in the working directory and its subdirectories) prefixed with
+``test_``. When you get to the point where you have a lot of
+tests/files, and you also have multiple things breaking, sometimes it's
+necessary, as a sanity measure, to just run one broken test a time, so
+you aren't overwhelmed by a massive failure report.
+
+.. code:: sh
+
+    # specify a test file to run
+    $ pytest tests/test_hello_world.py
+
+    # specify a specific directory
+    $ pytest tests/
+
+Using the ``-k`` (keyword) flag, you can also specify tests whose names
+match a string pattern, which should inspire you to write test names
+that follow an easily matchable convention, e.g. for tests that relate
+to the ``foo()`` function, prefix the tests' names with ``test_foo_``
+
+.. code:: sh
+
+    $ pytest -k 'foo'
+
+Read more about `specifying tests in the pytest
+docs <https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests>`__
+
+Debug broken tests interactively
+--------------------------------
+
+
+Running ``pytest`` with the ``--pdb`` flag will cause ``pytest`` to
+automatically drop into the `Python debugger (i.e.
+**pdb**) <https://realpython.com/python-debugging-pdb/>`__ upon any
+error/exception, including but not limited to ``AssertionError``.
+*Ideally*, your tests (and the code it tests) should be simple and
+explicit enough that there isn't room for confusion about what's going
+on during the test. But almost always in real life, things get
+convoluted.
+
+To test out how the ``--pdb`` functionality works, put this failing test
+in ``tests/test_hello_world.py``:
+
+.. code:: py
+
+    def test_what_is_this():
+        a = 'hello'
+        b = ['hello']
+        expect type(a) == type(b)
+
+Running ``pytest`` normally should get you this a result like this:
+
+::
+
+    tests/test_hello_world.py ...F                            [100%]
+
+    =========================== FAILURES ============================
+    _______________________ test_what_is_this _______________________
+
+        def test_what_is_this():
+            a = 'hello'
+            b = ['hello']
+    >       assert type(a) is type(b)
+    E       AssertionError: assert <class 'str'> is <class 'list'>
+    E        +  where <class 'str'> = type('hello')
+    E        +  and   <class 'list'> = type(['hello'])
+
+    tests/test_hello_world.py:13: AssertionError
+    ============== 1 failed, 3 passed in 0.05 seconds ===============
+
+Now run ``pytest`` with the ``--pdb`` flag. You'll get a similar error
+traceback, but you'll be dropped into an interactive prompt, which you
+can then use to inspect variables ``a`` and ``b`` as well as use the
+``type()`` function:
+
+
+.. image:: ./images/pytest-pdb-flag.png
+
+
+Read more at the pytest docs on `Dropping to PDB on
+failures <https://docs.pytest.org/en/latest/usage.html#dropping-to-pdb-python-debugger-on-failures>`_
+
+Other readings and resources
+============================
+
+
+
+-  `pytest docs: Create your first
+   test <https://docs.pytest.org/en/latest/getting-started.html#create-your-first-test>`__
+-  `pytest docs: Asserting with the assert
+   statement <https://docs.pytest.org/en/latest/assert.html#assert>`__
+-  `Holger Krekel Pycon 2012 talk: pytest - rapid and simple testing
+   with Python <https://www.youtube.com/watch?v=9LVqBQcFmyw>`__
+-  `Software Carpentry lesson on Python Testing and Continuous
+   Integration <http://katyhuff.github.io/python-testing/>`__
+
+   -  `Running Tests with
+      Pytest <http://katyhuff.github.io/python-testing/05-pytest/>`__

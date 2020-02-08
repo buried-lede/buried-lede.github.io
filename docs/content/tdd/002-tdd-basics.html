@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Intro to unit-testing and test-driven development &mdash; WayneCountyDeedsApp Notes 0.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+    <link rel="canonical" href="https://kat-alo.github.io/deed-scrapercontent/tdd/002-tdd-basics.html"/>
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Refactoring results_parser.py" href="../015-refactoring-results_parser.html" />
+    <link rel="prev" title="Intro to testing in Python and pytest" href="001-pytest-basics.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> WayneCountyDeedsApp Notes
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../001-first-notes.html">First codebase lookover</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-overhaul-overview.html">Overview of codebase overhaul</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../002-overhaul-overview.html#inventory">Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="001-pytest-basics.html">Intro to testing in Python and pytest</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Intro to unit-testing and test-driven development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-unit-test-adder-py-and-add">Example unit test: <code class="docutils literal notranslate"><span class="pre">adder.py</span></code> and <code class="docutils literal notranslate"><span class="pre">add()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../015-refactoring-results_parser.html">Refactoring results_parser.py</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">WayneCountyDeedsApp Notes</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Intro to unit-testing and test-driven development</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/content/tdd/002-tdd-basics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="intro-to-unit-testing-and-test-driven-development">
+<h1>Intro to unit-testing and test-driven development<a class="headerlink" href="#intro-to-unit-testing-and-test-driven-development" title="Permalink to this headline">¶</a></h1>
+<p>Unit-testing is a strategy. Not to be confused with Python’s built-in
+library named unittest.</p>
+<p>Test-driven development is a software engineering process</p>
+<p>Unit testing refers to testing one thing at a time. Almost invariably,
+this results in functions that do one thing at a time.</p>
+<p>A term that’s frequently used when discussing good testing practices is
+<strong>unit testing</strong>.</p>
+<p>Here’s what the <a class="reference external" href="http://katyhuff.github.io/python-testing/04-units/">Unit Tests chapter in Software Carpentry’s lesson on
+Python testing
+says</a>:</p>
+<blockquote>
+<div>Unit tests are so called because they exercise the functionality of
+the code by interrogating individual functions and methods.
+Functions and methods can often be considered the atomic units of
+software because they are indivisible.</div></blockquote>
+<p>From the <a class="reference external" href="https://docs.python-guide.org/writing/tests/">Hitchhiker’s Guide to Python on Testing Your
+Code</a>:</p>
+<ul class="simple">
+<li>A testing unit should focus on one tiny bit of functionality and
+prove it correct.</li>
+<li>Each test unit must be fully independent.</li>
+<li>Each test must be able to run alone, and also within the test suite,
+regardless of the order that they are called. The implication of this
+rule is that each test must be loaded with a fresh dataset and may
+have to do some cleanup afterwards. This is usually handled by
+setUp() and tearDown() methods.</li>
+</ul>
+<p>Good unit testing is not just a matter of test design, but of good
+design of your functions, making them as independent and isolated and
+following the “do one thing and do it well” philosophy.</p>
+<div class="section" id="example-unit-test-adder-py-and-add">
+<h2>Example unit test: <code class="docutils literal notranslate"><span class="pre">adder.py</span></code> and <code class="docutils literal notranslate"><span class="pre">add()</span></code><a class="headerlink" href="#example-unit-test-adder-py-and-add" title="Permalink to this headline">¶</a></h2>
+<p>First, in the working directory <code class="docutils literal notranslate"><span class="pre">/tmp/foobar/</span></code>, create two new empty
+files: <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>.</p>
+<p>And in <code class="docutils literal notranslate"><span class="pre">/tmp/foobar/tests/</span></code>, create <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>. The structure of
+this very simple example project should look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>foobar
+├── __init__.py
+├── adder.py
+└── tests
+    ├── __init__.py
+    ├── test_adder.py
+    └── test_hello_world.py
+</pre></div>
+</div>
+<div class="section" id="adder-py">
+<h3>adder.py<a class="headerlink" href="#adder-py" title="Permalink to this headline">¶</a></h3>
+<p>Now, in <strong>adder.py</strong>, define this very simple <code class="docutils literal notranslate"><span class="pre">add()</span></code> function:</p>
+<div class="code py highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</pre></div>
+</div>
+<div class="section" id="why-test">
+<h4>Why test?<a class="headerlink" href="#why-test" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="living-documentation-and-sanity-tests">
+<h5>Living documentation and sanity tests<a class="headerlink" href="#living-documentation-and-sanity-tests" title="Permalink to this headline">¶</a></h5>
+</div>
+<div class="section" id="convenient-code-running">
+<h5>Convenient code-running<a class="headerlink" href="#convenient-code-running" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+<div class="section" id="why-test-driven-development-tdd">
+<h4>Why test-driven development (TDD)?<a class="headerlink" href="#why-test-driven-development-tdd" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="enforces-minimalist-design">
+<h5>Enforces minimalist design<a class="headerlink" href="#enforces-minimalist-design" title="Permalink to this headline">¶</a></h5>
+</div>
+<div class="section" id="enforces-good-functional-design">
+<h5>Enforces good functional design<a class="headerlink" href="#enforces-good-functional-design" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+<div class="section" id="practical-tdd">
+<h4>Practical TDD<a class="headerlink" href="#practical-tdd" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="using-the-interactive-debugger-when-things-break">
+<h5>Using the interactive debugger when things break<a class="headerlink" href="#using-the-interactive-debugger-when-things-break" title="Permalink to this headline">¶</a></h5>
+<p><a class="reference external" href="https://hackebrot.github.io/pytest-tricks/debug_test_failures/">https://hackebrot.github.io/pytest-tricks/debug_test_failures/</a></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>$ pytest --pdb
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="other-readings-and-resources">
+<h4>Other readings and resources<a class="headerlink" href="#other-readings-and-resources" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference external" href="https://docs.python-guide.org/writing/tests/">Hitchhiker’s Guide to Python: Testing Your
+Code</a></li>
+<li><a class="reference external" href="https://blog.daftcode.pl/the-cleaning-hand-of-pytest-28f434f4b684">The Cleaning Hand of
+Pytest</a>
+- A good read about the author’s experiences with testing (and
+non-testing) at various companies, as well as being a primer to
+pytest (and why he likes it compared to Python’s built-in unittest
+library)</li>
+<li><a class="reference external" href="http://katyhuff.github.io/python-testing/">Software Carpentry lesson on Python Testing and Continuous
+Integration</a><ul>
+<li><a class="reference external" href="http://katyhuff.github.io/python-testing/04-units/">Unit
+Tests</a></li>
+<li><a class="reference external" href="http://katyhuff.github.io/python-testing/09-tdd/">Test Driven
+Development</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../015-refactoring-results_parser.html" class="btn btn-neutral float-right" title="Refactoring results_parser.py" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="001-pytest-basics.html" class="btn btn-neutral float-left" title="Intro to testing in Python and pytest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Dan Nguyen, Katlyn Alapati
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
